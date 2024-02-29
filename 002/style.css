@@ -8,9 +8,14 @@ h1 {
   font-size: 60px;
 }
 
-.container {
+.box {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
 }
 
 .card {
@@ -173,13 +178,32 @@ a:hover {
 
 /* Responsive */
 
+@media only screen and (max-width: 1600px) {
+  .container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+}
+
 @media only screen and (max-width: 1400px) {
   .book-container {
     display: grid;
     grid-template-columns: 100%;
   }
 
+  .container {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
   .book-right {
     padding-left: 30px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
