@@ -103,13 +103,18 @@ a:hover {
   flex-direction: column;
 }
 
-/* .book-left > img {
+.foto {
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+.book-left > div > img {
   width: 300px;
-} */
+  object-fit: contain;
+}
 
 .read-btn {
-  display: flex;
-  justify-content: center;
+  margin-left: 30px;
 }
 
 .read-btn > button {
@@ -176,10 +181,5 @@ a:hover {
 
   .book-right {
     padding-left: 30px;
-  }
-  .read-btn {
-    display: flex;
-    justify-content: start;
-    margin-left: 30px;
   }
 }
