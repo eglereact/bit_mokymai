@@ -35,11 +35,12 @@ h1 {
   line-height: 48px;
   text-align: left;
   color: #fff;
+  width: 800px;
   margin-bottom: 15px;
 }
 
 .text {
-  width: 625px;
+  width: 800px;
   height: 54px;
   color: #7f7f7f;
   font-size: 18px;

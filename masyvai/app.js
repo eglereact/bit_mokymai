@@ -100,6 +100,25 @@ for (let i = 0; i < korteles.length; i++) {
   }
 }
 
+//14 Sukurkite masyve (piniginėje) ketvirtą elementą (skyrelį) į kurį įdėkite 10 loterijos bilietų,
+//kurių numerius sugeneruokite atsitiktinai su rand funkcija nuo 1000000000 iki 9999999999;
+
+let bilietai = [];
+
+for (let i = 0; i < 10; i++) {
+  let bilietas = rand(1000000000, 9999999999);
+  bilietai.push(bilietas);
+}
+
+wallet.push(bilietai);
+
+//15 Loterijos bilietų masyvą išrūšiuoti nuo didžiausio numerio iki mažiausio;
+
+bilietai.sort();
+
+//16 Į piniginės popierinių pinigų skyrelį įdėti 500 pinigų mažom kupiūrom
+//( generuoti atsitiktinius skaičius nuo 3 iki 10 ir dėti kaip naujus elementus, kol įdėta suma bus lygi 500);
+
 console.log(pinigine);
 console.log(sum);
 console.log(biggerThanTwoSum);
@@ -112,4 +131,8 @@ console.log(popieriniai);
 console.log(wallet);
 console.log(masterCard);
 console.log(visa);
-console.log(`Daugiau yra: ${masterCard > visa ? "MasterCard" : "Visa"}`);
+console.log(
+  `Daugiau yra: ${
+    masterCard > visa ? "MasterCard" : visa > masterCard ? "Visa" : "Po lygiai"
+  }`
+);
