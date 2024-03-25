@@ -119,6 +119,41 @@ bilietai.sort();
 //16 Į piniginės popierinių pinigų skyrelį įdėti 500 pinigų mažom kupiūrom
 //( generuoti atsitiktinius skaičius nuo 3 iki 10 ir dėti kaip naujus elementus, kol įdėta suma bus lygi 500);
 
+let popSum = 0;
+
+while (popSum <= 500) {
+  let smulkios = rand(3, 10);
+  popSum += smulkios;
+  popieriniai.push(smulkios);
+}
+
+//jei suma viršija 500
+
+if (popSum > 500) {
+  let excess = popSum - 500;
+  popieriniai.pop();
+  popSum -= excess;
+}
+
+//17 Patikrinti ar ką nors laimėjote. Bilieto numerius dalinkite iš 777 ir jeigu numeris išsidalins be liekanos - jūs laimėjote!
+//Suskaičiuokite, kiek buvo laimingų bilietų.
+
+let laimingiBilietai = 0;
+for (let i = 0; i < bilietai.length; i++) {
+  if (bilietai[i] % 777 === 0) {
+    laimingiBilietai++;
+    console.log(`Bilietas ${bilietai[i]} buvo laimingas. Jūs laimėjote!`);
+  }
+}
+
+//18 Sukurkite penktą skyrelį ir į jį sudėkite nuotraukas: ['šuo', 'katė', 'automobilis', 'namas', 'kiemas']
+//ir jas išrūšiuokite pagal žodžių ilgį taip, kad pirma eitų trumpiausi žodžiai;
+
+let nuotraukos = ["šuo", "katė", "automobilis", "namas", "kiemas"];
+wallet.push(nuotraukos);
+
+nuotraukos.sort((a, b) => a.length - b.length);
+
 console.log(pinigine);
 console.log(sum);
 console.log(biggerThanTwoSum);
@@ -136,3 +171,5 @@ console.log(
     masterCard > visa ? "MasterCard" : visa > masterCard ? "Visa" : "Po lygiai"
   }`
 );
+console.log(`Popierinių suma: ${popSum}`);
+console.log(laimingiBilietai);
