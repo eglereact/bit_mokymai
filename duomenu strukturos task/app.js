@@ -42,28 +42,37 @@ const randomProducts = () => {
     let total = price * amount;
     let product = {
       title: products[Math.floor(Math.random() * products.length)],
-      price: price,
+      price: parseInt(price),
       amount: amount,
       total: total,
     };
     productsArr.push(product);
   }
-  let productsTotal = productsArr.reduce((sum, p) => sum + p.total, 0);
-  return { products: productsArr, total: productsTotal };
+  let productsTotal = 10;
+
+  for (let i = 0; i < productsArr.length; i++) {
+    productsTotal += productsArr[i].total;
+  }
+
+  return { products: productsArr, totalSum: productsTotal };
 };
 
-//1 Sukurti 100 sąskaitų masyvą.
+//A Sukurti 100 sąskaitų masyvą.
 let saskaitos = [];
 
 for (let i = 1; i <= 10; i++) {
+  let { products: productsNew, totalSum: total } = randomProducts();
   let saskaita = {
     number: i < 10 ? "INV00" + i : i < 100 ? "INV0" + i : "INV" + i,
-    products: randomProducts().products,
-    total: randomProducts().total,
-    vat: 45,
-    grandTotal: 1552,
+    products: productsNew,
+    total: total,
+    vat: parseInt((total * 0.21).toFixed(2)),
+    grandTotal: total + parseInt((total * 0.21).toFixed(2)),
   };
   saskaitos.push(saskaita);
 }
 
 console.log(saskaitos);
+
+//B Sugeneruotame (ne generavimo metu!) masyve paskaičiuoti ir konsolėje atspausdinti visų sąskaitų grandTotal sumą,
+// produktų sąrašą prie kiekvieno produkto pavadinimo pridedant koks to produkto kiekis yra visose sąskaitose bendrai ir už kokią bendrą sumą.
