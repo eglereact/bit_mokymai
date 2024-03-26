@@ -173,8 +173,12 @@ console.log("Task 7");
 console.log(arr7);
 
 //8: Sugeneruokite masyvą, kurio indeksus sudarytų 5 uždavinio pirmo masyvo reikšmės, o jo reikšmės  būtų iš  antrojo 5 uždavinio masyvo.
-// ????
 let arr8 = [];
+
+for (let i = 0; i < arr5a.length; i++) {
+  arr8[arr5a[i]] = arr5b[i];
+}
+
 console.log("Task 8");
 console.log(arr8);
 //9: Sugeneruokite 10 skaičių masyvą pagal taisyklę: Du pirmi skaičiai- atsitiktiniai nuo 5 iki 25.
