@@ -76,3 +76,51 @@ console.log(saskaitos);
 
 //B Sugeneruotame (ne generavimo metu!) masyve paskaičiuoti ir konsolėje atspausdinti visų sąskaitų grandTotal sumą,
 // produktų sąrašą prie kiekvieno produkto pavadinimo pridedant koks to produkto kiekis yra visose sąskaitose bendrai ir už kokią bendrą sumą.
+
+// Pvz:
+// Dviratis 35 479.55
+// Triratis 10 457.22
+// …..
+// Medinė dėžė 47 1025.74
+
+let totalAll = saskaitos.reduce((acc, item) => acc + item.grandTotal, 0); // sum grandTotal of all
+
+console.log(totalAll);
+
+function countProducts(arr) {
+  // Create an object to store product counts and total prices
+  const productCounts = {};
+
+  // Iterate over each object in the array
+  arr.forEach((obj) => {
+    // Iterate over each product in the current object's products array
+    obj.products.forEach((product) => {
+      // Check if the product title already exists in the productCounts object
+      if (product.title in productCounts) {
+        // If it exists, increment the count and add the total price
+        productCounts[product.title].count += product.amount;
+        productCounts[product.title].total += product.total;
+      } else {
+        // If it doesn't exist, initialize it with count and total price
+        productCounts[product.title] = {
+          count: product.amount,
+          total: product.total,
+        };
+      }
+    });
+  });
+
+  // Create an array to store the formatted strings
+  const result = [];
+
+  // Iterate over the productCounts object and create the formatted strings
+  for (const title in productCounts) {
+    const { count, total } = productCounts[title];
+    result.push(`${title} ${count} ${total}\n`);
+  }
+
+  // Return the array of formatted strings joined into a single string
+  return result.join("");
+}
+
+console.log(countProducts(saskaitos));
