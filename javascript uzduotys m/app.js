@@ -405,18 +405,20 @@ console.log(isPrime(10));
 
 //10. Sugeneruokite 100 elementų masyvą kurio reikšmės atsitiktiniai skaičiai nuo 997 iki 15991.
 
-const bigArr = [];
+const generateHundredElements = () => {
+  const bigArr = [];
+  for (let i = 0; i < 100; i++) {
+    bigArr.push(rand(997, 15991));
+  }
+  return bigArr;
+};
 
-for (let i = 0; i < 100; i++) {
-  bigArr.push(rand(997, 15991));
-}
-
-console.log(bigArr);
+console.log(generateHundredElements());
 
 //11. Pasinaudodami devintoje užduotyje aprašyta funkcija masyve palikite tik pirminius skaičius, kurie yra didesni nei 5000;
 
 const onlyPrimeArr = [];
-
+const bigArr = generateHundredElements();
 for (let i = 0; i < bigArr.length; i++) {
   if (bigArr[i] > 5000 && isPrime(bigArr[i])) {
     onlyPrimeArr.push(bigArr[i]);
