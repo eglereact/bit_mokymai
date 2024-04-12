@@ -1,0 +1,63 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.counter {
+  width: 30rem;
+  padding: 1rem;
+  background-color: cornflowerblue;
+  color: white;
+  text-align: center;
+  height: 15rem;
+}
+
+.container * {
+  margin-bottom: 2rem;
+}
+
+.count {
+  font-size: 2rem;
+}
+
+hr {
+  border: 1px solid white;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+  width: 130px;
+}
+
+.substract {
+  background-color: coral;
+  color: white;
+}
+
+.reset {
+  background-color: white;
+}
+.add {
+  background-color: darkcyan;
+  color: white;
+}
