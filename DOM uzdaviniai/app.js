@@ -95,6 +95,40 @@ window.addEventListener("load", (_) => {
     }
   });
   //Ištrinkite “Atsinaujinom” span tage iš gyvačių;
+  atsinaujinom.remove();
+  //Ištrinkite “Laukinę kiaulę”;
+  grassEaters.forEach((animal) => {
+    if (animal.innerText == "Laukinė kiaulė") {
+      animal.remove();
+    }
+  });
+  //Apačioje h2 tago “Plėšrūnai” pridėkite h3 tagą “Neglostyti!”;
+  animalTypes.forEach((animal) => {
+    if (animal.innerText == "Plėšrūnai") {
+      animal.insertAdjacentHTML("afterend", "<h3>Neglostyti!</h3");
+    }
+  });
+  //Pridėkite naują kainą “Studentas 3eur” po tago “Vaikas: 2eur”;
+  price.forEach((price) => {
+    if (price.innerText == "Vaikas: 2eur") {
+      price.insertAdjacentHTML("afterend", "<h2>Studentas: 3eur</h2>");
+    }
+  });
+  //Išrūšiuokita “Plėšrūnus pagal abėcėlę”;
+  const plesrunai2 = document.querySelectorAll("#plesrunai li");
+
+  // Convert NodeList to array for sorting
+  const sortedPlesrunai = Array.from(plesrunai2)
+    .slice(1) // Exclude the like-button
+    .sort((a, b) => a.textContent.localeCompare(b.textContent));
+
+  // Clear the existing list
+  document.querySelector("#plesrunai").innerHTML = "";
+
+  // Append sorted elements back to the list
+  sortedPlesrunai.forEach((li) =>
+    document.querySelector("#plesrunai").appendChild(li)
+  );
 
   //Part C
   const allAnimals2 = document.querySelectorAll("ul li");
@@ -136,10 +170,11 @@ window.addEventListener("load", (_) => {
   });
   // Tagus span “Atsinaujinom” nuspalvinkite raudonai;
   // Tagus span “Atsinaujinom” padarykite mirksinčius (pasinaudokite setInterval);
-  atsinaujinom.style.color = "crimson";
+  const atsinaujinom2 = document.querySelector(".main span");
+  atsinaujinom2.style.color = "crimson";
 
   setInterval(() => {
-    atsinaujinom.style.color =
-      atsinaujinom.style.color == "crimson" ? "green" : "crimson";
+    atsinaujinom2.style.color =
+      atsinaujinom2.style.color == "crimson" ? "green" : "crimson";
   }, 1000);
 });
