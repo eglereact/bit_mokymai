@@ -29,24 +29,45 @@ const fail = document.querySelector(".fails");
 const gz = document.querySelector(".gz");
 
 let currentNumber = 1;
-let timer;
-let sec = 0;
-let min = 0;
-let hour = 0;
+let cron;
+let minute = 0;
+let second = 0;
+let millisecond = 0;
 let fails = 0;
 
+function timer() {
+  if ((millisecond += 10) == 1000) {
+    millisecond = 0;
+    second++;
+  }
+  if (second == 60) {
+    second = 0;
+    minute++;
+  }
+
+  document.getElementById("minute").innerText = returnData(minute);
+  document.getElementById("second").innerText = returnData(second);
+  document.getElementById("millisecond").innerText = returnData(millisecond);
+}
+
+function returnData(input) {
+  return input > 10 ? input : `0${input}`;
+}
+
 reset.addEventListener("click", () => {
-  timer = clearInterval(timer);
+  cron = clearInterval(cron);
   left.replaceChildren();
   rigth.replaceChildren();
   start.disabled = false;
   msg.classList.remove("show");
   msg.classList.add("msg");
   currentNumber = 1;
-  sec = 0;
-  min = 0;
-  hour = 0;
-  timerDiv.innerHTML = "00:00:00";
+  minute = 0;
+  second = 0;
+  millisecond = 0;
+  document.getElementById("minute").innerText = "00";
+  document.getElementById("second").innerText = "00";
+  document.getElementById("millisecond").innerText = "000";
   gz.classList.remove("show-gz");
   fails = 0;
   fail.innerText = "0";
@@ -54,7 +75,9 @@ reset.addEventListener("click", () => {
 });
 
 start.addEventListener("click", (e) => {
-  timer = setInterval(TimeHandler, 1000);
+  cron = setInterval(() => {
+    timer();
+  }, 10);
   let numbers = [];
   // Fill the array with numbers from 1 to 25
   for (let i = 1; i <= 25; i++) {
@@ -105,7 +128,7 @@ start.addEventListener("click", (e) => {
         msg.classList.remove("show");
         msg.classList.add("msg");
         if (currentNumber == 26) {
-          timer = clearInterval(timer);
+          cron = clearInterval(cron);
           gz.classList.add("show-gz");
         }
       } else {
@@ -122,33 +145,3 @@ start.addEventListener("click", (e) => {
 
   start.disabled = true; // stop creating more balls
 });
-
-function TimeHandler() {
-  sec++;
-  if (sec == 60) {
-    sec = 0;
-    min++;
-  }
-  if (min == 60) {
-    min = 0;
-    hour++;
-  }
-  displayTime();
-}
-
-function displayTime() {
-  let secPretty = sec,
-    minPretty = min,
-    hourPretty = hour;
-  if (sec < 10) {
-    secPretty = "0" + sec;
-  }
-  if (min < 10) {
-    minPretty = `0${min}`;
-  }
-
-  if (hour < 10) {
-    hourPretty = `0${hour}`;
-  }
-  timerDiv.innerHTML = `${hourPretty}:${minPretty}:${secPretty}`;
-}
