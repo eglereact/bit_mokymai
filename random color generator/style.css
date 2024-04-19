@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.hex-container {
+  width: 35rem;
+  background-color: tomato;
+  text-align: center;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.hex-container > * {
+  margin: 2rem 0;
+}
+
+.hex-container span {
+  color: #fff;
+  font-size: 2rem;
+  border: 2px double #fff;
+  padding: 10px;
+}
+.button-container button {
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  background-color: transparent;
+  border: 2px dotted #fff;
+  border-radius: 7px;
+  cursor: pointer;
+}
