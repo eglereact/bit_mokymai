@@ -1,0 +1,60 @@
+.square {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: grey;
+  font-size: 20px;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: grey;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  font-size: 20px;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  border-bottom: 100px solid black;
+  color: grey;
+}
+
+.triangle.small {
+  border-bottom: 20px solid black;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
+
+.circle.small {
+  width: 20px;
+  height: 20px;
+}
+
+.square.small {
+  width: 20px;
+  height: 20px;
+}
+
+.holder {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+
+.bin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin: 30px;
+}
