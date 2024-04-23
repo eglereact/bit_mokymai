@@ -95,17 +95,17 @@ window.addEventListener("load", (_) => {
       figure.name != "seven" &&
       figure.name != "nine"
     ) {
-      check += `<div><input type="checkbox" value=${figure.id} />${
-        figure.name
-      }<div style="${
+      check += `<div style="display:flex;"><input type="checkbox" value=${
+        figure.id
+      } /><div style="${
         figure.figure !== "triangle"
           ? `background-color: ${figure.color};`
           : `border-color: transparent transparent ${figure.color} transparent;`
       }" class="${figure.figure}"></div></div>`;
     } else {
-      check += `<div><input type="checkbox" value=${figure.id} checked />${
-        figure.name
-      }<div style="${
+      check += `<div style="display:flex;"><input type="checkbox" value=${
+        figure.id
+      } checked /><div style="${
         figure.figure !== "triangle"
           ? `background-color: ${figure.color};`
           : `border-color: transparent transparent ${figure.color} transparent;`
@@ -118,7 +118,16 @@ window.addEventListener("load", (_) => {
   // kad pažymėjus bet kurį checkbox tame div taga atsirastų atitinkamos formos ir
   //spalvos figūra su “id” viduje. Jeigu pažymėta daugiau nei vienas checkbox, atitinkamai
   //yra daugiau figūrų. Atžymėjus bet kurį checkbox- atitinkama figūra išnyksta;
+
+  //9 Patobulinkite 8 dalį taip, kad figūra išnyktų paspaudus tiesiogiai ant jos. Atitinkamai atsižymėtų checkbox tagas;
+
+  //10 Padarykite, kad figūros kas 2 sekundės po vieną išnyktų pačios (checkbox atsižymi atitinkamai). Išnykimo tvarka svarbi!
+  // Pirmiausiai nyksta figūra su didžiausiu “id”. Visada galima pridėti/ištrinti figūras ir rankiniu būdu. Tokiu atveju
+  //automatinis išnykimo procesas ir tvarka neturi kisti. Visada pirmiausiai nyksta didžiausią “id” turinti figūra.
   const figuresDiv = document.createElement("div");
+  figuresDiv.style.margin = "20px";
+  figuresDiv.style.display = "flex";
+  figuresDiv.classList.add("figures-container");
   checkbox.appendChild(figuresDiv);
 
   const createFigures = () => {
@@ -149,4 +158,47 @@ window.addEventListener("load", (_) => {
 
   createFigures();
   checkbox.addEventListener("change", (e) => createFigures());
+  const figureElements = document.querySelectorAll(".figures-container");
+
+  figureElements.forEach((el) => {
+    el.addEventListener("click", (e) => {
+      const figureId = parseInt(e.target.id);
+      console.log(e.target.id);
+      const checkbox = document.querySelector(
+        `.checkbox input[type='checkbox'][value='${figureId}']`
+      );
+      if (checkbox) {
+        checkbox.checked = false;
+      }
+      figuresDiv.removeChild(e.target);
+    });
+  });
+
+  const removeFiguresWithDelay = () => {
+    const figureElements = document.querySelectorAll(".figures-container div");
+    const sortedFigures = Array.from(figureElements).sort(
+      (a, b) => b.id - a.id
+    );
+    const totalDuration = sortedFigures.length * 2000;
+    const averageDelay = totalDuration / sortedFigures.length;
+
+    sortedFigures.forEach((figure, index) => {
+      const delay = averageDelay * index;
+
+      setTimeout(() => {
+        const checkbox = document.querySelector(
+          `.checkbox input[type='checkbox'][value='${figure.id}']`
+        );
+        if (checkbox) {
+          checkbox.checked = false;
+        }
+        figuresDiv.removeChild(figure);
+        console.log(figure);
+      }, delay);
+    });
+  };
+
+  setInterval(removeFiguresWithDelay, 2000);
+
+  //TODO fix error
 });
