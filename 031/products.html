@@ -3,30 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="stylep.css" />
     <script src="products.js" defer></script>
-    <title>My products</title>
+    <link rel="stylesheet" href="stylep.css" />
+    <title>My Products</title>
   </head>
+
   <body>
     <main>
-      <div class="modal">
+      <div class="products-container">
+        <div class="products">
+          <div class="buttons">
+            <button type="button" class="green --create">Create</button>
+            <div class="seed">seed local storage</div>
+          </div>
+          <div class="list --list"></div>
+        </div>
+      </div>
+
+      <div class="modal modal--create --modal">
         <div class="card">
           <h2>Create</h2>
           <div class="input">
-            <div>Product title</div>
-            <input type="text" name="productTitle" placeholder="enter name" />
+            <div>Product Title</div>
+            <input type="text" name="productTitle" />
           </div>
           <div class="input">
-            <div>Product price</div>
-            <input type="text" name="productPrice" placeholder="enter price" />
+            <div>Product Price</div>
+            <input type="text" name="productPrice" />
           </div>
           <div class="input">
-            <div>Product info</div>
+            <div>Product Description</div>
             <textarea name="productDesc"></textarea>
           </div>
           <div class="buttons">
-            <button class="green">add</button>
-            <button class="gray">cancel</button>
+            <button type="button" class="green --submit">Save</button>
+            <button type="button" class="gray --close">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal--delete --modal">
+        <div class="card">
+          <h2>Delete</h2>
+          <h2>
+            Are you sure want to delete <span class="product--title"></span>?
+          </h2>
+          <div class="buttons">
+            <button type="button" class="green --submit">Yes</button>
+            <button type="button" class="gray --close">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal--edit --modal">
+        <div class="card">
+          <h2>Edit</h2>
+          <div class="input">
+            <div>Product Title</div>
+            <input type="text" name="productTitle" />
+          </div>
+          <div class="input">
+            <div>Product Price</div>
+            <input type="text" name="productPrice" />
+          </div>
+          <div class="input">
+            <div>Product Description</div>
+            <textarea name="productDesc"></textarea>
+          </div>
+          <div class="buttons">
+            <button type="button" class="green --submit">Save</button>
+            <button type="button" class="gray --close">Cancel</button>
           </div>
         </div>
       </div>

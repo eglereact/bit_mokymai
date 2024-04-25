@@ -173,7 +173,7 @@ window.addEventListener("load", (_) => {
       figuresDiv.removeChild(e.target);
     });
   });
-
+  let intervalId;
   const removeFiguresWithDelay = () => {
     const figureElements = document.querySelectorAll(".figures-container div");
     const sortedFigures = Array.from(figureElements).sort(
@@ -192,7 +192,9 @@ window.addEventListener("load", (_) => {
         if (checkbox) {
           checkbox.checked = false;
         }
+        // if (figuresDiv.contains(figure)) {
         figuresDiv.removeChild(figure);
+        // } fixed en error but deletes items inconsistently
         console.log(figure);
       }, delay);
     });
