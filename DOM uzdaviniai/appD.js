@@ -192,9 +192,10 @@ window.addEventListener("load", (_) => {
         if (checkbox) {
           checkbox.checked = false;
         }
-        // if (figuresDiv.contains(figure)) {
-        figuresDiv.removeChild(figure);
-        // } fixed en error but deletes items inconsistently
+        if (figureElements.length > 0) {
+          figure.style.display = "none";
+          // figuresDiv.removeChild(figure);
+        } // fixed en error but deletes items inconsistently
         console.log(figure);
       }, delay);
     });
