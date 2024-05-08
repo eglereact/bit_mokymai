@@ -18,7 +18,8 @@ app.post("/add-animal", (req, res) => {
   data.push({ id, animal });
   data = JSON.stringify(data);
   fs.writeFileSync("./data/animals.json", data);
-  res.json({ message: "OK" });
+  // res.json({ message: "OK" });
+  res.redirect(302, "http://localhost");
 });
 
 app.get("/get-animals", (req, res) => {
