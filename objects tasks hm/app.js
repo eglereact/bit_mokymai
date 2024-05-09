@@ -14,48 +14,73 @@ class Kibiras1 {
   kiekPririnktaAkmenu() {
     console.log(`Akmenų kibire yra ${this.akmenuKiekis}`);
   }
+  ispiltiVisusAkmenis() {
+    this.akmenuKiekis = 0;
+  }
+  perpiltiVisusAkmenis() {
+    const akmenuKiekis = this.akmenuKiekis;
+    this.akmenuKiekis = 0;
+    return akmenuKiekis;
+  }
 }
 
 const kibiras = new Kibiras1();
+const kibiras2 = new Kibiras1();
 
 kibiras.prideti1Akmeni();
 kibiras.pridetiDaugAkmenu(10);
 kibiras.kiekPririnktaAkmenu();
-
+// kibiras.ispiltiVisusAkmenis();
+kibiras.kiekPririnktaAkmenu();
+console.log(kibiras.perpiltiVisusAkmenis());
+kibiras.kiekPririnktaAkmenu();
 //2
 
 class Pinigine {
   constructor() {
-    this.popieriniaiPinigai = 0;
-    this.metaliniaiPinigai = 0;
+    // this.popieriniaiPinigai = 0;
+    // this.metaliniaiPinigai = 0;
+    this.popieriniaiPinigai = [];
+    this.metaliniaiPinigai = [];
   }
   ideti(kiekis) {
     if (kiekis <= 2) {
-      this.metaliniaiPinigai += kiekis;
+      // this.metaliniaiPinigai += kiekis;
+      this.metaliniaiPinigai.push(kiekis);
     } else {
-      this.popieriniaiPinigai += kiekis;
+      // this.popieriniaiPinigai += kiekis;
+      this.popieriniaiPinigai.push(kiekis);
     }
   }
 
   monetos() {
-    console.log(`Metaliniai pinigai: ${this.metaliniaiPinigai}`);
+    const kiekis = this.metaliniaiPinigai.length;
+    const suma = this.metaliniaiPinigai.reduce((sum, m) => sum + m, 0);
+    return `Metaliniai pinigai: kiekis ${kiekis}, suma: ${suma} `;
   }
 
   banknotai() {
-    console.log(`Popieriniai pinigai: ${this.popieriniaiPinigai}`);
+    const kiekis = this.popieriniaiPinigai.length;
+    const suma = this.popieriniaiPinigai.reduce((sum, m) => sum + m, 0);
+    return `Popieriniai pinigai:  kiekis ${kiekis}, suma: ${suma}`;
   }
 
   skaiciuoti() {
-    let isViso = 0;
-    isViso += this.metaliniaiPinigai + this.popieriniaiPinigai;
-    console.log(`Iš viso piniginėje yra ${isViso}`);
+    console.log(
+      `Iš viso piniginėje yra ${this.monetos()} ir ${this.banknotai()}`
+    );
   }
 }
 
 const pinigine = new Pinigine();
 
 pinigine.ideti(2);
+pinigine.ideti(2);
+pinigine.ideti(2);
+pinigine.ideti(1);
 pinigine.ideti(10);
+pinigine.ideti(11);
+pinigine.ideti(11);
 pinigine.monetos();
 pinigine.banknotai();
 
