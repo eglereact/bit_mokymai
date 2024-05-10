@@ -1,0 +1,41 @@
+section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 70px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: darkorchid;
+  text-align: center;
+}
+
+.accordion {
+  background-color: aliceblue;
+  cursor: pointer;
+  padding: 1rem;
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.accordion::after {
+  font-family: "bootstrap-icons";
+  content: "\F4FE";
+  font-size: 28px;
+}
+
+.active::after {
+  font-family: "bootstrap-icons";
+  content: "\F2EA";
+  font-size: 28px;
+}
+
+.desc {
+  padding: 0 1rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in;
+}
