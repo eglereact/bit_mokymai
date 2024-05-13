@@ -114,12 +114,17 @@ class Troleibusas {
   }
 
   islipa(keleiviuSkaicius) {
-    if (this.keleiviuSkaicius >= keleiviuSkaicius) {
-      this.keleiviuSkaicius -= keleiviuSkaicius;
-      Troleibusas.bendrasKeleiviuSkaicius(-keleiviuSkaicius);
-    } else {
-      console.log("Skaičius negali būti neigiamas");
-    }
+    // if (this.keleiviuSkaicius >= keleiviuSkaicius) {
+    //   this.keleiviuSkaicius -= keleiviuSkaicius;
+    const islipo =
+      this.keleiviuSkaicius < keleiviuSkaicius
+        ? this.keleiviuSkaicius
+        : keleiviuSkaicius;
+    this.keleiviuSkaicius -= islipo;
+    Troleibusas.bendrasKeleiviuSkaicius(-1 * islipo);
+    // } else {
+    //   console.log("Skaičius negali būti neigiamas");
+    // }
   }
 
   vaziuoja() {
@@ -196,30 +201,34 @@ class PirkiniuKrepselis {
   }
 
   idetiSureli(kiekis) {
-    this.idetiProdukta("Sūrelis", kiekis);
+    // this.idetiProdukta("Sūrelis", kiekis);
+    if (this.turinys.has("surelis")) {
+      this.turinys.set("surelis", kiekis + this.turinys.get("surelis"));
+    } else {
+      this.turinys.set("surelis", kiekis);
+    }
   }
 
   idetiPieno(kiekis) {
-    this.idetiProdukta("Pienas", kiekis);
+    // this.idetiProdukta("Pienas", kiekis);
+    if (this.turinys.has("pienas")) {
+      this.turinys.set("pienas", kiekis + this.turinys.get("pienas"));
+    } else {
+      this.turinys.set("pienas", kiekis);
+    }
   }
 
   idetiDuonos(kiekis) {
-    this.idetiProdukta("Duona", kiekis);
+    // this.idetiProdukta("Duona", kiekis);
+    if (this.turinys.has("duona")) {
+      this.turinys.set("duona", kiekis + this.turinys.get("duona"));
+    } else {
+      this.turinys.set("duona", kiekis);
+    }
   }
 
   krepselioTurinys() {
-    console.log("Krepselio turinys:");
-    this.turinys.forEach((kiekis, produktas) => {
-      console.log(`${produktas}: ${kiekis}`);
-    });
-  }
-
-  idetiProdukta(produktas, kiekis) {
-    if (this.turinys.has(produktas)) {
-      this.turinys.set(produktas, this.turinys.get(produktas) + kiekis);
-    } else {
-      this.turinys.set(produktas, kiekis);
-    }
+    console.log("Krepselio turinys: " + this.turinys);
   }
 }
 
@@ -233,17 +242,16 @@ krepselis.krepselioTurinys();
 
 //9
 
-function rand(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 class Grybas {
   constructor() {
-    this.valgomas = rand(0, 1);
-    this.sukirmijes = rand(0, 1);
-    this.svoris = rand(5, 45);
+    this.valgomas = !this.rand(0, 1);
+    this.sukirmijes = !this.rand(0, 1);
+    this.svoris = this.rand(5, 45);
+  }
+  rand(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }
 
@@ -254,26 +262,15 @@ class Krepsys {
   }
 
   deti(grybas) {
-    if (!grybas.sukirmijes && grybas.valgomas) {
-      if (this.prikrauta + grybas.svoris <= this.dydis) {
-        this.prikrauta += grybas.svoris;
-        console.log(`Į krepšį pridėtas grybas, svoris: ${grybas.svoris}`);
-      } else {
-        console.log("Krepšys pilnas.");
-      }
-    } else {
-      console.log("Grybas nesutinka su kriterijais.");
+    if (grybas.valgomas && !grybas.sukirmijes) {
+      this.prikrauta += grybas.svoris;
     }
+    return this.prikrauta < this.dydis;
   }
 }
 
 // Grybavimo procesas
 const krepsys = new Krepsys();
+while (krepsys.deti(new Grybas())) {}
 
-while (krepsys.prikrauta < krepsys.dydis) {
-  const grybas = new Grybas();
-  krepsys.deti(grybas);
-}
-
-console.log("Grybų rinkimas baigtas. Krepšyje surinkti grybai:");
-console.log(`Prikrauta: ${krepsys.prikrauta}/${krepsys.dydis}`);
+console.log(krepsys);
