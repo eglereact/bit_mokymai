@@ -1,14 +1,17 @@
 //1
 class Kibiras1 {
+  static visiAkmenys = 0;
   constructor() {
     this.akmenuKiekis = 0;
   }
   prideti1Akmeni() {
     this.akmenuKiekis++;
+    Kibiras1.visiAkmenys++;
   }
 
   pridetiDaugAkmenu(kiekis) {
     this.akmenuKiekis += kiekis;
+    Kibiras1.visiAkmenys += kiekis;
   }
 
   kiekPririnktaAkmenu() {
@@ -22,6 +25,12 @@ class Kibiras1 {
     this.akmenuKiekis = 0;
     return akmenuKiekis;
   }
+
+  static akmenuSkaiciusVisuoseKibiruose() {
+    console.log(
+      `Bendras akmenų kiekis visuose kibiruose: ${Kibiras1.visiAkmenys}`
+    );
+  }
 }
 
 const kibiras = new Kibiras1();
@@ -34,6 +43,7 @@ kibiras.kiekPririnktaAkmenu();
 kibiras.kiekPririnktaAkmenu();
 console.log(kibiras.perpiltiVisusAkmenis());
 kibiras.kiekPririnktaAkmenu();
+Kibiras1.akmenuSkaiciusVisuoseKibiruose();
 //2
 
 class Pinigine {
@@ -89,17 +99,24 @@ pinigine.skaiciuoti();
 //3
 
 class Troleibusas {
+  static visiKeleiviai = 0;
+
+  static bendrasKeleiviuSkaicius(keleiviuSkaicius) {
+    this.visiKeleiviai += keleiviuSkaicius;
+  }
   constructor() {
     this.keleiviuSkaicius = 0;
   }
 
   ilipa(keleiviuSkaicius) {
     this.keleiviuSkaicius += keleiviuSkaicius;
+    Troleibusas.bendrasKeleiviuSkaicius(keleiviuSkaicius);
   }
 
   islipa(keleiviuSkaicius) {
     if (this.keleiviuSkaicius >= keleiviuSkaicius) {
       this.keleiviuSkaicius -= keleiviuSkaicius;
+      Troleibusas.bendrasKeleiviuSkaicius(-keleiviuSkaicius);
     } else {
       console.log("Skaičius negali būti neigiamas");
     }
@@ -108,14 +125,25 @@ class Troleibusas {
   vaziuoja() {
     console.log(`Autobuse važiuoja ${this.keleiviuSkaicius} keleivių`);
   }
+
+  static keleiviuSkaiciusVisuoseTroleibusuose() {
+    console.log(
+      `Bendras keleivių skaičius visuose troleibusuose: ${Troleibusas.visiKeleiviai}`
+    );
+  }
 }
 
 const troleibusas = new Troleibusas();
+const troleibusas2 = new Troleibusas();
 
 troleibusas.ilipa(10);
 troleibusas.islipa(5);
 troleibusas.islipa(4);
 troleibusas.vaziuoja();
+troleibusas2.ilipa(5);
+troleibusas2.islipa(3);
+
+Troleibusas.keleiviuSkaiciusVisuoseTroleibusuose();
 
 //8
 
@@ -159,3 +187,93 @@ console.log("-----------");
 stikline1.stiklinejeYra();
 stikline2.stiklinejeYra();
 stikline3.stiklinejeYra();
+
+//5
+
+class PirkiniuKrepselis {
+  constructor() {
+    this.turinys = new Map();
+  }
+
+  idetiSureli(kiekis) {
+    this.idetiProdukta("Sūrelis", kiekis);
+  }
+
+  idetiPieno(kiekis) {
+    this.idetiProdukta("Pienas", kiekis);
+  }
+
+  idetiDuonos(kiekis) {
+    this.idetiProdukta("Duona", kiekis);
+  }
+
+  krepselioTurinys() {
+    console.log("Krepselio turinys:");
+    this.turinys.forEach((kiekis, produktas) => {
+      console.log(`${produktas}: ${kiekis}`);
+    });
+  }
+
+  idetiProdukta(produktas, kiekis) {
+    if (this.turinys.has(produktas)) {
+      this.turinys.set(produktas, this.turinys.get(produktas) + kiekis);
+    } else {
+      this.turinys.set(produktas, kiekis);
+    }
+  }
+}
+
+const krepselis = new PirkiniuKrepselis();
+krepselis.idetiSureli(2);
+krepselis.idetiPieno(1);
+krepselis.idetiDuonos(3);
+krepselis.idetiSureli(1);
+
+krepselis.krepselioTurinys();
+
+//9
+
+function rand(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+class Grybas {
+  constructor() {
+    this.valgomas = rand(0, 1);
+    this.sukirmijes = rand(0, 1);
+    this.svoris = rand(5, 45);
+  }
+}
+
+class Krepsys {
+  constructor() {
+    this.dydis = 500;
+    this.prikrauta = 0;
+  }
+
+  deti(grybas) {
+    if (!grybas.sukirmijes && grybas.valgomas) {
+      if (this.prikrauta + grybas.svoris <= this.dydis) {
+        this.prikrauta += grybas.svoris;
+        console.log(`Į krepšį pridėtas grybas, svoris: ${grybas.svoris}`);
+      } else {
+        console.log("Krepšys pilnas.");
+      }
+    } else {
+      console.log("Grybas nesutinka su kriterijais.");
+    }
+  }
+}
+
+// Grybavimo procesas
+const krepsys = new Krepsys();
+
+while (krepsys.prikrauta < krepsys.dydis) {
+  const grybas = new Grybas();
+  krepsys.deti(grybas);
+}
+
+console.log("Grybų rinkimas baigtas. Krepšyje surinkti grybai:");
+console.log(`Prikrauta: ${krepsys.prikrauta}/${krepsys.dydis}`);
