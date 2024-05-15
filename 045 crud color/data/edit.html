@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="http://colors.test/style.css" />
+    <script src="http://colors.test/app.js" defer></script>
+    <title>Edit Color</title>
+  </head>
+  <body>
+    {{NAV}}
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-7">
+          <div class="card mt-5">
+            <div class="card-header"><h1>Edit Color</h1></div>
+            <div class="card-body">
+              <form action="http://colors.test/update/{{ID}}" method="post">
+                <div class="edit">
+                  <h5 class="card-title">Edit your color and shape</h5>
+
+                  <div
+                    style="background-color: COLOR"
+                    class="edit__color-shape shape-{{SHAPE}}"
+                  ></div>
+                </div>
+                <div class="m-3">
+                  <label class="form-label">Color picker</label>
+                  <input
+                    type="color"
+                    class="form-control form-control-color"
+                    id="exampleColorInput"
+                    value="COLOR"
+                    title="Choose your color"
+                    name="color"
+                  />
+                </div>
+                <div class="m-3">
+                  <label class="form-label">Shape picker</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="shape"
+                      id="shape1"
+                      value="1"
+                      {{val1}}
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Circle
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="shape"
+                      id="shape2"
+                      value="2"
+                      {{val2}}
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Square
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="shape"
+                      id="shape3"
+                      value="3"
+                      {{val3}}
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Rounded
+                    </label>
+                  </div>
+                </div>
+                <div class="m-3 mt-5">
+                  <button type="submit" class="btn btn-outline-primary">
+                    Save
+                  </button>
+                  <a
+                    href="http://colors.test/"
+                    class="btn btn-outline-secondary"
+                    >Cancel</a
+                  >
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
