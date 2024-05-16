@@ -1,0 +1,56 @@
+.container {
+  width: 700px;
+  height: 600px;
+  background-color: bisque;
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.item1 {
+  background-color: brown;
+  /* width: 100px;
+  height: 100px; */
+}
+
+.item2 {
+  background-color: deeppink;
+  /* width: 100px;
+  height: 100px; */
+}
+
+.item3 {
+  background-color: darkslategrey;
+  /* width: 100px;
+  height: 100px; */
+}
+
+.item4 {
+  background-color: dodgerblue;
+  /* width: 100px;
+  height: 100px; */
+}
+
+.item5 {
+  background-color: darkgoldenrod;
+  /* width: 100px;
+  height: 100px; */
+}
+
+/* .container {
+  width: 800px;
+  height: 800px;
+  background-color: bisque;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+.black {
+  background-color: #b58863;
+}
+
+.white {
+  background-color: #f0d9b5;
+} */
