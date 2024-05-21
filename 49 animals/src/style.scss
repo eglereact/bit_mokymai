@@ -1,0 +1,15 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+.color-in-list__animal {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr;
+  text-align: start;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.list-group-item:nth-child(odd) {
+  background-color: #f5f8fe;
+}

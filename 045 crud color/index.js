@@ -15,10 +15,15 @@ const fs = require("node:fs");
 const addNav = (id, html) => {
   let nav = fs.readFileSync("./data/nav.html", "utf8");
   let userHtml;
-  if (!isLogged(id)) {
+  let data = fs.readFileSync("./data/sessions.json", "utf8");
+  data = JSON.parse(data);
+  const session = data.find((s) => s.id === id);
+  if (!session || !session.d?.user) {
     userHtml = fs.readFileSync("./data/navAnon.html", "utf8");
+    userHtml = userHtml.replace("{{NAME}}", "no name");
   } else {
     userHtml = fs.readFileSync("./data/navUser.html", "utf8");
+    userHtml = userHtml.replace("{{NAME}}", session.d.user);
   }
   nav = nav.replace("{{USERBTN}}", userHtml);
   return html.replace("{{NAV}}", nav);
@@ -42,6 +47,17 @@ const loginUser = (id, user) => {
   );
   data = JSON.stringify(data);
   fs.writeFileSync("./data/sessions.json", data);
+};
+
+const logout = (id) => {
+  let data = fs.readFileSync("./data/sessions.json", "utf8");
+  data = JSON.parse(data);
+  const session = data.find((s) => s.id === id);
+  if (session && session.d?.user) {
+    delete session.d.user;
+    data = JSON.stringify(data);
+    fs.writeFileSync("./data/sessions.json", data);
+  }
 };
 
 const isLogged = (id) => {
@@ -98,10 +114,9 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => {
   let html = fs.readFileSync("./data/home.html", "utf8");
-  let nav = fs.readFileSync("./data/nav.html", "utf8");
-  html = html
-    .replace("{{NAV}}", nav)
-    .replace("{{MSG}}", showMessage(req.sessionsId));
+
+  html = html.replace("{{MSG}}", showMessage(req.sessionsId));
+  html = addNav(req.sessionsId, html);
   res.send(html);
 });
 
@@ -139,9 +154,8 @@ app.get("/create", (req, res) => {
     res.redirect(302, "http://colors.test/login").end();
   }
   let html = fs.readFileSync("./data/create.html", "utf8");
-  let nav = fs.readFileSync("./data/nav.html", "utf8");
 
-  html = html.replace("{{NAV}}", nav);
+  html = addNav(req.sessionsId, html);
   res.send(html);
 });
 
@@ -175,12 +189,12 @@ app.get("/delete/:id", (req, res) => {
     res.status(404).send(html);
   } else {
     let html = fs.readFileSync("./data/delete.html", "utf8");
-    let nav = fs.readFileSync("./data/nav.html", "utf8");
+
     html = html
-      .replace("{{NAV}}", nav)
       .replaceAll("{{ID}}", color.id)
       .replace("{{SHAPE}}", color.shape)
       .replace("COLOR", color.color);
+    html = addNav(req.sessionsId, html);
     res.send(html);
   }
 });
@@ -211,9 +225,8 @@ app.get("/edit/:id", (req, res) => {
     res.status(404).send(html);
   } else {
     let html = fs.readFileSync("./data/edit.html", "utf8");
-    let nav = fs.readFileSync("./data/nav.html", "utf8");
+
     html = html
-      .replace("{{NAV}}", nav)
       .replaceAll("{{ID}}", color.id)
       .replace("{{SHAPE}}", color.shape)
       .replaceAll("COLOR", color.color);
@@ -225,6 +238,7 @@ app.get("/edit/:id", (req, res) => {
         html = html.replace(`{{val${v}}}`, "");
       }
     });
+    html = addNav(req.sessionsId, html);
     res.send(html);
   }
 });
@@ -246,20 +260,23 @@ app.post("/update/:id", (req, res) => {
 
 app.get("/register", (req, res) => {
   if (isLogged(req.sessionsId)) {
-    res.redirect(302, "http://colors.test").end();
+    res.redirect(302, "http://colors.test/").end();
   }
   let html = fs.readFileSync("./data/register.html", "utf8");
-  let nav = fs.readFileSync("./data/nav.html", "utf8");
 
-  html = html
-    .replace("{{NAV}}", nav)
-    .replace("{{MSG}}", showMessage(req.sessionsId));
+  html = html.replace("{{MSG}}", showMessage(req.sessionsId));
+  html = addNav(req.sessionsId, html);
   res.send(html);
 });
 
 app.post("/register", (req, res) => {
   if (isLogged(req.sessionsId)) {
-    res.redirect(302, "http://colors.test").end();
+    res.redirect(302, "http://colors.test/").end();
+  }
+
+  if (req.body.password.length < 3) {
+    addMessage(req.sessionsId, "Password is too short", "warning");
+    res.redirect(302, "http://colors.test/register");
   }
   const email = req.body.email;
   const password = md5(req.body.password);
@@ -286,7 +303,7 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
   if (isLogged(req.sessionsId)) {
-    res.redirect(302, "http://colors.test").end();
+    res.redirect(302, "http://colors.test/").end();
   }
   const email = req.body.email;
   const password = md5(req.body.password);
@@ -298,12 +315,21 @@ app.post("/login", (req, res) => {
   if (user) {
     loginUser(req.sessionsId, user);
     addMessage(req.sessionsId, "You are successfully logged in", "success");
-    res.redirect(302, "http://colors.test");
+    res.redirect(302, "http://colors.test/");
   } else {
     addMessage(req.sessionsId, "Invalid password or email", "danger");
     res.redirect(302, "http://colors.test/login");
   }
 });
+
+app.post("/logout", (req, res) => {
+  if (!isLogged(req.sessionsId)) {
+    res.redirect(302, "http://colors.test/").end();
+  }
+  logout(req.sessionsId);
+  res.redirect(302, "http://colors.test/");
+});
+
 app.listen(port, () => {
   console.log(`Colors app listening on port ${port}`);
 });

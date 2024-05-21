@@ -1,12 +1,1 @@
-[
-  {
-    "id": "a98221ee-79df-417b-9631-169170224b37",
-    "email": "bebras@gmail.com",
-    "password": "4c5bde74a8f110656874902f07378009"
-  },
-  {
-    "id": "4ee1950e-83ae-4793-b0b1-4f98dccc050d",
-    "email": "sam@gmail.com",
-    "password": "81dc9bdb52d04dc20036dbd8313ed055"
-  }
-]
+[{"id":"a98221ee-79df-417b-9631-169170224b37","email":"bebras@gmail.com","password":"4c5bde74a8f110656874902f07378009"},{"id":"4ee1950e-83ae-4793-b0b1-4f98dccc050d","email":"sam@gmail.com","password":"81dc9bdb52d04dc20036dbd8313ed055"},{"id":"d6a6df42-e26d-4f6c-a03c-a638d160c432","email":"briedis@gmail.com","password":"81dc9bdb52d04dc20036dbd8313ed055"},{"id":"eed8bec1-f6ce-4346-91e4-e22ecd21d165","email":"cat@gmail.com","password":"c4ca4238a0b923820dcc509a6f75849b"}]
