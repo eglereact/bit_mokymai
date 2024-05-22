@@ -29,16 +29,6 @@ const addNav = (id, html) => {
   return html.replace("{{NAV}}", nav);
 };
 
-const addMessage = (id, text, type) => {
-  let data = fs.readFileSync("./data/sessions.json", "utf8");
-  data = JSON.parse(data);
-  data = data.map((s) =>
-    s.id === id ? { id, d: { ...s.d, msg: { text, type } } } : s
-  );
-  data = JSON.stringify(data);
-  fs.writeFileSync("./data/sessions.json", data);
-};
-
 const loginUser = (id, user) => {
   let data = fs.readFileSync("./data/sessions.json", "utf8");
   data = JSON.parse(data);
@@ -70,6 +60,16 @@ const isLogged = (id) => {
   return true;
 };
 
+const addMessage = (id, text, type) => {
+  let data = fs.readFileSync("./data/sessions.json", "utf8");
+  data = JSON.parse(data);
+  data = data.map((s) =>
+    s.id === id ? { id, d: { ...s.d, msg: { text, type } } } : s
+  );
+  data = JSON.stringify(data);
+  fs.writeFileSync("./data/sessions.json", data);
+};
+
 const showMessage = (id) => {
   let data = fs.readFileSync("./data/sessions.json", "utf8");
   data = JSON.parse(data);
@@ -82,6 +82,35 @@ const showMessage = (id) => {
   data = JSON.stringify(data);
   fs.writeFileSync("./data/sessions.json", data);
   return `<div class="mt-3 ms-5 me-5 alert alert-${type}" role="alert">  ${text}</div>`;
+};
+
+const addOld = (id, old) => {
+  let data = fs.readFileSync("./data/sessions.json", "utf8");
+  data = JSON.parse(data);
+  data = data.map((s) => (s.id === id ? { id, d: { ...s.d, old } } : s));
+  data = JSON.stringify(data);
+  fs.writeFileSync("./data/sessions.json", data);
+};
+
+const showOld = (id, html) => {
+  const allOlds = ["email"];
+  let data = fs.readFileSync("./data/sessions.json", "utf8");
+  data = JSON.parse(data);
+  const session = data.find((s) => s.id === id);
+  if (!session || !session.d?.old) {
+    allOlds.forEach((o) => {
+      html = html.replace(`{{${o}}}`, "");
+    });
+  } else {
+    for (const k in session.d?.old) {
+      html = html.replace(`{{${k}}}`, session.d?.old[k]);
+      delete session.d.old;
+      data = JSON.stringify(data);
+      fs.writeFileSync("./data/sessions.json", data);
+    }
+  }
+
+  return html;
 };
 
 app.use((req, res, next) => {
@@ -266,6 +295,7 @@ app.get("/register", (req, res) => {
 
   html = html.replace("{{MSG}}", showMessage(req.sessionsId));
   html = addNav(req.sessionsId, html);
+  html = showOld(req.sessionsId, html);
   res.send(html);
 });
 
@@ -275,8 +305,10 @@ app.post("/register", (req, res) => {
   }
 
   if (req.body.password.length < 3) {
-    addMessage(req.sessionsId, "Password is too short", "warning");
-    res.redirect(302, "http://colors.test/register");
+    addMessage(req.sessionsId, "Password is too short", "danger");
+
+    addOld(req.sessionsId, { email: req.body.email });
+    res.redirect(302, "http://colors.test/register").end();
   }
   const email = req.body.email;
   const password = md5(req.body.password);
