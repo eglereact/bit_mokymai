@@ -1,17 +1,1 @@
-[
-  { "name": "Lion", "species": "Panthera leo", "age": 10 },
-  { "name": "Tiger", "species": "Panthera tigris", "age": 12 },
-  { "name": "Elephant", "species": "Loxodonta africana", "age": 15 },
-  { "name": "Giraffe", "species": "Giraffa camelopardalis", "age": 20 },
-  { "name": "Zebra", "species": "Equus zebra", "age": 8 },
-  { "name": "Hippopotamus", "species": "Hippopotamus amphibius", "age": 25 },
-  { "name": "Crocodile", "species": "Crocodylus niloticus", "age": 30 },
-  { "name": "Flamingo", "species": "Phoenicopterus", "age": 5 },
-  { "name": "Penguin", "species": "Aptenodytes forsteri", "age": 3 },
-  { "name": "Kangaroo", "species": "Macropus", "age": 7 },
-  { "name": "Koala", "species": "Phascolarctos cinereus", "age": 4 },
-  { "name": "Kookaburra", "species": "Dacelo novaeguineae", "age": 2 },
-  { "name": "Platypus", "species": "Ornithorhynchus anatinus", "age": 6 },
-  { "name": "Wallaby", "species": "Macropus", "age": 5 },
-  { "name": "Dingo", "species": "Canis lupus dingo", "age": 8 }
-]
+[{"name":"Lion","species":"Panthera leo","age":10},{"name":"Tiger","species":"Panthera tigris","age":12},{"name":"Elephant","species":"Loxodonta africana","age":15},{"name":"Giraffe","species":"Giraffa camelopardalis","age":20},{"name":"Zebra","species":"Equus zebra","age":8},{"name":"Hippopotamus","species":"Hippopotamus amphibius","age":25},{"name":"Crocodile","species":"Crocodylus niloticus","age":30},{"name":"Flamingo","species":"Phoenicopterus","age":5},{"name":"Penguin","species":"Aptenodytes forsteri","age":3},{"name":"Kangaroo","species":"Macropus","age":7},{"name":"Koala","species":"Phascolarctos cinereus","age":4},{"name":"Kookaburra","species":"Dacelo novaeguineae","age":2},{"name":"Platypus","species":"Ornithorhynchus anatinus","age":6},{"name":"Wallaby","species":"Macropus","age":5},{"name":"Dingo","species":"Canis lupus dingo","age":8},{"id":"a8cf894d-3cd2-4c4e-991a-40b63936d68b","name":"liutas","species":"puikusis","age":14},{"id":"9053503d-9309-4187-9160-49d2481a0be9","name":"cat","species":"catazaurus","age":15},{"id":"b6f9724e-9d6e-4a65-91dd-ad696456a991","name":"bear","species":"polar","age":25}]
