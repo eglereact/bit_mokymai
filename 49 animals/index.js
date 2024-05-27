@@ -207,6 +207,30 @@ app.post("/store", (req, res) => {
   res.redirect(302, "http://animals.test/");
 });
 
+app.get("/delete/:id", (req, res) => {
+  let html = fs.readFileSync("./data/delete.html", "utf8");
+  let nav = fs.readFileSync("./data/nav.html", "utf8");
+  let data = fs.readFileSync("./data/animals.json", "utf8");
+  data = JSON.parse(data);
+  const animal = data.find((c) => c.id === req.params.id);
+  html = html
+    .replace("{{NAV}}", nav)
+    .replace("{{NAME}}", `${animal.name}`)
+    .replace("{{ID}}", animal.id);
+  res.send(html);
+});
+
+app.post("/destroy/:id", (req, res) => {
+  let data = fs.readFileSync("./data/animals.json", "utf8");
+  data = JSON.parse(data);
+  const animal = data.find((c) => c.id === req.params.id);
+  data = data.filter((u) => u.id !== req.params.id);
+  data = JSON.stringify(data);
+  fs.writeFileSync("./data/animals.json", data);
+  addMessage(req.sessionsId, `${animal.name} was deleted`, "danger");
+  res.redirect(302, "http://animals.test/");
+});
+
 app.listen(port, () => {
   console.log(`049 app listening on port ${port}`);
 });

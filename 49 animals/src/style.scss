@@ -2,7 +2,7 @@
 
 .color-in-list__animal {
   display: grid;
-  grid-template-columns: 2fr 3fr 1fr;
+  grid-template-columns: 2fr 3fr 1fr 2fr;
   text-align: start;
 }
 
@@ -36,9 +36,18 @@ h1 {
   text-shadow: 1px 1px 0 rgba(white, 1);
 }
 
+.vh {
+  height: 500px;
+}
+
+.animal-name {
+  font-weight: 700;
+}
+
 form {
   max-width: 600px;
   text-align: center;
+  width: 100%;
   margin: 20px auto;
 
   input {
@@ -77,12 +86,14 @@ form {
     }
   }
 
-  #input-submit {
+  #input-submit,
+  .delete {
     color: white;
     background: #e74c3c;
     cursor: pointer;
     border: none;
     width: 100%;
+    font-weight: 700;
     border-radius: 5px;
     &:hover {
       box-shadow: 0 1px 1px 1px rgba(#aaa, 0.6);
