@@ -231,6 +231,75 @@ app.post("/destroy/:id", (req, res) => {
   res.redirect(302, "http://animals.test/");
 });
 
+app.get("/edit/:id", (req, res) => {
+  let nav = fs.readFileSync("./data/nav.html", "utf8");
+  let data = fs.readFileSync("./data/animals.json", "utf8");
+  data = JSON.parse(data);
+  const animal = data.find((c) => c.id === req.params.id);
+
+  let html = fs.readFileSync("./data/edit.html", "utf8");
+  html = html
+    .replace("{{NAV}}", nav)
+    .replace("{{MSGU}}", showMessage(req.sessionsId))
+    .replace("{{ID}}", animal.id)
+    .replace("{{name}}", animal.name)
+    .replace("{{species}}", animal.species)
+    .replace("{{age}}", animal.age);
+  res.send(html);
+});
+
+app.post("/update/:id", (req, res) => {
+  const name = req.body.name;
+  const species = req.body.species;
+  const age = parseInt(req.body.age);
+
+  // Validation
+  if (name.length < 3) {
+    addMessage(req.sessionsId, "Name is too short", "danger");
+    addOld(req.sessionsId, { name, species, age: req.body.age });
+    res.redirect(302, `http://animals.test/edit/${req.params.id}`)?.end();
+    return;
+  }
+
+  if (species.length < 3) {
+    addMessage(req.sessionsId, "Species is too short", "danger");
+    addOld(req.sessionsId, { name, species, age: req.body.age });
+    res.redirect(302, `http://animals.test/edit/${req.params.id}`)?.end();
+    return;
+  }
+
+  if (isNaN(age) || age < 0) {
+    addMessage(req.sessionsId, "Age must be a positive number", "danger");
+    addOld(req.sessionsId, { name, species, age: req.body.age });
+    res.redirect(302, `http://animals.test/edit/${req.params.id}`)?.end();
+    return;
+  }
+
+  // Check for duplicate animal
+  let data = fs.readFileSync("./data/animals.json", "utf8");
+  const animals = JSON.parse(data);
+  const duplicateAnimal = animals.find(
+    (animal) => animal.name.toLowerCase() === name.toLowerCase()
+  );
+
+  if (duplicateAnimal) {
+    addMessage(req.sessionsId, "This animal already exists", "danger");
+    addOld(req.sessionsId, { name, species, age: req.body.age });
+    res.redirect(302, `http://animals.test/edit/${req.params.id}`)?.end();
+    return;
+  }
+
+  // Update the animal if no validation errors
+  data = animals.map((c) =>
+    c.id === req.params.id ? { ...c, name, species, age } : c
+  );
+  data = JSON.stringify(data);
+  fs.writeFileSync("./data/animals.json", data);
+
+  addMessage(req.sessionsId, "Animal was edited", "success");
+  res.redirect(302, "http://animals.test/");
+});
+
 app.listen(port, () => {
   console.log(`049 app listening on port ${port}`);
 });

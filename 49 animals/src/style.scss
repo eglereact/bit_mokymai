@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: 2fr 3fr 1fr 2fr;
   text-align: start;
+  align-items: center;
 }
 
 .title {
@@ -42,6 +43,10 @@ h1 {
 
 .animal-name {
   font-weight: 700;
+}
+
+.test {
+  color: red;
 }
 
 form {
@@ -94,6 +99,41 @@ form {
     border: none;
     width: 100%;
     font-weight: 700;
+    border-radius: 5px;
+    &:hover {
+      box-shadow: 0 1px 1px 1px rgba(#aaa, 0.6);
+    }
+  }
+}
+
+.list-btns {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  .delete-btn {
+    color: white;
+    background: #e74c3c;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-weight: 700;
+    padding: 6px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    &:hover {
+      box-shadow: 0 1px 1px 1px rgba(#aaa, 0.6);
+    }
+  }
+
+  .edit-btn {
+    width: 100%;
+    padding: 6px 20px;
+    background-color: #a8a8a8;
+    text-decoration: none;
+    font-weight: 700;
+    color: #fff;
     border-radius: 5px;
     &:hover {
       box-shadow: 0 1px 1px 1px rgba(#aaa, 0.6);
