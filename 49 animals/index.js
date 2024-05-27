@@ -176,7 +176,9 @@ app.post("/store", (req, res) => {
   // Check for duplicate animal
   let data = fs.readFileSync("./data/animals.json", "utf8");
   const animals = JSON.parse(data);
-  const duplicateAnimal = animals.find((animal) => animal.name === name);
+  const duplicateAnimal = animals.find(
+    (animal) => animal.name.toLowerCase() === name.toLowerCase()
+  );
 
   if (duplicateAnimal) {
     addMessage(req.sessionsId, "This animal already exists", "danger");
