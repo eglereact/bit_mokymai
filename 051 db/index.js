@@ -47,8 +47,66 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/find", (req, res) => {
+  let html = fs.readFileSync("./data/find.html", "utf8");
+  const listItem = fs.readFileSync("./data/listItem.html", "utf8");
+
+  const s = req.query.s;
+  const sql = `
+  SELECT id, name, height, type
+  FROM trees
+  WHERE name LIKE ?
+
+  `;
+  connection.query(sql, ["%" + s + "%"], (err, rows) => {
+    if (err) throw err;
+
+    let listItems = "";
+    rows.forEach((tree) => {
+      let liHtml = listItem;
+      liHtml = liHtml
+        .replaceAll("{{ID}}", tree.id)
+        .replace("{{NAME}}", tree.name)
+        .replace("{{HEIGHT}}", tree.height)
+        .replace("{{TYPE}}", tree.type);
+      listItems += liHtml;
+    });
+    html = html.replace("{{LI}}", listItems).replace("{{S}}", s);
+
+    res.send(html);
+  });
+});
+
+app.get("/stats", (req, res) => {
+  let html = fs.readFileSync("./data/stats.html", "utf8");
+  const sql = `
+    SELECT MIN(height) AS min, MAX(height) AS max, COUNT(*) AS count, SUM(height) AS sum, AVG(height) AS avg
+    FROM trees;
+  `;
+  connection.query(sql, (err, rows) => {
+    if (err) throw err;
+
+    html = html
+      .replace("{{MAX}}", rows[0].max)
+      .replace("{{MIN}}", rows[0].min)
+      .replace("{{SUM}}", rows[0].sum)
+      .replace("{{COUNT}}", rows[0].count)
+      .replace("{{AVG}}", rows[0].avg);
+
+    res.send(html);
+  });
+});
+
 app.post("/plant", (req, res) => {
-  const { name, height, type } = req.body;
+  let { name, height, type } = req.body;
+
+  // validation
+  height = parseFloat(height);
+  isNaN(height) && (height = 0);
+
+  !["lapuotis", "spygliuotis", "palmė"].includes(type) && (type = "lapuotis");
+
+  !name && (name = "---");
   // const sql = `
   // INSERT INTO trees (name, height, type)
   // VALUES ('${name}', ${parseFloat(height)}, '${type}');

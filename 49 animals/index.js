@@ -278,16 +278,16 @@ app.post("/update/:id", (req, res) => {
   // Check for duplicate animal
   let data = fs.readFileSync("./data/animals.json", "utf8");
   const animals = JSON.parse(data);
-  const duplicateAnimal = animals.find(
-    (animal) => animal.name.toLowerCase() === name.toLowerCase()
-  );
+  // const duplicateAnimal = animals.find(
+  //   (animal) => animal.name.toLowerCase() === name.toLowerCase()
+  // );
 
-  if (duplicateAnimal) {
-    addMessage(req.sessionsId, "This animal already exists", "danger");
-    addOld(req.sessionsId, { name, species, age: req.body.age });
-    res.redirect(302, `http://animals.test/edit/${req.params.id}`)?.end();
-    return;
-  }
+  // if (duplicateAnimal) {
+  //   addMessage(req.sessionsId, "This animal already exists", "danger");
+  //   addOld(req.sessionsId, { name, species, age: req.body.age });
+  //   res.redirect(302, `http://animals.test/edit/${req.params.id}`)?.end();
+  //   return;
+  // }
 
   // Update the animal if no validation errors
   data = animals.map((c) =>
@@ -296,7 +296,7 @@ app.post("/update/:id", (req, res) => {
   data = JSON.stringify(data);
   fs.writeFileSync("./data/animals.json", data);
 
-  addMessage(req.sessionsId, "Animal was edited", "success");
+  addMessage(req.sessionsId, "Animal was updated", "success");
   res.redirect(302, "http://animals.test/");
 });
 
