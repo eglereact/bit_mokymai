@@ -1,13 +1,14 @@
 import "./App.css";
-import Bebras from "./Components/001/Bebras";
+import Price2 from "./Components/002/Price2";
 
 function App() {
+  const price = 100;
+  const color = "orange";
   return (
     <div className="App">
       <header className="App-header">
-        <h1 style={{ color: "skyblue", letterSpacing: "15px" }}>Hello React</h1>
-        {2 * 5}
-        <Bebras />
+        <h1>002</h1>
+        <Price2 productPrice={price} discount={20} color={color} />
       </header>
     </div>
   );
