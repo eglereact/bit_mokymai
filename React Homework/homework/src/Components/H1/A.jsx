@@ -9,11 +9,15 @@ const A = () => {
         height: "600px",
         display: "flex",
         gap: "10px",
+        flexDirection: "column",
       }}
     >
       A
       <B />
       <B />
+      <div className="D">D</div>
+      <div className="D">D</div>
+      <div className="D">D</div>
     </div>
   );
 };

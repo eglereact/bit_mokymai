@@ -5,9 +5,6 @@ function H1() {
   return (
     <>
       <A />
-      <div className="D">D</div>
-      <div className="D">D</div>
-      <div className="D">D</div>
     </>
   );
 }
