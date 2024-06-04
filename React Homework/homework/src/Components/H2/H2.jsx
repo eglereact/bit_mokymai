@@ -1,21 +1,21 @@
 import LabasZuiki from "./LabasZuiki";
-import VienasProps from "./VienasProps";
 import ZebraiIrBenbrai from "./ZebraiIrBenbrai";
-import DuProps from "./DuProps";
-import TrysProps from "./TrysProps";
+import Book1 from "./Book1";
+import Book2 from "./Book2";
+import Book3 from "./Book3";
 
 const H2 = () => {
   return (
     <>
       <LabasZuiki />
-      <VienasProps text="Bet koks tekstas, kuris komponente atvaizduojamas h1 tage" />
+      <Book1 title="Miegančiosios gražuolės" />
       <ZebraiIrBenbrai number={1} />
       <ZebraiIrBenbrai number={2} />
-      <DuProps textBig="Bigger Text" textSmall="Smaller text" />
-      <TrysProps
-        textBigger="Text Big"
-        textSmaller="text small"
-        textColor="crimson"
+      <Book2 title="Miegančiosios gražuolės" author="Stephen King, Owen King" />
+      <Book3
+        title="Miegančiosios gražuolės"
+        author="Stephen King, Owen King"
+        textColor="#c5a32b"
       />
     </>
   );
