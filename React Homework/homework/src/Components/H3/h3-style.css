@@ -1,0 +1,30 @@
+.sq {
+  width: 100px;
+  height: 100px;
+  background-color: #2191fb;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  background-color: #2191fb;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.red {
+  color: crimson;
+}
+
+.green {
+  color: darkgreen;
+}
