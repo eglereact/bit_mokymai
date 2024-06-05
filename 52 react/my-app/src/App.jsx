@@ -1,118 +1,102 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 import "./buttons.scss";
-import Fig from "./Components/003/Fig";
-import Fruit from "./Components/003/Fruit";
-
-const fruits = [
-  "apple",
-  "banana",
-  "cherry",
-  "date",
-  "elderberry",
-  "fig",
-  "grape",
-  "honeydew",
-  "kiwi",
-  "lemon",
-  "mango",
-  "nectarine",
-  "orange",
-  "pear",
-  "quince",
-  "raspberry",
-  "strawberry",
-  "tangerine",
-  "ugli",
-  "watermelon",
-];
-
-const fruits2 = [
-  { id: 1, name: "apple", color: "red" },
-  { id: 2, name: "banana", color: "yellow" },
-  { id: 3, name: "cherry", color: "red" },
-  { id: 4, name: "date", color: "brown" },
-  { id: 5, name: "elderberry", color: "black" },
-  { id: 6, name: "fig", color: "purple" },
-  { id: 7, name: "grape", color: "purple" },
-  { id: 8, name: "honeydew", color: "green" },
-  { id: 9, name: "kiwi", color: "brown" },
-  { id: 10, name: "lemon", color: "yellow" },
-  { id: 11, name: "mango", color: "orange" },
-  { id: 12, name: "nectarine", color: "orange" },
-  { id: 13, name: "orange", color: "orange" },
-  { id: 14, name: "pear", color: "green" },
-  { id: 15, name: "quince", color: "yellow" },
-  { id: 16, name: "kiwi", color: "brown" },
-  { id: 17, name: "cherry", color: "red" },
-];
-
+import randomColor from "./Functions/randColor";
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(100);
+  const [figure, setFigure] = useState("square");
+  const [sq, setSq] = useState([]);
 
-  const blueClick = () => {
-    console.log("blue clicked");
-    setCount((c) => c + 1);
+  const add1 = () => {
+    setCount((oldCount) => oldCount + 1);
   };
 
-  const redClick = (what) => {
-    console.log("red clicked", what);
+  const minus1 = () => {
+    setCount((oldCount) => oldCount - 1);
   };
-  const buttonClick = (e, v = "") => {
-    console.log("Button clicked", e.target.classList.value, v);
+
+  const reset = () => {
+    setCount(0);
   };
+
+  const big = () => {
+    setCount((oldCount) => oldCount * oldCount);
+  };
+
+  const changeFigure = () => {
+    setFigure((f) => (f === "square" ? "circle" : "square"));
+  };
+
+  const id = useRef(1);
+
+  const addSquare = () => {
+    setSq((a) => [...a, { id: id.current++, color: randomColor() }]);
+  };
+
+  const removeSquareEnd = () => {
+    setSq((a) => a.filter((s, i) => i !== a.length - 1));
+  };
+
+  const removeSquareFirst = () => {
+    setSq((a) => a.filter((s, i) => i !== 0));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>003</h1>
-        <h2>{count}</h2>
-        <button type="button" className="blue" onClick={blueClick}>
-          Click!
-        </button>
-        <button
-          type="button"
-          className="red"
-          onClick={() => redClick("ka tu?")}
+        <div
+          onClick={changeFigure}
+          style={{
+            cursor: "pointer",
+            width: "200px",
+            height: "200px",
+            transition: "all 0.5s",
+            backgroundColor: figure === "square" ? "skyblue" : "crimson",
+            borderRadius: figure === "square" ? null : "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          Click!
-        </button>
-        <button
-          type="button"
-          className="yellow"
-          onClick={(e) => buttonClick(e, "Valio")}
-        >
-          Click!
-        </button>
-        <button type="button" className="white" onClick={buttonClick}>
-          Click!
-        </button>
-        <button type="button" className="green" onClick={buttonClick}>
-          Click!
-        </button>
-        <ul>
-          {fruits2.map((f) =>
-            f.name !== "fig" ? (
-              <Fruit key={f.id} fruit={f} />
-            ) : (
-              <Fig key={f.id} fruit={f} />
-            )
-          )}
-        </ul>
-        <ul>
-          {fruits
-            .sort((a, b) => b.localeCompare(a))
-            .map((f, i) =>
-              i % 3 ? (
-                <li key={i} style={{ color: "skyblue" }}>
-                  {f}
-                </li>
-              ) : (
-                <li key={i} style={{ color: "crimson" }}>
-                  {f}
-                </li>
-              )
-            )}
-        </ul>
+          <h1>{count}</h1>
+        </div>
+        <div className="sq-bin">
+          {sq.map((s) => (
+            <div
+              className="sq"
+              key={s.id}
+              style={{
+                backgroundColor: s.color + "66",
+                borderColor: s.color,
+              }}
+            >
+              {s.id}
+            </div>
+          ))}
+        </div>
+        <div className="buttons">
+          <button type="button" className="green" onClick={add1}>
+            +1
+          </button>
+          <button type="button" className="white" onClick={reset}>
+            reset
+          </button>
+          <button type="button" className="red" onClick={minus1}>
+            -1
+          </button>
+          <button type="button" className="yellow" onClick={big}>
+            **
+          </button>
+          <button type="button" className="green" onClick={addSquare}>
+            Add
+          </button>
+          <button type="button" className="red" onClick={removeSquareEnd}>
+            Remove last
+          </button>
+          <button type="button" className="red" onClick={removeSquareFirst}>
+            Remove first
+          </button>
+        </div>
       </header>
     </div>
   );
