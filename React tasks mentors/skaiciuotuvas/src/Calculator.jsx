@@ -16,10 +16,40 @@ const Calculator = () => {
 
   const handleCalculate = () => {
     try {
-      setResult(eval(input));
+      const computedResult = evaluateExpression(input);
+      setResult(computedResult);
     } catch (e) {
       setResult("Error");
     }
+  };
+
+  const evaluateExpression = (expression) => {
+    const operators = expression.split(/[\d.]+/).filter(Boolean);
+    const numbers = expression.split(/[^.\d]+/).map(Number);
+
+    let index = 0;
+    let currentResult = numbers[index++];
+
+    operators.forEach((operator) => {
+      switch (operator) {
+        case "+":
+          currentResult += numbers[index++];
+          break;
+        case "-":
+          currentResult -= numbers[index++];
+          break;
+        case "*":
+          currentResult *= numbers[index++];
+          break;
+        case "/":
+          currentResult /= numbers[index++];
+          break;
+        default:
+          throw new Error("Invalid operator");
+      }
+    });
+
+    return currentResult;
   };
 
   const buttons = [
