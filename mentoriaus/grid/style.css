@@ -54,3 +54,31 @@
 .white {
   background-color: #f0d9b5;
 } */
+
+.container2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+.box {
+  /* width: 300px; */
+  height: 300px;
+  font-size: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.items1 {
+  background-color: tomato;
+}
+
+.items2 {
+  background-color: blueviolet;
+}
+
+.items3 {
+  background-color: skyblue;
+}
