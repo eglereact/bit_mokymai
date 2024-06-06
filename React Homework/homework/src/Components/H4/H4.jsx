@@ -27,6 +27,19 @@ const H4 = () => {
     setBirch((a) => a.filter((tree) => tree.id !== treeId));
     setAsh((a) => a.filter((tree) => tree.id !== treeId));
   };
+
+  const removeAllOaks = () => {
+    setOak([]);
+  };
+
+  const removeAllBirch = () => {
+    setBirch([]);
+  };
+
+  const removeAllAshs = () => {
+    setAsh([]);
+  };
+
   return (
     <div className="container">
       <div className="with-btn">
@@ -38,9 +51,14 @@ const H4 = () => {
             </div>
           ))}
         </div>
-        <button className="button-68" onClick={addOak}>
-          Ąžuolas
-        </button>
+        <div className="buttons">
+          <button type="button" className="button-68" onClick={addOak}>
+            Ąžuolas
+          </button>
+          <button type="button" className="button-68" onClick={removeAllOaks}>
+            Ištrinti viską
+          </button>
+        </div>
       </div>
 
       <div className="with-btn">
@@ -52,9 +70,14 @@ const H4 = () => {
             </div>
           ))}
         </div>
-        <button className="button-68" onClick={addBirch}>
-          Beržas
-        </button>
+        <div className="buttons">
+          <button type="button" className="button-68" onClick={addBirch}>
+            Beržas
+          </button>
+          <button type="button" className="button-68" onClick={removeAllBirch}>
+            Ištrinti viską
+          </button>
+        </div>
       </div>
       <div className="with-btn">
         <div className="treeLand">
@@ -65,9 +88,14 @@ const H4 = () => {
             </div>
           ))}
         </div>
-        <button type="button" className="button-68" onClick={addAsh}>
-          Uosis
-        </button>
+        <div className="buttons">
+          <button type="button" className="button-68" onClick={addAsh}>
+            Uosis
+          </button>
+          <button type="button" className="button-68" onClick={removeAllAshs}>
+            Ištrinti viską
+          </button>
+        </div>
       </div>
     </div>
   );
