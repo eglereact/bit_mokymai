@@ -1,0 +1,153 @@
+.container-animals {
+  background-color: rgb(250, 236, 221);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  font-family: monospace;
+}
+
+.animals-plots {
+  display: flex;
+  gap: 20px;
+}
+
+.animals-box {
+  width: 580px;
+  height: 500px;
+  background-color: #0a3b22;
+  border: 8px dashed #d2d2d2;
+  padding: 10px;
+}
+
+.top {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  height: auto;
+}
+
+.animal {
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}
+
+.sheep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 5px;
+  transition: all 0.3s;
+}
+
+.sheep span {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.sheep img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.sheep:hover {
+  transform: scale(1.05);
+}
+
+/* CSS */
+.button-28 {
+  width: 150px;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #0a3b22;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #0a3b22;
+  cursor: pointer;
+  display: inline-block;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.button-28:disabled {
+  pointer-events: none;
+}
+
+.button-28:hover {
+  color: #fff;
+  background-color: #0a3b22;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-28:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/* CSS */
+.button-30 {
+  align-items: center;
+  background-color: #412605;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #190b01 0 -3px 0 inset;
+  color: #eaeaea;
+  display: inline-flex;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  font-size: 18px;
+  width: 100px;
+}
+
+.left {
+  width: 10px;
+  height: 20px;
+  background-color: #190b01;
+}
+
+.right {
+  width: 10px;
+  height: 20px;
+  background-color: #190b01;
+}
+
+.legs {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+  margin-top: -10px;
+}
