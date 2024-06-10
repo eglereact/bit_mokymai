@@ -1,11 +1,6 @@
 import { useRef, useState } from "react";
 import "./reactstate-style.css";
-
-function rand(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+import rand from "../../Functions/rand";
 
 const ReactState = () => {
   const [figure, setFigure] = useState("circler");
