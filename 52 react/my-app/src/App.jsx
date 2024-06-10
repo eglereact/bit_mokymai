@@ -1,33 +1,39 @@
-import { useRef, useState } from "react";
-import randomColor from "./Functions/randColor";
+import { useEffect, useState } from "react";
 import "./App.css";
 import "./buttons.scss";
-import Buttons from "./Components/005/Buttons";
-import Counter from "./Components/005/Counter";
-import SquareButtons from "./Components/005/SquareButtons";
-import SquareBin from "./Components/005/SquareBin";
 
 function App() {
-  const [counter, setCounter] = useState(50);
-  const [sq, setSq] = useState([]);
-  const id = useRef(1);
-  const addSquare = () => {
-    setSq((a) => [...a, { id: id.current++, color: randomColor(), rotate: 0 }]);
+  const [counter, setCounter] = useState(0);
+  const [counter2, setCounter2] = useState(0);
+  console.log("Outside useEffect");
+  useEffect(() => {
+    console.log("Green");
+  }, [counter]);
+
+  useEffect(() => {
+    console.log("Yellow");
+  }, [counter2]);
+
+  const clickGreen = () => {
+    setCounter((c) => c + 1);
   };
 
-  const rotateSq = (id) => {
-    setSq((a) =>
-      a.map((s) => (s.id === id ? { ...s, rotate: s.rotate + 15 } : s))
-    );
+  const clickYellow = () => {
+    setCounter2((c) => c + 1);
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <Counter counter={counter} />
-        <Buttons setCounter={setCounter} />
-        <SquareBin sq={sq} rotateSq={rotateSq} />
-        <SquareButtons addSquare={addSquare} />
+        <h1>006</h1>
+        <div className="buttons">
+          <button type="button" className="green" onClick={clickGreen}>
+            {counter}
+          </button>
+          <button type="button" className="yellow" onClick={clickYellow}>
+            {counter2}
+          </button>
+        </div>
       </header>
     </div>
   );
