@@ -1,93 +1,148 @@
-import { useCallback, useEffect, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./App.css";
 import "./buttons.scss";
-import Square from "./Components/007/Square";
-import rand from "./Functions/rand";
 
 function App() {
-  const [countLetter, setCountLetter] = useState(0);
-  const [letters, setLetters] = useState("");
-  // const [sq, setSq] = useState(() =>
-  //   JSON.parse(localStorage.getItem("square") ?? [])
-  // );
-  const [sq, setSq] = useState(null);
-  const makeLetters = useCallback(
-    () => () => {
-      if (countLetter <= 5) {
-        setLetters("A".repeat(countLetter));
-      } else {
-        setLetters("B".repeat(countLetter));
-      }
-    },
-    [countLetter]
-  );
+  const [text1, setText1] = useState("");
+  const [error, setError] = useState(false);
 
-  const doCount = () => {
-    setCountLetter((c) => c + 1);
-  };
+  const [texts, setTexts] = useState({ textA: "", textB: "", textC: "" });
+  const [color, setColor] = useState("#282c34");
+  const [range, setRange] = useState(30);
+  const [select, setSelect] = useState(3);
 
-  // const destroySq = (id) => {
-  //   setSq((s) => {
-  //     const newSq = s.filter((sq) => sq.id !== id);
-  //     localStorage.setItem("square", JSON.stringify(newSq));
-  //     return newSq;
-  //   });
-  // };
+  const text2 = useRef();
 
-  const destroySq = (id) => {
-    setSq((s) => s.filter((sq) => sq.id !== id));
-  };
+  const animals = [
+    { id: 1, name: "fox" },
+    { id: 2, name: "cat" },
+    { id: 3, name: "dog" },
+    { id: 4, name: "mouse" },
+    { id: 5, name: "bear" },
+    { id: 6, name: "wolf" },
+  ];
 
   useEffect(() => {
-    makeLetters();
-  }, [countLetter, makeLetters]);
-
-  // const makeSq = () => {
-  //   setSq((s) => {
-  //     const newSq = [{ id: rand(1000000, 9999999) }, ...s];
-  //     localStorage.setItem("square", JSON.stringify(newSq));
-  //     return newSq;
-  //   });
-  // };
-
-  const makeSq = () => {
-    setSq((s) => [{ id: rand(1000000, 9999999) }, ...s]);
-  };
-
-  useEffect(() => {
-    setSq(JSON.parse(localStorage.getItem("sq") ?? "[]"));
+    text2.current.focus();
   }, []);
 
-  useEffect(() => {
-    if (sq === null) {
+  const handleText1 = (e) => {
+    //basic validation
+    if (e.target.value.length > 10) {
+      setError(true);
       return;
+    } else {
+      setError(false);
     }
-    localStorage.setItem("sq", JSON.stringify(sq));
-  }, [sq]);
+    setText1(e.target.value);
+  };
+
+  //niekam tikęs būdas skaityti inputus
+  const readRed = () => {
+    // const el = document.querySelector("#text2"); niekad nerašti
+    console.log("text2", text2.current.value);
+  };
+
+  const handleTexts = (e) => {
+    setTexts((t) => ({ ...t, [e.target.name]: e.target.value }));
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="sq-bin">
-          {sq !== null ? (
-            sq.length ? (
-              sq.map((s) => <Square key={s.id} {...s} destroySq={destroySq} />)
-            ) : (
-              <div>No squares</div>
-            )
-          ) : (
-            <div>Loading...</div>
-          )}
-        </div>
-        <h1>{letters}</h1>
-        <div className="buttons">
-          <button className="green" type="button" onClick={doCount}>
-            {countLetter}
+      <header className="App-header" style={{ backgroundColor: color }}>
+        <h1 style={{ fontSize: range + "px" }}>008 - Controlled Inputs</h1>
+
+        <fieldset>
+          <legend>{text1}</legend>
+          <input
+            type="text"
+            value={text1}
+            onChange={handleText1}
+            style={{ backgroundColor: error ? "crimson" : null }}
+          />
+          <input type="text" ref={text2} />
+
+          <button
+            type="button"
+            className="blue"
+            onClick={() => console.log("text1 ", text1)}
+          >
+            Read 1
           </button>
-          <button className="yellow" type="button" onClick={makeSq}>
-            Add []
+          <button type="button" className="red" onClick={readRed}>
+            Read 1
           </button>
-        </div>
+        </fieldset>
+        {/* ----------------------------- */}
+        <fieldset>
+          <legend>More text</legend>
+          <input
+            type="text"
+            value={texts.textA}
+            name="textA"
+            onChange={handleTexts}
+          />
+          <input
+            type="text"
+            value={texts.textB}
+            name="textB"
+            onChange={handleTexts}
+          />
+          <input
+            type="text"
+            value={texts.textC}
+            name="textC"
+            onChange={handleTexts}
+          />
+
+          <button
+            type="button"
+            className="blue"
+            onClick={() => console.log("texts ", texts)}
+          >
+            Read all
+          </button>
+        </fieldset>
+
+        <fieldset>
+          <legend>Color and range</legend>
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+          <input
+            type="range"
+            min={20}
+            max={60}
+            value={range}
+            onChange={(e) => setRange(+e.target.value)}
+          />
+        </fieldset>
+
+        <fieldset>
+          <legend>select</legend>
+          <select value={select} onChange={(e) => setSelect(+e.target.value)}>
+            {animals.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            className="blue"
+            onClick={() =>
+              console.log(
+                "animal ",
+                select,
+                animals.find((a) => a.id === select).name
+              )
+            }
+          >
+            what?
+          </button>
+        </fieldset>
       </header>
     </div>
   );
