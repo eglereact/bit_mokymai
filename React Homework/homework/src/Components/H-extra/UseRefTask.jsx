@@ -6,77 +6,73 @@ const UseRefTask = () => {
     const savedSquares = localStorage.getItem("squares");
     return savedSquares ? JSON.parse(savedSquares) : [];
   });
-  const [history, setHistory] = useState([]);
-  const id = useRef(1);
-  const [step, setStep] = useState(0);
+
+  const historyRef = useRef([]);
+  const stepRef = useRef(0);
 
   useEffect(() => {
     localStorage.setItem("squares", JSON.stringify(squares));
   }, [squares]);
 
-  const addSquare = () => {
+  const addSquares = () => {
     const numberOfSquares = rand(5, 10);
-    const newSquares = [];
-    for (let i = 0; i < numberOfSquares; i++) {
-      newSquares.push({ id: id.current++ });
-    }
-    const newHistory = [...history, squares];
-    setHistory(newHistory);
-    setStep(newHistory.length);
+    const newSquares = Array.from({ length: numberOfSquares }, () => ({
+      id: rand(1000000, 9999999),
+    }));
+    historyRef.current = [...historyRef.current, squares];
+
+    stepRef.current = historyRef.current.length;
+
     setSquares((s) => [...s, ...newSquares]);
   };
 
-  const removeAll = () => {
-    const newHistory = [...history, squares];
-    setHistory(newHistory);
-    setStep(newHistory.length);
+  useEffect(() => {
+    console.log("stepRef.current", stepRef.current);
+    console.log("historyRef.current.length", historyRef.current.length);
+    console.log("----------------");
+    console.log("historyRef.current", historyRef.current);
+    console.log("[...historyRef.current, squares]", [
+      ...historyRef.current,
+      squares,
+    ]);
+  });
+
+  const clearSquares = () => {
+    historyRef.current = [...historyRef.current, squares];
+    stepRef.current = historyRef.current.length;
     setSquares([]);
   };
 
-  const back = () => {
-    if (step > 0) {
-      const newStep = step - 1;
-      setSquares(history[newStep]);
-      setStep(newStep);
-      setHistory(history.slice(0, newStep));
+  const undo = () => {
+    if (stepRef.current > 0) {
+      setSquares(historyRef.current[--stepRef.current]);
+      historyRef.current.length = stepRef.current;
     }
   };
 
-  const handleStepChange = (event) => {
-    const selectedStep = parseInt(event.target.value, 10);
-    setSquares(history[selectedStep]);
-    setStep(selectedStep);
-  };
-
   return (
-    <div className="r-container">
-      <div className="five-container">
-        {squares.map((s) => (
-          <div key={s.id} className="blue-sq"></div>
+    <div className="containerRef">
+      <div className="squares-container">
+        {squares.map((square) => (
+          <div key={square.id} className="square p-2">
+            <p>{square.id}</p>
+          </div>
         ))}
       </div>
       <div className="buttons">
-        <button type="button" className="add" onClick={addSquare}>
+        <button onClick={addSquares} className="greenR">
           Pridėti
         </button>
-        <button type="button" className="add" onClick={removeAll}>
+        <button onClick={clearSquares} className="redR">
           Išvalyti
         </button>
         <button
-          type="button"
-          className="add"
-          onClick={back}
-          disabled={step === 0}
+          onClick={undo}
+          disabled={stepRef.current === 0}
+          className="backR p-3 bg-gray-800 text-white font-bold rounded-md  hover:bg-gray-900"
         >
           Atgal
         </button>
-        <select value={step} onChange={handleStepChange}>
-          {history.map((_, index) => (
-            <option key={index} value={index}>
-              {index + 1} žingsnis
-            </option>
-          ))}
-        </select>
       </div>
     </div>
   );
