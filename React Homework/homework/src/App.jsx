@@ -8,6 +8,7 @@ import H4 from "./Components/H4/H4";
 import H4B from "./Components/H4/H4B";
 import H4C from "./Components/H4/H4C";
 import H5 from "./Components/H5/H5";
+import H6 from "./Components/H6/H6";
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
       {/* <H4C /> */}
       {/* <H5 /> */}
       {/* <ReactState /> */}
-      <UseRefTask />
+      {/* <UseRefTask /> */}
+      <H6 />
     </>
   );
 }
