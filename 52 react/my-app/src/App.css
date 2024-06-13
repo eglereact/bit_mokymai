@@ -71,3 +71,50 @@ select {
 select {
   border: 2px solid black;
 }
+
+.cb-svg svg {
+  fill: white;
+  width: 30px;
+  height: 30px;
+}
+
+span.cb {
+  line-height: 30px;
+  font-size: 30px;
+  padding-right: 10px;
+  display: flex;
+}
+div.cb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.cb label {
+  display: flex;
+  padding: 3px 0;
+  cursor: pointer;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: none;
+}
+
+.up-img {
+  height: 200px;
+  width: auto;
+  position: relative;
+}
+
+.up-img .remove {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.up-img img {
+  height: 200px;
+  width: auto;
+}

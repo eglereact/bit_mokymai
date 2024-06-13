@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import getRandomImage from "../../Functions/randImg";
 import imageUrls from "../../Data/data";
 import Cat from "./Cat";
+import rand from "../../Functions/rand";
 
 const H6 = () => {
   const [cats, setCats] = useState(() => {
@@ -9,7 +10,6 @@ const H6 = () => {
     return savedCats ? JSON.parse(savedCats) : [];
   });
   const [cat, setCat] = useState({ name: "", weight: "" });
-  const id = useRef(1);
 
   useEffect(() => {
     localStorage.setItem("cats", JSON.stringify(cats));
@@ -20,7 +20,7 @@ const H6 = () => {
     setCat((prevCat) => ({
       ...prevCat,
       [name]: value,
-      id: id.current++,
+      id: "K" + rand(10000, 99999),
       img: getRandomImage(imageUrls),
     }));
   };
@@ -47,7 +47,11 @@ const H6 = () => {
     <div className="flex justify-center items-center h-screen bg-slate-500 flex-col">
       <div>
         <h1 className="text-4xl font-bold text-white">
-          All weight : {cats.reduce((a, c) => a + parseFloat(c.weight), 0)}
+          All weight :{" "}
+          <span className="text-slate-900 bg-white rounded-3xl px-2 py-1">
+            {cats.reduce((a, c) => a + parseFloat(c.weight), 0)}
+          </span>{" "}
+          kg
         </h1>
       </div>
       <div className="flex  w-5/6  justify-center ">
