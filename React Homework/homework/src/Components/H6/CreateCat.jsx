@@ -7,7 +7,7 @@ const CreateCat = ({ show, close, cat, handleChange, handleSubmit }) => {
   }
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="modal w-1/3">
         <div className="flex text-slate-900 justify-between items-center  mb-8">
           <h3 className="capitalize font-bold  text-2xl">create new cat</h3>
           <div
