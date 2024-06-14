@@ -93,7 +93,7 @@ const H6 = () => {
   console.log(cats);
 
   return (
-    <div className="flex justify-center items-center  bg-slate-500 flex-col">
+    <div className="flex justify-center items-center h-[100vh] bg-slate-500 flex-col">
       <div>
         <h1 className="text-4xl font-bold text-white">
           All weight :{" "}
