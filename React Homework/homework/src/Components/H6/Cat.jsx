@@ -3,25 +3,35 @@ import Modal from "./Modal";
 import ModalMore from "./ModalMore";
 import ModalEdit from "./ModalEdit";
 
-const Cat = ({ id, name, weight, img, removeCat, updateCat }) => {
+const Cat = ({ cat, removeCat, updateCat }) => {
+  const { id, name, weight, img, gender } = cat;
   const [modal, setModal] = useState(false);
   const [modalMore, setModalMore] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const toggleModal = () => setModal((prev) => !prev);
   const toggleModalMore = () => setModalMore((prev) => !prev);
   const toggleModalEdit = () => setModalEdit((prev) => !prev);
-  const [tempValues, setTempValues] = useState({ name, weight });
+  const [tempValues, setTempValues] = useState({ name, weight, gender });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTempValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
+    const { name, value, type, id } = e.target;
+
+    setTempValues((prevValues) => {
+      if (type === "checkbox" && (name === "f" || name === "m")) {
+        return {
+          ...prevValues,
+          gender: id,
+        };
+      }
+      return {
+        ...prevValues,
+        [name]: value,
+      };
+    });
   };
 
   const handleSave = () => {
-    updateCat(id, tempValues.name, tempValues.weight);
+    updateCat(id, tempValues.name, tempValues.weight, tempValues.gender);
     toggleModalEdit();
   };
 
@@ -32,6 +42,7 @@ const Cat = ({ id, name, weight, img, removeCat, updateCat }) => {
       </div>
       <div className="w-1/2">
         <div>
+          <p>Gender {gender || "n/a"}</p>
           <h1 className="font-bold capitalize">{name}</h1>
           <h2>
             <span className="font-bold">{weight}</span> kg
@@ -48,8 +59,7 @@ const Cat = ({ id, name, weight, img, removeCat, updateCat }) => {
           <Modal
             show={modal}
             removeCat={removeCat}
-            id={id}
-            name={name}
+            cat={cat}
             close={toggleModal}
           />
           <button
@@ -63,12 +73,10 @@ const Cat = ({ id, name, weight, img, removeCat, updateCat }) => {
             <ModalEdit
               show={modalEdit}
               close={toggleModalEdit}
-              id={id}
-              name={name}
-              weight={weight}
               handleChange={handleChange}
               handleSave={handleSave}
               tempValues={tempValues}
+              cat={cat}
             />
           )}
           <button
@@ -78,13 +86,7 @@ const Cat = ({ id, name, weight, img, removeCat, updateCat }) => {
           >
             More
           </button>
-          <ModalMore
-            show={modalMore}
-            close={toggleModalMore}
-            id={id}
-            name={name}
-            weight={weight}
-          />
+          <ModalMore show={modalMore} close={toggleModalMore} cat={cat} />
         </div>
       </div>
     </div>

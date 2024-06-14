@@ -1,8 +1,8 @@
-const Modal = ({ show, removeCat, id, name, close }) => {
+const Modal = ({ show, removeCat, cat, close }) => {
   if (!show) {
     return null;
   }
-
+  const { id, name } = cat;
   return (
     <div className="modal-backdrop">
       <div className="modal">

@@ -1,12 +1,10 @@
 const ModalEdit = ({
   show,
-  removeCat,
-  id,
-  name,
   close,
   tempValues,
   handleChange,
   handleSave,
+  cat,
 }) => {
   if (!show) {
     return null;
@@ -15,7 +13,7 @@ const ModalEdit = ({
   return (
     <div className="modal-backdrop">
       <div className="modal">
-        <div>
+        <div className="flex flex-col">
           <input
             type="text"
             name="name"
@@ -30,20 +28,45 @@ const ModalEdit = ({
             onChange={handleChange}
             className="mb-2"
           />
-          <button
-            type="button"
-            className="bg-green-600 w-16"
-            onClick={handleSave}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className="bg-gray-600 w-16"
-            onClick={() => close()}
-          >
-            Cancel
-          </button>
+          <fieldset>
+            <legend>Gender</legend>
+            <div className="cb">
+              <input
+                type="checkbox"
+                name="f"
+                id="f"
+                checked={tempValues.gender === "f"}
+                onChange={handleChange}
+              />{" "}
+              <span className="cb">Female</span>
+            </div>
+            <div className="cb">
+              <input
+                type="checkbox"
+                name="m"
+                id="m"
+                checked={tempValues.gender === "m"}
+                onChange={handleChange}
+              />{" "}
+              <span className="cb">Male</span>
+            </div>
+          </fieldset>
+          <div className="flex">
+            <button
+              type="button"
+              className="bg-green-600 w-16"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="bg-gray-600 w-16"
+              onClick={() => close()}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

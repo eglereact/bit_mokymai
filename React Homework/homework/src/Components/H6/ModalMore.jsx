@@ -1,8 +1,8 @@
-const ModalMore = ({ show, removeCat, id, name, close, weight }) => {
+const ModalMore = ({ show, cat, close }) => {
   if (!show) {
     return null;
   }
-
+  const { id, name, weight, img, gender } = cat;
   return (
     <div className="modal-backdrop">
       <div className="modal">
@@ -15,6 +15,8 @@ const ModalMore = ({ show, removeCat, id, name, close, weight }) => {
         <h1>{id}</h1>
         <h1>{name}</h1>
         <h1>{weight}</h1>
+        <h1>{gender === "f" ? "Female" : "Male"}</h1>
+        <img src={img} alt={name} className="w-20 h-14" />
         <button onClick={() => close()}>Cancel</button>
       </div>
     </div>

@@ -9,15 +9,16 @@ const H6 = () => {
     const savedCats = localStorage.getItem("cats");
     return savedCats ? JSON.parse(savedCats) : [];
   });
-  const [cat, setCat] = useState({ name: "", weight: "" });
+  const [cat, setCat] = useState({ name: "", weight: "", gender: "f" });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, id } = e.target;
     setCat((prevCat) => ({
       ...prevCat,
       [name]: value,
       id: "K" + rand(10000, 99999),
       img: getRandomImage(imageUrls),
+      gender: id,
     }));
   };
 
@@ -47,9 +48,11 @@ const H6 = () => {
     localStorage.setItem("cats", JSON.stringify(cats));
   }, [cats]);
 
-  const updateCat = (id, newName, newWeight) => {
+  const updateCat = (id, newName, newWeight, newGender) => {
     const updatedCats = cats.map((cat) =>
-      cat.id === id ? { ...cat, name: newName, weight: newWeight } : cat
+      cat.id === id
+        ? { ...cat, name: newName, weight: newWeight, gender: newGender }
+        : cat
     );
     setCats(updatedCats);
     localStorage.setItem("cats", JSON.stringify(updatedCats));
@@ -67,6 +70,7 @@ const H6 = () => {
           </span>{" "}
           kg
         </h1>
+        <h1>There are {cats.length} cats.</h1>
       </div>
       <div className="flex  w-5/6  justify-center ">
         <div className="flex gap-2 flex-wrap m-4 p-7">
@@ -75,7 +79,7 @@ const H6 = () => {
             .map((c) => (
               <Cat
                 key={c.id}
-                {...c}
+                cat={c}
                 removeCat={removeCat}
                 updateCat={updateCat}
               />
@@ -99,6 +103,37 @@ const H6 = () => {
           className="outline-none border-none p-2  w-full rounded-lg"
           onChange={handleChange}
         />
+        <div>
+          <fieldset>
+            <legend>Gender</legend>
+            <div className="cb">
+              <input
+                type="checkbox"
+                name="f"
+                id="f"
+                checked={cat.gender === "f"}
+                onChange={handleChange}
+              />{" "}
+              <span className="cb">Female</span>
+              {/* <label className="cb-svg" htmlFor="rA">
+                {cat.gender === "f" ? rbc : rbu}
+              </label> */}
+            </div>
+            <div className="cb">
+              <input
+                type="checkbox"
+                name="m"
+                id="m"
+                checked={cat.gender === "m"}
+                onChange={handleChange}
+              />{" "}
+              <span className="cb">Male</span>
+              {/* <label className="cb-svg" htmlFor="rB">
+                {cat.gender === "m" ? rbc : rbu}
+              </label> */}
+            </div>
+          </fieldset>
+        </div>
         <button
           type="submit"
           className="bg-slate-900 w-full rounded-lg p-2 hover:bg-slate-950 transition-all text-white"
