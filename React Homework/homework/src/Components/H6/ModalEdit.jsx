@@ -1,11 +1,4 @@
-const ModalEdit = ({
-  show,
-  close,
-  tempValues,
-  handleChange,
-  handleSave,
-  cat,
-}) => {
+const ModalEdit = ({ show, close, tempValues, handleChange, handleSave }) => {
   if (!show) {
     return null;
   }
@@ -29,26 +22,26 @@ const ModalEdit = ({
             className="mb-2"
           />
           <fieldset>
-            <legend>Gender</legend>
+            <legend>available</legend>
             <div className="cb">
               <input
                 type="checkbox"
-                name="gender"
-                id="f"
-                checked={tempValues.gender === "f"}
+                name="available"
+                id="y"
+                checked={tempValues.available === "y"}
                 onChange={handleChange}
               />{" "}
-              <span className="cb">Female</span>
+              <span className="cb">available</span>
             </div>
             <div className="cb">
               <input
                 type="checkbox"
-                name="gender"
-                id="m"
-                checked={tempValues.gender === "m"}
+                name="available"
+                id="n"
+                checked={tempValues.available === "n"}
                 onChange={handleChange}
               />{" "}
-              <span className="cb">Male</span>
+              <span className="cb">Adopted</span>
             </div>
           </fieldset>
           <div className="mb-2">
@@ -62,6 +55,7 @@ const ModalEdit = ({
               <option value="white">White</option>
               <option value="orange">Orange</option>
               <option value="gray">Gray</option>
+              <option value="tortoiseshell">tortoiseshell</option>
             </select>
           </div>
           <div className="flex">

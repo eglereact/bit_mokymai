@@ -3,6 +3,8 @@ import getRandomImage from "../../Functions/randImg";
 import imageUrls from "../../Data/data";
 import Cat from "./Cat";
 import rand from "../../Functions/rand";
+import CreateCat from "./CreateCat";
+import { TbCat } from "react-icons/tb";
 
 const H6 = () => {
   const [cats, setCats] = useState(() => {
@@ -12,20 +14,21 @@ const H6 = () => {
   const [cat, setCat] = useState({
     name: "",
     weight: "",
-    gender: "f",
+    available: "y",
     color: "black",
   });
 
-  const colors = ["black", "white", "grey", "orange"];
+  const [modalCreate, setModalCreate] = useState(false);
+  const toggleModalCreate = () => setModalCreate((prev) => !prev);
 
   const handleChange = (e) => {
     const { name, value, id, type } = e.target;
 
     if (type === "checkbox") {
-      // Handle gender change
+      // Handle available change
       setCat((prevCat) => ({
         ...prevCat,
-        gender: id,
+        available: id,
       }));
     } else if (type === "select-one") {
       // Handle color change
@@ -58,6 +61,7 @@ const H6 = () => {
     }
     setCats((prevCats) => [...prevCats, cat]);
     setCat({ name: "", weight: "" });
+    toggleModalCreate();
   };
 
   const removeCat = (id) => {
@@ -70,14 +74,14 @@ const H6 = () => {
     localStorage.setItem("cats", JSON.stringify(cats));
   }, [cats]);
 
-  const updateCat = (id, newName, newWeight, newGender, newColor) => {
+  const updateCat = (id, newName, newWeight, newAvailable, newColor) => {
     const updatedCats = cats.map((cat) =>
       cat.id === id
         ? {
             ...cat,
             name: newName,
             weight: newWeight,
-            gender: newGender,
+            available: newAvailable,
             color: newColor,
           }
         : cat
@@ -89,7 +93,7 @@ const H6 = () => {
   console.log(cats);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-slate-500 flex-col">
+    <div className="flex justify-center items-center  bg-slate-500 flex-col">
       <div>
         <h1 className="text-4xl font-bold text-white">
           All weight :{" "}
@@ -99,6 +103,23 @@ const H6 = () => {
           kg
         </h1>
         <h1>There are {cats.length} cats.</h1>
+      </div>
+      <div>
+        <button
+          title="Create new cat"
+          type="button"
+          className="bg-slate-900 rounded-full text-white p-5 flex justify-center items-center w-20 h-20 hover:bg-white hover:text-slate-900 fixed top-4 left-4"
+          onClick={toggleModalCreate}
+        >
+          <TbCat fontSize={50} />
+        </button>
+        <CreateCat
+          show={modalCreate}
+          close={toggleModalCreate}
+          cat={cat}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
       </div>
       <div className="flex  w-5/6  justify-center ">
         <div className="flex gap-2 flex-wrap m-4 p-7">
@@ -113,72 +134,6 @@ const H6 = () => {
               />
             ))}
         </div>
-      </div>
-      <div className="flex flex-col w-[300px] gap-3">
-        <input
-          type="text"
-          placeholder="Enter name"
-          name="name"
-          value={cat.name}
-          className="outline-none border-none p-2  w-full rounded-lg"
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="Enter weight"
-          name="weight"
-          value={cat.weight}
-          className="outline-none border-none p-2  w-full rounded-lg"
-          onChange={handleChange}
-        />
-        <div>
-          <fieldset>
-            <legend>Gender</legend>
-            <div className="cb">
-              <input
-                type="checkbox"
-                name="gender"
-                id="f"
-                checked={cat.gender === "f"}
-                onChange={handleChange}
-              />{" "}
-              <span className="cb">Female</span>
-              {/* <label className="cb-svg" htmlFor="rA">
-                {cat.gender === "f" ? rbc : rbu}
-              </label> */}
-            </div>
-            <div className="cb">
-              <input
-                type="checkbox"
-                name="gender"
-                id="m"
-                checked={cat.gender === "m"}
-                onChange={handleChange}
-              />{" "}
-              <span className="cb">Male</span>
-              {/* <label className="cb-svg" htmlFor="rB">
-                {cat.gender === "m" ? rbc : rbu}
-              </label> */}
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>select</legend>
-            <select value={cat.color} onChange={handleChange}>
-              {colors.map((a, i) => (
-                <option key={i} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-          </fieldset>
-        </div>
-        <button
-          type="submit"
-          className="bg-slate-900 w-full rounded-lg p-2 hover:bg-slate-950 transition-all text-white"
-          onClick={handleSubmit}
-        >
-          Create
-        </button>
       </div>
     </div>
   );
