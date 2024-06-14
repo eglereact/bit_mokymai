@@ -11,10 +11,6 @@ const H6 = () => {
   });
   const [cat, setCat] = useState({ name: "", weight: "" });
 
-  useEffect(() => {
-    localStorage.setItem("cats", JSON.stringify(cats));
-  }, [cats]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCat((prevCat) => ({
@@ -41,6 +37,24 @@ const H6 = () => {
     setCat({ name: "", weight: "" });
   };
 
+  const removeCat = (id) => {
+    const catRemoved = cats.filter((c) => c.id !== id);
+    setCats(catRemoved);
+    localStorage.setItem("cats", JSON.stringify(catRemoved));
+  };
+
+  useEffect(() => {
+    localStorage.setItem("cats", JSON.stringify(cats));
+  }, [cats]);
+
+  const updateCat = (id, newName, newWeight) => {
+    const updatedCats = cats.map((cat) =>
+      cat.id === id ? { ...cat, name: newName, weight: newWeight } : cat
+    );
+    setCats(updatedCats);
+    localStorage.setItem("cats", JSON.stringify(updatedCats));
+  };
+
   console.log(cats);
 
   return (
@@ -59,7 +73,12 @@ const H6 = () => {
           {cats
             .sort((a, b) => parseFloat(b.weight) - parseFloat(a.weight))
             .map((c) => (
-              <Cat key={c.id} {...c} />
+              <Cat
+                key={c.id}
+                {...c}
+                removeCat={removeCat}
+                updateCat={updateCat}
+              />
             ))}
         </div>
       </div>
