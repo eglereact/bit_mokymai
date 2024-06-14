@@ -9,17 +9,39 @@ const H6 = () => {
     const savedCats = localStorage.getItem("cats");
     return savedCats ? JSON.parse(savedCats) : [];
   });
-  const [cat, setCat] = useState({ name: "", weight: "", gender: "f" });
+  const [cat, setCat] = useState({
+    name: "",
+    weight: "",
+    gender: "f",
+    color: "black",
+  });
+
+  const colors = ["black", "white", "grey", "orange"];
 
   const handleChange = (e) => {
-    const { name, value, id } = e.target;
-    setCat((prevCat) => ({
-      ...prevCat,
-      [name]: value,
-      id: "K" + rand(10000, 99999),
-      img: getRandomImage(imageUrls),
-      gender: id,
-    }));
+    const { name, value, id, type } = e.target;
+
+    if (type === "checkbox") {
+      // Handle gender change
+      setCat((prevCat) => ({
+        ...prevCat,
+        gender: id,
+      }));
+    } else if (type === "select-one") {
+      // Handle color change
+      setCat((prevCat) => ({
+        ...prevCat,
+        color: value,
+      }));
+    } else {
+      // Handle text inputs for name and weight
+      setCat((prevCat) => ({
+        ...prevCat,
+        [name]: value,
+        id: "K" + rand(10000, 99999),
+        img: getRandomImage(imageUrls),
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -48,10 +70,16 @@ const H6 = () => {
     localStorage.setItem("cats", JSON.stringify(cats));
   }, [cats]);
 
-  const updateCat = (id, newName, newWeight, newGender) => {
+  const updateCat = (id, newName, newWeight, newGender, newColor) => {
     const updatedCats = cats.map((cat) =>
       cat.id === id
-        ? { ...cat, name: newName, weight: newWeight, gender: newGender }
+        ? {
+            ...cat,
+            name: newName,
+            weight: newWeight,
+            gender: newGender,
+            color: newColor,
+          }
         : cat
     );
     setCats(updatedCats);
@@ -109,7 +137,7 @@ const H6 = () => {
             <div className="cb">
               <input
                 type="checkbox"
-                name="f"
+                name="gender"
                 id="f"
                 checked={cat.gender === "f"}
                 onChange={handleChange}
@@ -122,7 +150,7 @@ const H6 = () => {
             <div className="cb">
               <input
                 type="checkbox"
-                name="m"
+                name="gender"
                 id="m"
                 checked={cat.gender === "m"}
                 onChange={handleChange}
@@ -132,6 +160,16 @@ const H6 = () => {
                 {cat.gender === "m" ? rbc : rbu}
               </label> */}
             </div>
+          </fieldset>
+          <fieldset>
+            <legend>select</legend>
+            <select value={cat.color} onChange={handleChange}>
+              {colors.map((a, i) => (
+                <option key={i} value={a}>
+                  {a}
+                </option>
+              ))}
+            </select>
           </fieldset>
         </div>
         <button

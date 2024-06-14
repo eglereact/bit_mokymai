@@ -33,7 +33,7 @@ const ModalEdit = ({
             <div className="cb">
               <input
                 type="checkbox"
-                name="f"
+                name="gender"
                 id="f"
                 checked={tempValues.gender === "f"}
                 onChange={handleChange}
@@ -43,7 +43,7 @@ const ModalEdit = ({
             <div className="cb">
               <input
                 type="checkbox"
-                name="m"
+                name="gender"
                 id="m"
                 checked={tempValues.gender === "m"}
                 onChange={handleChange}
@@ -51,6 +51,19 @@ const ModalEdit = ({
               <span className="cb">Male</span>
             </div>
           </fieldset>
+          <div className="mb-2">
+            <label htmlFor="color">Color:</label>
+            <select
+              name="color"
+              value={tempValues.color}
+              onChange={handleChange}
+            >
+              <option value="black">Black</option>
+              <option value="white">White</option>
+              <option value="orange">Orange</option>
+              <option value="gray">Gray</option>
+            </select>
+          </div>
           <div className="flex">
             <button
               type="button"

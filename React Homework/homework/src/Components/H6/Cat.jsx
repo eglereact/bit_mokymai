@@ -4,45 +4,64 @@ import ModalMore from "./ModalMore";
 import ModalEdit from "./ModalEdit";
 
 const Cat = ({ cat, removeCat, updateCat }) => {
-  const { id, name, weight, img, gender } = cat;
+  const { id, name, weight, img, gender, color } = cat;
   const [modal, setModal] = useState(false);
   const [modalMore, setModalMore] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const toggleModal = () => setModal((prev) => !prev);
   const toggleModalMore = () => setModalMore((prev) => !prev);
   const toggleModalEdit = () => setModalEdit((prev) => !prev);
-  const [tempValues, setTempValues] = useState({ name, weight, gender });
+  const [tempValues, setTempValues] = useState({ name, weight, gender, color });
 
   const handleChange = (e) => {
     const { name, value, type, id } = e.target;
 
     setTempValues((prevValues) => {
-      if (type === "checkbox" && (name === "f" || name === "m")) {
+      if (type === "checkbox") {
+        // Handle checkboxes for gender
+        if (name === "gender") {
+          return {
+            ...prevValues,
+            gender: id,
+          };
+        }
+      } else if (type === "select-one") {
+        // Handle select dropdown for color
         return {
           ...prevValues,
-          gender: id,
+          color: value,
+        };
+      } else {
+        // Handle text inputs
+        return {
+          ...prevValues,
+          [name]: value,
         };
       }
-      return {
-        ...prevValues,
-        [name]: value,
-      };
     });
   };
 
   const handleSave = () => {
-    updateCat(id, tempValues.name, tempValues.weight, tempValues.gender);
+    updateCat(
+      id,
+      tempValues.name,
+      tempValues.weight,
+      tempValues.gender,
+      tempValues.color
+    );
     toggleModalEdit();
   };
 
   return (
-    <div className="flex w-52  h-40 bg-white justify-between items-center p-4 text-slate-800 rounded-lg shadow-lg ">
+    <div className="flex w-64  h-52 bg-white justify-between items-center p-4 text-slate-800 rounded-lg shadow-lg ">
       <div className="w-1/2">
         <img src={img} alt={name} className="w-16 h-12" />
       </div>
       <div className="w-1/2">
         <div>
-          <p>Gender {gender || "n/a"}</p>
+          <p>
+            Gender {gender || "n/a"} color: {color || "n/a"}
+          </p>
           <h1 className="font-bold capitalize">{name}</h1>
           <h2>
             <span className="font-bold">{weight}</span> kg
