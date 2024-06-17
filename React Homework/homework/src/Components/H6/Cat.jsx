@@ -2,12 +2,12 @@ import { useState } from "react";
 import Modal from "./Modal";
 import ModalMore from "./ModalMore";
 import ModalEdit from "./ModalEdit";
-import { CiCircleMore } from "react-icons/ci";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
-import { RiEditCircleLine } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
+import { IoInformation } from "react-icons/io5";
 
-const Cat = ({ cat, removeCat, updateCat }) => {
-  const { id, name, weight, img, available, color } = cat;
+const Cat = ({ cat, removeCat, updateCat, images }) => {
+  const { id, name, weight, image, available, color } = cat;
   const [modal, setModal] = useState(false);
   const [modalMore, setModalMore] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -19,6 +19,7 @@ const Cat = ({ cat, removeCat, updateCat }) => {
     weight,
     available,
     color,
+    image,
   });
 
   const handleChange = (e) => {
@@ -49,13 +50,22 @@ const Cat = ({ cat, removeCat, updateCat }) => {
     });
   };
 
+  const handleImageChange = (e) => {
+    const { id } = e.target;
+    setTempValues((prevValues) => ({
+      ...prevValues,
+      image: id,
+    }));
+  };
+
   const handleSave = () => {
     updateCat(
       id,
       tempValues.name,
       tempValues.weight,
       tempValues.available,
-      tempValues.color
+      tempValues.color,
+      tempValues.image
     );
     toggleModalEdit();
   };
@@ -65,11 +75,11 @@ const Cat = ({ cat, removeCat, updateCat }) => {
       className={`flex w-64  h-52 ${
         available === "y"
           ? "border-green-300 border-8"
-          : "border-yellow-200 border-8"
+          : "border-gray-200 border-8"
       }  justify-between bg-white flex-col items-center p-4 text-slate-800 rounded-lg shadow-lg`}
     >
       <div className="w-ful flex justify-center items-center">
-        <img src={img} alt={name} className="w-20 h-16" />
+        <img src={image} alt={name} className="w-20 h-16" />
       </div>
       <div className="w-full">
         <div className="flex justify-between my-3 items-center">
@@ -85,7 +95,7 @@ const Cat = ({ cat, removeCat, updateCat }) => {
             className="bg-slate-300 w-auto p-2 rounded-full hover:bg-slate-900 hover:text-white transition-all"
             onClick={toggleModalMore}
           >
-            <CiCircleMore fontSize={30} />
+            <IoInformation fontSize={20} />
           </button>
           <ModalMore show={modalMore} close={toggleModalMore} cat={cat} />
           <button
@@ -94,7 +104,7 @@ const Cat = ({ cat, removeCat, updateCat }) => {
             className="bg-blue-300 w-auto p-2 rounded-full hover:bg-slate-900 hover:text-white transition-all"
             onClick={toggleModalEdit}
           >
-            <RiEditCircleLine fontSize={30} />
+            <CiEdit fontSize={20} />
           </button>
           {modalEdit && (
             <ModalEdit
@@ -103,6 +113,8 @@ const Cat = ({ cat, removeCat, updateCat }) => {
               handleChange={handleChange}
               handleSave={handleSave}
               tempValues={tempValues}
+              handleImageChange={handleImageChange}
+              images={images}
               cat={cat}
             />
           )}
@@ -113,7 +125,7 @@ const Cat = ({ cat, removeCat, updateCat }) => {
             className="bg-red-300 w-auto p-2 rounded-full hover:bg-slate-900 hover:text-white transition-all"
             onClick={toggleModal}
           >
-            <IoIosRemoveCircleOutline fontSize={30} />
+            <IoIosRemoveCircleOutline fontSize={20} />
           </button>
           <Modal
             show={modal}

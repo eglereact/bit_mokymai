@@ -1,7 +1,15 @@
 import { IoClose } from "react-icons/io5";
 const colors = ["black", "white", "grey", "orange", "tortoiseshell"];
 
-const CreateCat = ({ show, close, cat, handleChange, handleSubmit }) => {
+const CreateCat = ({
+  show,
+  close,
+  cat,
+  handleChange,
+  handleSubmit,
+  handleImageChange,
+  images,
+}) => {
   if (!show) {
     return null;
   }
@@ -20,72 +28,99 @@ const CreateCat = ({ show, close, cat, handleChange, handleSubmit }) => {
           </div>
         </div>
 
-        <div className="flex flex-col w-[300px] gap-5">
-          <input
-            type="text"
-            placeholder="Enter name"
-            name="name"
-            value={cat.name}
-            className="outline-none p-2 w-full rounded-lg border-b-2 border-slate-900 bg-slate-100"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Enter weight"
-            name="weight"
-            value={cat.weight}
-            className="outline-none p-2 w-full rounded-lg border-b-2 border-slate-900 bg-slate-100"
-            onChange={handleChange}
-          />
-          <div>
+        <div className="flex ">
+          <div className="flex flex-col w-[300px] gap-5">
+            <input
+              type="text"
+              placeholder="Enter name"
+              name="name"
+              value={cat.name}
+              className="outline-none p-2 w-full rounded-lg border-b-2 border-slate-900 bg-slate-100"
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              placeholder="Enter weight"
+              name="weight"
+              value={cat.weight}
+              className="outline-none p-2 w-full rounded-lg border-b-2 border-slate-900 bg-slate-100"
+              onChange={handleChange}
+            />
             <div>
+              <div>
+                <div
+                  className={`${
+                    cat.available === "y" &&
+                    "bg-slate-900 text-white rounded-lg"
+                  } p-1`}
+                >
+                  <input
+                    type="checkbox"
+                    name="available"
+                    id="y"
+                    checked={cat.available === "y"}
+                    onChange={handleChange}
+                  />{" "}
+                  <label className="cursor-pointer" htmlFor="y">
+                    Looking for home
+                  </label>
+                </div>
+                <div
+                  className={`${
+                    cat.available === "n" &&
+                    "bg-slate-900 text-white rounded-lg"
+                  } p-1`}
+                >
+                  <input
+                    type="checkbox"
+                    name="available"
+                    id="n"
+                    checked={cat.available === "n"}
+                    onChange={handleChange}
+                  />{" "}
+                  <label className="cursor-pointer" htmlFor="n">
+                    Adopted
+                  </label>
+                </div>
+              </div>
+              <div className="flex my-5">
+                <p className="w-32 font-bold">Main color:</p>
+                <select
+                  value={cat.color}
+                  onChange={handleChange}
+                  className="w-full bg-slate-900 text-white px-2 rounded-lg capitalize cursor-pointer"
+                >
+                  {colors.map((a, i) => (
+                    <option key={i} value={a}>
+                      {a}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap w-1/2 justify-center items-center">
+            {images.map((url, index) => (
               <div
+                key={index}
                 className={`${
-                  cat.available === "y" && "bg-slate-900 text-white rounded-lg"
-                } p-1`}
+                  cat.image === url
+                    ? "border-2 border-slate-900 p-2 rounded-lg bg-gray-200 cursor-pointer"
+                    : "border-2 border-transparent p-2 cursor-pointer"
+                }`}
               >
                 <input
                   type="checkbox"
-                  name="available"
-                  id="y"
-                  checked={cat.available === "y"}
-                  onChange={handleChange}
-                />{" "}
-                <label className="cursor-pointer" htmlFor="y">
-                  Looking for home
+                  name="image"
+                  id={url}
+                  checked={cat.image === url}
+                  onChange={handleImageChange}
+                />
+                <label htmlFor={url}>
+                  <img className="w-16 cursor-pointer" src={url} />
                 </label>
               </div>
-              <div
-                className={`${
-                  cat.available === "n" && "bg-slate-900 text-white rounded-lg"
-                } p-1`}
-              >
-                <input
-                  type="checkbox"
-                  name="available"
-                  id="n"
-                  checked={cat.available === "n"}
-                  onChange={handleChange}
-                />{" "}
-                <label className="cursor-pointer" htmlFor="n">
-                  Adopted
-                </label>
-              </div>
-            </div>
-            <div className="flex my-5">
-              <p className="w-32 font-bold">Main color:</p>
-              <select
-                value={cat.color}
-                onChange={handleChange}
-                className="w-full bg-slate-900 text-white px-2 rounded-lg capitalize cursor-pointer"
-              >
-                {colors.map((a, i) => (
-                  <option key={i} value={a}>
-                    {a}
-                  </option>
-                ))}
-              </select>
-            </div>
+            ))}
           </div>
         </div>
         <div className="flex my-5 gap-5">

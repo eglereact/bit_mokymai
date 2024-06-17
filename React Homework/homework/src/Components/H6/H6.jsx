@@ -16,8 +16,23 @@ const H6 = () => {
     weight: "",
     available: "y",
     color: "black",
+    image: "/src/images/bandit.png",
   });
 
+  const images = [
+    "/src/images/bandit.png",
+    "/src/images/misty.png",
+    "/src/images/peach.png",
+    "/src/images/macky.png",
+    "/src/images/apricot.png",
+    "/src/images/cocoa.png",
+    "/src/images/fred.png",
+    "/src/images/ganache.png",
+    "/src/images/ginger.png",
+    "/src/images/pepper.png",
+    "/src/images/princes.png",
+    "/src/images/smokey.png",
+  ];
   const [modalCreate, setModalCreate] = useState(false);
   const toggleModalCreate = () => setModalCreate((prev) => !prev);
 
@@ -42,9 +57,17 @@ const H6 = () => {
         ...prevCat,
         [name]: value,
         id: "K" + rand(10000, 99999),
-        img: getRandomImage(imageUrls),
+        // img: getRandomImage(imageUrls),
       }));
     }
+  };
+
+  const handleImageChange = (e) => {
+    const { id } = e.target;
+    setCat((prevCat) => ({
+      ...prevCat,
+      image: id,
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -60,7 +83,7 @@ const H6 = () => {
       return;
     }
     setCats((prevCats) => [...prevCats, cat]);
-    setCat({ name: "", weight: "" });
+    setCat({ name: "", weight: "", image: "" });
     toggleModalCreate();
   };
 
@@ -74,7 +97,14 @@ const H6 = () => {
     localStorage.setItem("cats", JSON.stringify(cats));
   }, [cats]);
 
-  const updateCat = (id, newName, newWeight, newAvailable, newColor) => {
+  const updateCat = (
+    id,
+    newName,
+    newWeight,
+    newAvailable,
+    newColor,
+    newImage
+  ) => {
     const updatedCats = cats.map((cat) =>
       cat.id === id
         ? {
@@ -83,6 +113,7 @@ const H6 = () => {
             weight: newWeight,
             available: newAvailable,
             color: newColor,
+            image: newImage,
           }
         : cat
     );
@@ -119,6 +150,8 @@ const H6 = () => {
           cat={cat}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
+          handleImageChange={handleImageChange}
+          images={images}
         />
       </div>
       <div className="flex  w-5/6  justify-center ">
@@ -131,6 +164,8 @@ const H6 = () => {
                 cat={c}
                 removeCat={removeCat}
                 updateCat={updateCat}
+                handleImageChange={handleImageChange}
+                images={images}
               />
             ))}
         </div>
