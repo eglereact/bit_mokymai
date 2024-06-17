@@ -72,7 +72,7 @@ const Cat = ({ cat, removeCat, updateCat, images }) => {
 
   return (
     <div
-      className={`flex w-64  h-52 ${
+      className={`flex w-60  h-52 ${
         available === "y"
           ? "border-green-300 border-8"
           : "border-gray-200 border-8"

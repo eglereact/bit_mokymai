@@ -1,5 +1,5 @@
 import { IoClose } from "react-icons/io5";
-const colors = ["black", "white", "grey", "orange", "tortoiseshell"];
+const colors = ["black", "white", "grey", "orange", "brown"];
 
 const CreateCat = ({
   show,

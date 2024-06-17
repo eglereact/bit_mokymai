@@ -93,7 +93,7 @@ const ModalEdit = ({
                 <option value="white">White</option>
                 <option value="orange">Orange</option>
                 <option value="gray">Gray</option>
-                <option value="tortoiseshell">tortoiseshell</option>
+                <option value="brown">Brown</option>
               </select>
             </div>
           </div>

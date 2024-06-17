@@ -16,8 +16,9 @@ const H6 = () => {
     weight: "",
     available: "y",
     color: "black",
-    image: "/src/images/bandit.png",
+    image: "",
   });
+  const [sortCriteria, setSortCriteria] = useState("weightDesc");
 
   const images = [
     "/src/images/bandit.png",
@@ -82,6 +83,10 @@ const H6 = () => {
       alert("Weight must be a positive number.");
       return;
     }
+    if (cat.image === "") {
+      alert("Please select image.");
+      return;
+    }
     setCats((prevCats) => [...prevCats, cat]);
     setCat({ name: "", weight: "", image: "" });
     toggleModalCreate();
@@ -121,19 +126,43 @@ const H6 = () => {
     localStorage.setItem("cats", JSON.stringify(updatedCats));
   };
 
-  console.log(cats);
+  const sortCats = (criteria) => {
+    switch (criteria) {
+      case "weightAsc":
+        return cats.sort((a, b) => parseFloat(a.weight) - parseFloat(b.weight));
+      case "weightDesc":
+        return cats.sort((a, b) => parseFloat(b.weight) - parseFloat(a.weight));
+      case "nameAsc":
+        return cats.sort((a, b) => a.name.localeCompare(b.name));
+      case "nameDesc":
+        return cats.sort((a, b) => b.name.localeCompare(a.name));
+      default:
+        return cats;
+    }
+  };
+
+  const sortedCats = sortCats(sortCriteria);
 
   return (
-    <div className="flex justify-center items-center h-[100vh] bg-slate-500 flex-col">
-      <div>
-        <h1 className="text-4xl font-bold text-white">
-          All weight :{" "}
-          <span className="text-slate-900 bg-white rounded-3xl px-2 py-1">
-            {cats.reduce((a, c) => a + parseFloat(c.weight), 0)}
-          </span>{" "}
-          kg
-        </h1>
-        <h1>There are {cats.length} cats.</h1>
+    <div className="flex justify-center items-center bg-slate-500 flex-col">
+      <div className=" text-slate-900 w-4/5">
+        <div className="bg-slate-300 w-[300px] p-4 rounded-lg flex flex-col gap-3 mt-4">
+          <h1 className="text-2xl font-bold">Statistics:</h1>
+          <h1>
+            All weight :{" "}
+            <span className="text-slate-900 font-bold  bg-white rounded-3xl px-2 py-1">
+              {cats.reduce((a, c) => a + parseFloat(c.weight), 0)}
+            </span>{" "}
+            kg
+          </h1>
+          <h1>
+            There are{" "}
+            <span className="text-slate-900 font-bold bg-white rounded-3xl px-2 py-1">
+              {cats.length}
+            </span>{" "}
+            cats.
+          </h1>
+        </div>
       </div>
       <div>
         <button
@@ -154,20 +183,44 @@ const H6 = () => {
           images={images}
         />
       </div>
-      <div className="flex  w-5/6  justify-center ">
-        <div className="flex gap-2 flex-wrap m-4 p-7">
-          {cats
-            .sort((a, b) => parseFloat(b.weight) - parseFloat(a.weight))
-            .map((c) => (
-              <Cat
-                key={c.id}
-                cat={c}
-                removeCat={removeCat}
-                updateCat={updateCat}
-                handleImageChange={handleImageChange}
-                images={images}
-              />
-            ))}
+      <div className="flex gap-2 mt-4 w-4/5">
+        <button
+          onClick={() => setSortCriteria("weightAsc")}
+          className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-200"
+        >
+          Sort by Weight ASC
+        </button>
+        <button
+          onClick={() => setSortCriteria("weightDesc")}
+          className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-200"
+        >
+          Sort by Weight DESC
+        </button>
+        <button
+          onClick={() => setSortCriteria("nameAsc")}
+          className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-200"
+        >
+          Sort by Name [A-Z]
+        </button>
+        <button
+          onClick={() => setSortCriteria("nameDesc")}
+          className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-200"
+        >
+          Sort by Name [Z-A]
+        </button>
+      </div>
+      <div className="flex w-4/5 justify-start">
+        <div className="flex gap-2 flex-wrap mt-4">
+          {sortedCats.map((c) => (
+            <Cat
+              key={c.id}
+              cat={c}
+              removeCat={removeCat}
+              updateCat={updateCat}
+              handleImageChange={handleImageChange}
+              images={images}
+            />
+          ))}
         </div>
       </div>
     </div>
