@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { rbc, rbu } from "../styles/svg";
 
-const Create = ({ create, setStore, setCreate }) => {
-  const [shape, setShape] = useState(create.shape);
-  const [color, setColor] = useState(create.color);
-  const [range, setRange] = useState(create.range);
+export default function Edit({ edit, setUpdate, setEdit }) {
+  const [shape, setShape] = useState(edit.shape);
+  const [color, setColor] = useState(edit.color);
+  const [range, setRange] = useState(edit.range);
 
   const handleShape = (e) => {
     setShape(e.target.id);
   };
 
-  const save = () => {
-    setStore({ shape, color, range });
-    setCreate(null);
+  const handleEdit = (_) => {
+    setUpdate({
+      ...edit,
+      shape,
+      color,
+      range,
+    });
+    setEdit(null);
   };
 
   return (
@@ -20,11 +25,11 @@ const Create = ({ create, setStore, setCreate }) => {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Add your color</h5>
+            <h5 className="modal-title">Edit color</h5>
             <button
               type="button"
-              onClick={() => setCreate(null)}
               className="btn-close"
+              onClick={(_) => setEdit(null)}
             ></button>
           </div>
           <div className="modal-body">
@@ -33,14 +38,14 @@ const Create = ({ create, setStore, setCreate }) => {
               <input
                 type="color"
                 className="form-control form-control-color"
-                value={color}
                 onChange={(e) => setColor(e.target.value)}
+                value={color}
                 title="Choose your color"
               />
             </div>
             <div className="m-2">
-              <label className="form-label">
-                How many? <b>{range}</b>
+              <label className="form-label flex-space">
+                <span>How many?</span> <b>{range}</b>
               </label>
               <input
                 type="range"
@@ -62,11 +67,10 @@ const Create = ({ create, setStore, setCreate }) => {
                     checked={shape === "square"}
                     onChange={handleShape}
                   />
-
-                  <label className="cb-svg" htmlFor="square">
+                  <label htmlFor="square">
                     {shape === "square" ? rbc : rbu}
                   </label>
-                  <span className="cb">Square</span>
+                  <span>Square</span>
                 </div>
                 <div className="cb">
                   <input
@@ -75,11 +79,10 @@ const Create = ({ create, setStore, setCreate }) => {
                     checked={shape === "circle"}
                     onChange={handleShape}
                   />
-
-                  <label className="cb-svg" htmlFor="circle">
+                  <label htmlFor="circle">
                     {shape === "circle" ? rbc : rbu}
                   </label>
-                  <span className="cb">Circle</span>
+                  <span>Circle</span>
                 </div>
                 <div className="cb">
                   <input
@@ -88,11 +91,10 @@ const Create = ({ create, setStore, setCreate }) => {
                     checked={shape === "rounded"}
                     onChange={handleShape}
                   />
-
-                  <label className="cb-svg" htmlFor="rounded">
+                  <label htmlFor="rounded">
                     {shape === "rounded" ? rbc : rbu}
                   </label>
-                  <span className="cb">Rounded</span>
+                  <span>Rounded</span>
                 </div>
                 <div className="cb">
                   <input
@@ -101,23 +103,22 @@ const Create = ({ create, setStore, setCreate }) => {
                     checked={shape === "triangle"}
                     onChange={handleShape}
                   />
-
-                  <label className="cb-svg" htmlFor="triangle">
+                  <label htmlFor="triangle">
                     {shape === "triangle" ? rbc : rbu}
                   </label>
-                  <span className="cb">Triangle</span>
+                  <span>Triangle</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="modal-footer">
-            <button type="button" className="green" onClick={save}>
-              Add
+            <button type="button" className="green" onClick={handleEdit}>
+              Save
             </button>
             <button
               type="button"
               className="red"
-              onClick={() => setCreate(null)}
+              onClick={(_) => setEdit(null)}
             >
               Close
             </button>
@@ -126,5 +127,4 @@ const Create = ({ create, setStore, setCreate }) => {
       </div>
     </div>
   );
-};
-export default Create;
+}
