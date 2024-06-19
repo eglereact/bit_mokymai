@@ -1,5 +1,12 @@
 @import "bootstrap/scss/bootstrap";
 @import "./Styles/buttons.scss";
+
+$b1: #2191fb;
+$b2: #ba274a;
+$b3: #f9c846;
+$b4: #b2ece1;
+$b5: #04724d;
+
 * {
   margin: 0;
   padding: 0;
@@ -107,4 +114,30 @@
     margin: 0;
     padding: 0;
   }
+}
+
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 50px;
+}
+
+.toast-type {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 5px;
+  &.error {
+    background-color: $b2;
+  }
+  &.success {
+    background-color: $b5;
+  }
+  &.info {
+    background-color: $b4;
+  }
+}
+
+label.error {
+  color: $b2;
 }

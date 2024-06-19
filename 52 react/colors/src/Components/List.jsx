@@ -13,7 +13,9 @@ const List = ({ colors, setRemove, setEdit }) => {
         <li key={c.id} className="list-group-item">
           <div className="color-line">
             <div className="content">
-              <div style={{ color: c.color }}>{c.color}</div>
+              <div style={{ color: c.color, width: "150px" }}>
+                {c.title ?? "no title"}
+              </div>
               <div className="colors">
                 {Array(c.range)
                   .fill()

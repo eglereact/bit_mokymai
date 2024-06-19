@@ -1,16 +1,40 @@
 import { useState } from "react";
 import { rbc, rbu } from "../styles/svg";
 
-const Create = ({ create, setStore, setCreate }) => {
+const Create = ({ create, setStore, setCreate, addMsg }) => {
   const [shape, setShape] = useState(create.shape);
   const [color, setColor] = useState(create.color);
   const [range, setRange] = useState(create.range);
+  const [errors, setErrors] = useState([]);
 
   const handleShape = (e) => {
     setShape(e.target.id);
   };
 
   const save = () => {
+    setErrors([]);
+    let hasErrors = false;
+    if (!shape) {
+      addMsg({
+        title: "Error",
+        type: "error",
+        text: "Please select color shape",
+      });
+      hasErrors = true;
+      setErrors((e) => [...e, "shape"]);
+    }
+    if (range > 8) {
+      addMsg({
+        title: "Error",
+        type: "error",
+        text: "Max range is 8.",
+      });
+      hasErrors = true;
+      setErrors((e) => [...e, "range"]);
+    }
+    if (hasErrors) {
+      return;
+    }
     setStore({ shape, color, range });
     setCreate(null);
   };
@@ -39,7 +63,11 @@ const Create = ({ create, setStore, setCreate }) => {
               />
             </div>
             <div className="m-2">
-              <label className="form-label">
+              <label
+                className={
+                  `form-label ` + (errors.includes("range") ? "error" : "")
+                }
+              >
                 How many? <b>{range}</b>
               </label>
               <input
@@ -53,7 +81,13 @@ const Create = ({ create, setStore, setCreate }) => {
               />
             </div>
             <div className="m-2">
-              <label className="form-label">Shape</label>
+              <label
+                className={
+                  `form-label ` + (errors.includes("shape") ? "error" : "")
+                }
+              >
+                Shape
+              </label>
               <div className="cb-bin">
                 <div className="cb">
                   <input
