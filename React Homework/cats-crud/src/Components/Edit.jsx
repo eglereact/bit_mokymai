@@ -110,11 +110,11 @@ const Edit = ({ editModal, setEditModal, setUpdate }) => {
               <div>
                 <input
                   type="checkbox"
-                  id="curiuos"
+                  id="curious"
                   checked={features.curious}
                   onChange={handleFeatures}
                 />
-                <label htmlFor="curiuos">curiuos</label>
+                <label htmlFor="curious">curious</label>
               </div>
               <div>
                 <input
