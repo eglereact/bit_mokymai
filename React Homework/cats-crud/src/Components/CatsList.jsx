@@ -1,6 +1,6 @@
 import Cat from "./Cat";
 
-const CatsList = ({ cats }) => {
+const CatsList = ({ cats, setDeleteModal }) => {
   if (null === cats) {
     return (
       <div>
@@ -12,7 +12,7 @@ const CatsList = ({ cats }) => {
   return (
     <div className="flex gap-5">
       {cats.map((c) => (
-        <Cat key={c.id} c={c} />
+        <Cat key={c.id} c={c} setDeleteModal={setDeleteModal} />
       ))}
     </div>
   );

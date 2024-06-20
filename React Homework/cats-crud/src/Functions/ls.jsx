@@ -22,7 +22,7 @@ export const lsDelete = (key, id) => {
   const ls = read(key);
   write(
     key,
-    ls.fiter((d) => d.id !== id)
+    ls.filter((d) => d.id !== id)
   );
 };
 

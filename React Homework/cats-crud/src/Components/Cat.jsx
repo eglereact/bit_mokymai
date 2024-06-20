@@ -1,4 +1,4 @@
-const Cat = ({ c }) => {
+const Cat = ({ c, setDeleteModal }) => {
   return (
     <div key={c.id} className="bg-slate-200 p-9">
       <h1>Name: {c.name}</h1>
@@ -21,7 +21,11 @@ const Cat = ({ c }) => {
         <button type="button" className="bg-blue-300 p-2">
           Edit
         </button>
-        <button type="button" className="bg-red-300 p-2">
+        <button
+          type="button"
+          className="bg-red-300 p-2"
+          onClick={() => setDeleteModal(c)}
+        >
           Delete
         </button>
       </div>

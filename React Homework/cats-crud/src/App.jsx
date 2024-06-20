@@ -3,6 +3,7 @@ import "./App.css";
 import Create from "./Components/Create";
 import CatsList from "./Components/CatsList";
 import * as storage from "./Functions/ls";
+import Delete from "./Components/Delete";
 
 const dv = {
   name: "",
@@ -26,6 +27,8 @@ function App() {
   const [createModal, setCreateModal] = useState(null);
   const [store, setStore] = useState(null);
   const [refresh, setRefresh] = useState(Date.now());
+  const [deleteModal, setDeleteModal] = useState(null);
+  const [destroy, setDestroy] = useState(null);
 
   useEffect(() => {
     if (null === store) {
@@ -40,6 +43,15 @@ function App() {
     setCats(storage.lsRead(key));
   }, [refresh]);
 
+  useEffect(() => {
+    if (null === destroy) {
+      return;
+    }
+    storage.lsDelete(key, destroy.id);
+    setDestroy(null);
+    setRefresh(Date.now());
+  }, [destroy]);
+
   return (
     <>
       <div>
@@ -51,7 +63,7 @@ function App() {
           Add a new cat
         </button>
         <div>
-          <CatsList cats={cats} />
+          <CatsList cats={cats} setDeleteModal={setDeleteModal} />
         </div>
       </div>
       {createModal !== null && (
@@ -59,6 +71,13 @@ function App() {
           createModal={createModal}
           setStore={setStore}
           setCreateModal={setCreateModal}
+        />
+      )}
+      {deleteModal !== null && (
+        <Delete
+          setDeleteModal={setDeleteModal}
+          deleteModal={deleteModal}
+          setDestroy={setDestroy}
         />
       )}
     </>
