@@ -4,6 +4,7 @@ import Create from "./Components/Create";
 import CatsList from "./Components/CatsList";
 import * as storage from "./Functions/ls";
 import Delete from "./Components/Delete";
+import Edit from "./Components/Edit";
 
 const dv = {
   name: "",
@@ -29,6 +30,8 @@ function App() {
   const [refresh, setRefresh] = useState(Date.now());
   const [deleteModal, setDeleteModal] = useState(null);
   const [destroy, setDestroy] = useState(null);
+  const [editModal, setEditModal] = useState(null);
+  const [update, setUpdate] = useState(null);
 
   useEffect(() => {
     if (null === store) {
@@ -52,6 +55,15 @@ function App() {
     setRefresh(Date.now());
   }, [destroy]);
 
+  useEffect(() => {
+    if (null === update) {
+      return;
+    }
+    storage.lsEdit(key, update, update.id);
+    setUpdate(null);
+    setRefresh(Date.now());
+  }, [update]);
+
   return (
     <>
       <div>
@@ -63,7 +75,11 @@ function App() {
           Add a new cat
         </button>
         <div>
-          <CatsList cats={cats} setDeleteModal={setDeleteModal} />
+          <CatsList
+            cats={cats}
+            setDeleteModal={setDeleteModal}
+            setEditModal={setEditModal}
+          />
         </div>
       </div>
       {createModal !== null && (
@@ -78,6 +94,13 @@ function App() {
           setDeleteModal={setDeleteModal}
           deleteModal={deleteModal}
           setDestroy={setDestroy}
+        />
+      )}
+      {editModal !== null && (
+        <Edit
+          setEditModal={setEditModal}
+          editModal={editModal}
+          setUpdate={setUpdate}
         />
       )}
     </>

@@ -1,4 +1,4 @@
-const Cat = ({ c, setDeleteModal }) => {
+const Cat = ({ c, setDeleteModal, setEditModal }) => {
   return (
     <div key={c.id} className="bg-slate-200 p-9">
       <h1>Name: {c.name}</h1>
@@ -9,7 +9,7 @@ const Cat = ({ c, setDeleteModal }) => {
       </div>
       <div>
         {Object.keys(c.features).map((feature) => (
-          <div key={feature} className="cb">
+          <div key={feature}>
             <span>
               {c.features[feature] &&
                 feature.charAt(0).toUpperCase() + feature.slice(1)}
@@ -18,7 +18,11 @@ const Cat = ({ c, setDeleteModal }) => {
         ))}
       </div>
       <div>
-        <button type="button" className="bg-blue-300 p-2">
+        <button
+          type="button"
+          className="bg-blue-300 p-2"
+          onClick={() => setEditModal(c)}
+        >
           Edit
         </button>
         <button

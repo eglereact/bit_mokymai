@@ -15,25 +15,29 @@ const images = [
   "/src/images/pepper.png",
   "/src/images/princes.png",
   "/src/images/smokey.png",
-  "/src/images/snowball.png",
-  "/src/images/socks.png",
-  "/src/images/spots.png",
 ];
 
-const Create = ({ createModal, setCreateModal, setStore }) => {
-  const [name, setName] = useState(createModal.name);
-  const [weight, setWeight] = useState(createModal.weight);
-  const [image, setImage] = useState(createModal.image);
-  const [features, setFeatures] = useState(createModal.features);
-  const [age, setAge] = useState(createModal.age);
+const Edit = ({ editModal, setEditModal, setUpdate }) => {
+  const [name, setName] = useState(editModal.name);
+  const [weight, setWeight] = useState(editModal.weight);
+  const [image, setImage] = useState(editModal.image);
+  const [features, setFeatures] = useState(editModal.features);
+  const [age, setAge] = useState(editModal.age);
 
   const handleImage = (e) => {
     setImage(e.target.id);
   };
 
-  const handleCreate = () => {
-    setStore({ name, weight, image, features, age });
-    setCreateModal(null);
+  const handleEdit = () => {
+    setUpdate({
+      ...editModal,
+      name,
+      weight,
+      image,
+      features,
+      age,
+    });
+    setEditModal(null);
   };
 
   const handleFeatures = (e) => {
@@ -45,12 +49,10 @@ const Create = ({ createModal, setCreateModal, setStore }) => {
       <div className="modal-backdrop">
         <div className="modal w-1/2">
           <div className="flex justify-between border-b-2 p-4 border-slate-200">
-            <h1 className="text-2xl text-slate-800 font-bold">
-              Create a new cat
-            </h1>
+            <h1 className="text-2xl text-slate-800 font-bold">Edit cat</h1>
             <div
               className="text-2xl cursor-pointer w-4 h-4 text-slate-800 font-bold"
-              onClick={() => setCreateModal(null)}
+              onClick={() => setEditModal(null)}
             >
               X
             </div>
@@ -164,16 +166,16 @@ const Create = ({ createModal, setCreateModal, setStore }) => {
               <button
                 type="button"
                 className="bg-green-200 p-4"
-                onClick={handleCreate}
+                onClick={handleEdit}
               >
-                Add
+                Edit
               </button>
               <button
                 type="button"
                 className="bg-gray-200 p-4"
-                onClick={() => setCreateModal(null)}
+                onClick={() => setEditModal(null)}
               >
-                Close
+                Cancel
               </button>
             </div>
           </div>
@@ -182,4 +184,4 @@ const Create = ({ createModal, setCreateModal, setStore }) => {
     </div>
   );
 };
-export default Create;
+export default Edit;

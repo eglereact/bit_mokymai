@@ -30,7 +30,7 @@ export const lsEdit = (key, data, id) => {
   const ls = read(key);
   write(
     key,
-    ls.map((d) => (d.id === id ? { ...d, ...data, id } : id))
+    ls.map((d) => (d.id === id ? { ...d, ...data, id } : d))
   );
 };
 
