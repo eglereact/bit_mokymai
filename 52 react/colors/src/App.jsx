@@ -27,6 +27,7 @@ function App() {
   const [edit, setEdit] = useState(null);
   const [update, setUpdate] = useState(null);
   const [msg, setMsg] = useState([]);
+  const [route, setRoute] = useState("landing");
 
   const removeMsg = useCallback((id) => {
     setMsg((msgs) => msgs.filter((m) => m.id !== id));
@@ -111,48 +112,77 @@ function App() {
     setColors(storage.lsRead(key));
   }, [refresh]);
 
-  console.log(store);
-  return (
-    <>
+  if (route === "landing") {
+    return (
       <div className="container">
         <div className="row">
           <div className="col">
             <div className="buttons">
-              <button
-                className="blue"
-                onClick={() => setCreate(dv)}
-                type="button"
-              >
-                Add new color
-              </button>
+              <h1>Landing Page</h1>
+              <div>
+                <button className="blue" onClick={() => setRoute("colors")}>
+                  Got to colors
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <List colors={colors} setRemove={setRemove} setEdit={setEdit} />
+    );
+  }
+
+  if (route === "colors") {
+    return (
+      <>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <div className="buttons">
+                <button
+                  className="blue"
+                  onClick={() => setCreate(dv)}
+                  type="button"
+                >
+                  Add new color
+                </button>
+                <div>
+                  <button className="green" onClick={() => setRoute("landing")}>
+                    Go to Home page
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      {create !== null && (
-        <Create
-          addMsg={addMsg}
-          create={create}
-          setStore={setStore}
-          setCreate={setCreate}
-        />
-      )}
-      {remove !== null && (
-        <Delete setRemove={setRemove} remove={remove} setDestroy={setDestroy} />
-      )}
-      {edit !== null && (
-        <Edit setEdit={setEdit} edit={edit} setUpdate={setUpdate} />
-      )}
-      <Messages msg={msg} removeMsg={removeMsg} />
-    </>
-  );
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <List colors={colors} setRemove={setRemove} setEdit={setEdit} />
+            </div>
+          </div>
+        </div>
+        {create !== null && (
+          <Create
+            addMsg={addMsg}
+            create={create}
+            setStore={setStore}
+            setCreate={setCreate}
+          />
+        )}
+        {remove !== null && (
+          <Delete
+            setRemove={setRemove}
+            remove={remove}
+            setDestroy={setDestroy}
+          />
+        )}
+        {edit !== null && (
+          <Edit setEdit={setEdit} edit={edit} setUpdate={setUpdate} />
+        )}
+        <Messages msg={msg} removeMsg={removeMsg} />
+      </>
+    );
+  }
 }
 
 export default App;
