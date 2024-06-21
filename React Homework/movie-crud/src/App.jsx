@@ -5,14 +5,22 @@ import * as storage from "./Functions/ls";
 import CategoriesList from "./Components/Categories/CategoriesList";
 import DeleteModal from "./Components/Categories/DeleteModal";
 import EditModal from "./Components/Categories/EditModal";
+import CreateMovieModal from "./Components/Movies/CreateMovieModal";
+import MovieList from "./Components/Movies/MovieList";
+import DeleteMovie from "./Components/Movies/DeleteMovie";
+import EditMovie from "./Components/Movies/EditMovie";
 
 const dv = {
   category: "",
 };
 
 const key = "categories";
+const movieKey = "movies";
 
 function App() {
+  const [route, setRoute] = useState(() => {
+    return localStorage.getItem("route") || "categories";
+  });
   const [categories, setCategories] = useState(null);
   const [createModal, setCreateModal] = useState(null);
   const [store, setStore] = useState(null);
@@ -21,6 +29,41 @@ function App() {
   const [destroy, setDestroy] = useState(null);
   const [editModal, setEditModal] = useState(null);
   const [update, setUpdate] = useState(null);
+
+  const [movies, setMovies] = useState(null);
+  const [createMovieModal, setCreateMovieModal] = useState(null);
+  const [storeMovie, setStoreMovie] = useState(null);
+  const [deleteMovieModal, setDeleteMovieModal] = useState(null);
+  const [destroyMovie, setDestroyMovie] = useState(null);
+  const [editMovieModal, setEditMovieModal] = useState(null);
+  const [updateMovie, setUpdateMovie] = useState(null);
+
+  useEffect(() => {
+    setCategories(storage.lsRead(key));
+    setMovies(storage.lsRead(movieKey));
+  }, [refresh]);
+
+  useEffect(() => {
+    localStorage.setItem("route", route);
+  }, [route]);
+
+  const mapCategoriesToFalse = (categoriesArray) => {
+    if (!categoriesArray) {
+      return {};
+    }
+    const categoriesObject = {};
+    categoriesArray.forEach(({ category }) => {
+      categoriesObject[category] = false;
+    });
+    return categoriesObject;
+  };
+
+  const movieDv = {
+    title: "",
+    year: "",
+    categories: mapCategoriesToFalse(categories),
+    rating: 1,
+  };
 
   useEffect(() => {
     if (null === store) {
@@ -42,10 +85,6 @@ function App() {
   }, [destroy]);
 
   useEffect(() => {
-    setCategories(storage.lsRead(key));
-  }, [refresh]);
-
-  useEffect(() => {
     if (null === update) {
       return;
     }
@@ -54,44 +93,133 @@ function App() {
     setRefresh(Date.now());
   }, [update]);
 
-  return (
-    <div className="App">
-      <h1 className="text-red-500">Movie crud</h1>
+  useEffect(() => {
+    if (null === storeMovie) {
+      return;
+    }
+    storage.lsCreate(movieKey, storeMovie);
+    setStoreMovie(null);
+    setRefresh(Date.now());
+  }, [storeMovie]);
+
+  useEffect(() => {
+    if (null === destroyMovie) {
+      return;
+    }
+    storage.lsDelete(movieKey, destroyMovie.id);
+    setDestroy(null);
+    setRefresh(Date.now());
+  }, [destroyMovie]);
+
+  useEffect(() => {
+    if (null === updateMovie) {
+      return;
+    }
+    storage.lsEdit(movieKey, updateMovie, updateMovie.id);
+    setUpdate(null);
+    setRefresh(Date.now());
+  }, [updateMovie]);
+
+  if (route === "categories") {
+    return (
+      <div className="App">
+        <h1 className="text-2xl">Category crud</h1>
+        <div>
+          <button
+            type="button"
+            className="bg-pink-600 p-4"
+            onClick={() => setCreateModal(dv)}
+          >
+            Add new category
+          </button>
+          <button
+            type="button"
+            className="bg-yellow-600 p-4"
+            onClick={() => setRoute("movies")}
+          >
+            Go to movies
+          </button>
+          <div>
+            <CategoriesList
+              categories={categories}
+              setDeleteModal={setDeleteModal}
+              setEditModal={setEditModal}
+            />
+          </div>
+        </div>
+        {createModal !== null && (
+          <CreateModal
+            createModal={createModal}
+            setStore={setStore}
+            setCreateModal={setCreateModal}
+          />
+        )}
+        {deleteModal !== null && (
+          <DeleteModal
+            setDeleteModal={setDeleteModal}
+            deleteModal={deleteModal}
+            setDestroy={setDestroy}
+          />
+        )}
+        {editModal !== null && (
+          <EditModal
+            setEditModal={setEditModal}
+            editModal={editModal}
+            setUpdate={setUpdate}
+          />
+        )}
+      </div>
+    );
+  }
+  if (route === "movies") {
+    return (
       <div>
-        <button type="button" onClick={() => setCreateModal(dv)}>
-          Add new category
+        <h1>Movies list</h1>
+        <button
+          type="button"
+          className="bg-pink-600 p-4"
+          onClick={() => setCreateMovieModal(movieDv)}
+        >
+          Add new movie
+        </button>
+        <button
+          type="button"
+          className="bg-yellow-600 p-4"
+          onClick={() => setRoute("categories")}
+        >
+          Go to categories
         </button>
         <div>
-          <CategoriesList
-            categories={categories}
-            setDeleteModal={setDeleteModal}
-            setEditModal={setEditModal}
+          <MovieList
+            movies={movies}
+            setDeleteMovieModal={setDeleteMovieModal}
+            setEditMovieModal={setEditMovieModal}
           />
         </div>
+        {createMovieModal !== null && (
+          <CreateMovieModal
+            createMovieModal={createMovieModal}
+            setStoreMovie={setStoreMovie}
+            setCreateMovieModal={setCreateMovieModal}
+          />
+        )}
+        {deleteMovieModal !== null && (
+          <DeleteMovie
+            setDeleteMovieModal={setDeleteMovieModal}
+            deleteMovieModal={deleteMovieModal}
+            setDestroyMovie={setDestroyMovie}
+          />
+        )}
+        {editMovieModal !== null && (
+          <EditMovie
+            setEditMovieModal={setEditMovieModal}
+            editMovieModal={editMovieModal}
+            setUpdateMovie={setUpdateMovie}
+          />
+        )}
       </div>
-      {createModal !== null && (
-        <CreateModal
-          createModal={createModal}
-          setStore={setStore}
-          setCreateModal={setCreateModal}
-        />
-      )}
-      {deleteModal !== null && (
-        <DeleteModal
-          setDeleteModal={setDeleteModal}
-          deleteModal={deleteModal}
-          setDestroy={setDestroy}
-        />
-      )}
-      {editModal !== null && (
-        <EditModal
-          setEditModal={setEditModal}
-          editModal={editModal}
-          setUpdate={setUpdate}
-        />
-      )}
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
