@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import CreateModal from "./Components/Categories/CreateModal";
 import * as storage from "./Functions/ls";
@@ -9,6 +9,8 @@ import CreateMovieModal from "./Components/Movies/CreateMovieModal";
 import MovieList from "./Components/Movies/MovieList";
 import DeleteMovie from "./Components/Movies/DeleteMovie";
 import EditMovie from "./Components/Movies/EditMovie";
+import Messages from "./Components/Messages";
+import { v4 as uuidv4 } from "uuid";
 
 const dv = {
   category: "",
@@ -37,6 +39,23 @@ function App() {
   const [destroyMovie, setDestroyMovie] = useState(null);
   const [editMovieModal, setEditMovieModal] = useState(null);
   const [updateMovie, setUpdateMovie] = useState(null);
+
+  const [msg, setMsg] = useState([]);
+
+  const removeMsg = useCallback((id) => {
+    setMsg((msgs) => msgs.filter((m) => m.id !== id));
+  }, []);
+
+  const addMsg = useCallback(
+    (m) => {
+      const id = uuidv4();
+      setMsg((msgs) => [{ ...m, id }, ...msgs]);
+      setTimeout(() => {
+        removeMsg(id);
+      }, 5000);
+    },
+    [removeMsg]
+  );
 
   useEffect(() => {
     setCategories(storage.lsRead(key));
@@ -71,54 +90,78 @@ function App() {
     }
 
     storage.lsCreate(key, store);
+    addMsg({
+      type: "success",
+      text: "Category was added successfully.",
+    });
     setStore(null);
     setRefresh(Date.now());
-  }, [store]);
+  }, [store, addMsg]);
 
   useEffect(() => {
     if (null === destroy) {
       return;
     }
     storage.lsDelete(key, destroy.id);
+    addMsg({
+      type: "success",
+      text: `Category was deleted successfully.`,
+    });
     setDestroy(null);
     setRefresh(Date.now());
-  }, [destroy]);
+  }, [destroy, addMsg]);
 
   useEffect(() => {
     if (null === update) {
       return;
     }
     storage.lsEdit(key, update, update.id);
+    addMsg({
+      type: "success",
+      text: `Category  was updated successfully.`,
+    });
     setUpdate(null);
     setRefresh(Date.now());
-  }, [update]);
+  }, [update, addMsg]);
 
   useEffect(() => {
     if (null === storeMovie) {
       return;
     }
     storage.lsCreate(movieKey, storeMovie);
+    addMsg({
+      type: "success",
+      text: `Movie was created successfully.`,
+    });
     setStoreMovie(null);
     setRefresh(Date.now());
-  }, [storeMovie]);
+  }, [storeMovie, addMsg]);
 
   useEffect(() => {
     if (null === destroyMovie) {
       return;
     }
     storage.lsDelete(movieKey, destroyMovie.id);
+    addMsg({
+      type: "success",
+      text: `Movie was deleted successfully.`,
+    });
     setDestroyMovie(null);
     setRefresh(Date.now());
-  }, [destroyMovie]);
+  }, [destroyMovie, addMsg]);
 
   useEffect(() => {
     if (null === updateMovie) {
       return;
     }
     storage.lsEdit(movieKey, updateMovie, updateMovie.id);
+    addMsg({
+      type: "success",
+      text: `Movie was updated successfully.`,
+    });
     setUpdateMovie(null);
     setRefresh(Date.now());
-  }, [updateMovie]);
+  }, [updateMovie, addMsg]);
 
   if (route === "categories") {
     return (
@@ -169,6 +212,7 @@ function App() {
             setUpdate={setUpdate}
           />
         )}
+        <Messages msg={msg} removeMsg={removeMsg} />
       </div>
     );
   }
@@ -222,6 +266,7 @@ function App() {
             setUpdateMovie={setUpdateMovie}
           />
         )}
+        <Messages msg={msg} removeMsg={removeMsg} />
       </div>
     );
   }
