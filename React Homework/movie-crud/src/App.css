@@ -22,3 +22,12 @@
   border-radius: 8px;
   z-index: 100;
 }
+
+.bg-spring {
+  background: rgb(144, 154, 182);
+  background: radial-gradient(
+    circle,
+    rgba(144, 154, 182, 1) 0%,
+    rgba(87, 118, 156, 1) 100%
+  );
+}

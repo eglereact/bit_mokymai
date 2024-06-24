@@ -107,7 +107,7 @@ function App() {
       return;
     }
     storage.lsDelete(movieKey, destroyMovie.id);
-    setDestroy(null);
+    setDestroyMovie(null);
     setRefresh(Date.now());
   }, [destroyMovie]);
 
@@ -116,29 +116,30 @@ function App() {
       return;
     }
     storage.lsEdit(movieKey, updateMovie, updateMovie.id);
-    setUpdate(null);
+    setUpdateMovie(null);
     setRefresh(Date.now());
   }, [updateMovie]);
 
   if (route === "categories") {
     return (
       <div className="App">
-        <h1 className="text-2xl">Category crud</h1>
-        <div>
-          <button
-            type="button"
-            className="bg-pink-600 p-4"
-            onClick={() => setCreateModal(dv)}
-          >
-            Add new category
-          </button>
-          <button
-            type="button"
-            className="bg-yellow-600 p-4"
-            onClick={() => setRoute("movies")}
-          >
-            Go to movies
-          </button>
+        <div className="flex flex-col justify-center items-center mt-8">
+          <div className="w-4/5  flex gap-4">
+            <button
+              type="button"
+              className="bg-slate-800 hover:bg-slate-900 shadow-lg text-white font-bold capitalize rounded-md p-4"
+              onClick={() => setCreateModal(dv)}
+            >
+              Add new category
+            </button>
+            <button
+              type="button"
+              className="bg-teal-600 hover:bg-teal-700 transition-all shadow-lg text-white  font-bold capitalize rounded-md p-4"
+              onClick={() => setRoute("movies")}
+            >
+              Go to movies
+            </button>
+          </div>
           <div>
             <CategoriesList
               categories={categories}

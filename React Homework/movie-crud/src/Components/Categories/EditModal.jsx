@@ -13,7 +13,7 @@ const EditModal = ({ editModal, setEditModal, setUpdate }) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal w-1/2">
+      <div className="modal w-1/4">
         <div className="flex justify-between border-b-2 p-4 border-slate-200">
           <h1 className="text-2xl text-slate-800 font-bold">
             Edit movie category
@@ -31,23 +31,23 @@ const EditModal = ({ editModal, setEditModal, setUpdate }) => {
             <input
               type="text"
               placeholder="category"
-              className="bg-slate-200 outline-none"
+              className="bg-slate-200 mb-3 w-full rounded-md capitalize outline-none px-4 py-2"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             />
           </div>
 
-          <div>
+          <div className="flex gap-2">
             <button
               type="button"
-              className="bg-green-200 p-4"
+              className="bg-teal-600 hover:bg-teal-700 transition-all shadow-lg text-white  font-bold capitalize rounded-md py-3 px-4"
               onClick={handleEdit}
             >
               Edit
             </button>
             <button
               type="button"
-              className="bg-gray-200 p-4"
+              className="bg-gray-400 hover:bg-gray-500 transition-all shadow-lg text-white  font-bold capitalize rounded-md py-3 px-4"
               onClick={() => setEditModal(null)}
             >
               Close
