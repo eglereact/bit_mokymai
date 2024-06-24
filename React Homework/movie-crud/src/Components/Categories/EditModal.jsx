@@ -1,14 +1,31 @@
 import { useState } from "react";
 
-const EditModal = ({ editModal, setEditModal, setUpdate }) => {
+const EditModal = ({ editModal, setEditModal, setUpdate, addMsg }) => {
   const [category, setCategory] = useState(editModal.category);
-
+  const [errors, setErrors] = useState([]);
   const handleEdit = () => {
+    setErrors([]);
+    let hasError = false;
+    if (!category) {
+      addMsg({
+        type: "danger",
+        text: "Please add a category",
+      });
+      hasError = true;
+      setErrors((e) => [...e, "category"]);
+    }
+    if (hasError) {
+      return;
+    }
     setUpdate({
       ...editModal,
       category,
     });
     setEditModal(null);
+  };
+
+  const removeError = (error) => {
+    setErrors((e) => e.filter((err) => err !== error));
   };
 
   return (
@@ -31,9 +48,16 @@ const EditModal = ({ editModal, setEditModal, setUpdate }) => {
             <input
               type="text"
               placeholder="category"
-              className="bg-slate-200 mb-3 w-full rounded-md capitalize outline-none px-4 py-2"
+              className={`bg-slate-200 mb-3 w-full rounded-md capitalize outline-none px-4 py-2 ${
+                errors.includes("category") ? "border-2 border-rose-500" : ""
+              }`}
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                if (e.target.value) {
+                  removeError("category");
+                }
+              }}
             />
           </div>
 

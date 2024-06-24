@@ -8,7 +8,7 @@ const Messages = ({ msg, removeMsg }) => {
   }
 
   return (
-    <div className="fixed top-10 right-10 flex flex-col gap-2 ">
+    <div className="fixed top-10 right-10 flex flex-col gap-2 z-10">
       {msg.map((m) => (
         <div key={m.id}>
           {m.type === "success" && (
@@ -27,7 +27,7 @@ const Messages = ({ msg, removeMsg }) => {
             </div>
           )}
           {m.type === "danger" && (
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex justify-between items-center gap-2 shadow bg-white rounded-lg p-4">
               <div className="bg-red-100 p-2 rounded">
                 <IoCloseCircle className="text-red-600" />
               </div>

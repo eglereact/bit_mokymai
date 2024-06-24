@@ -194,6 +194,7 @@ function App() {
         {createModal !== null && (
           <CreateModal
             createModal={createModal}
+            addMsg={addMsg}
             setStore={setStore}
             setCreateModal={setCreateModal}
           />
@@ -210,6 +211,7 @@ function App() {
             setEditModal={setEditModal}
             editModal={editModal}
             setUpdate={setUpdate}
+            addMsg={addMsg}
           />
         )}
         <Messages msg={msg} removeMsg={removeMsg} />
@@ -250,6 +252,7 @@ function App() {
             createMovieModal={createMovieModal}
             setStoreMovie={setStoreMovie}
             setCreateMovieModal={setCreateMovieModal}
+            addMsg={addMsg}
           />
         )}
         {deleteMovieModal !== null && (
@@ -264,6 +267,7 @@ function App() {
             setEditMovieModal={setEditMovieModal}
             editMovieModal={editMovieModal}
             setUpdateMovie={setUpdateMovie}
+            addMsg={addMsg}
           />
         )}
         <Messages msg={msg} removeMsg={removeMsg} />

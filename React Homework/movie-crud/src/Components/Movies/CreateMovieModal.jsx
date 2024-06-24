@@ -4,22 +4,71 @@ const CreateMovieModal = ({
   createMovieModal,
   setStoreMovie,
   setCreateMovieModal,
+  addMsg,
 }) => {
   const [title, setTitle] = useState(createMovieModal.title);
   const [year, setYear] = useState(createMovieModal.year);
   const [categories, setCategories] = useState(createMovieModal.categories);
   const [rating, setRating] = useState(createMovieModal.rating);
+  const [errors, setErrors] = useState([]);
+
+  const isAtLeastOneTrue = Object.values(categories).some((value) => value);
+
+  console.log(isAtLeastOneTrue);
 
   const handleCreate = () => {
+    setErrors([]);
+    let hasError = false;
+    if (!title) {
+      addMsg({
+        type: "danger",
+        text: "Please add a title",
+      });
+      hasError = true;
+      setErrors((e) => [...e, "title"]);
+    }
+    if (!year) {
+      addMsg({
+        type: "danger",
+        text: "Please add a year",
+      });
+      hasError = true;
+      setErrors((e) => [...e, "year"]);
+    }
+    if (!isAtLeastOneTrue) {
+      addMsg({
+        type: "danger",
+        text: "Please select a category",
+      });
+      hasError = true;
+      setErrors((e) => [...e, "category"]);
+    }
+    if (hasError) {
+      return;
+    }
     setStoreMovie({ title, year, categories, rating });
     setCreateMovieModal(null);
   };
 
+  const removeError = (error) => {
+    setErrors((e) => e.filter((err) => err !== error));
+  };
+
   const handleCategories = (category) => {
-    setCategories({
+    const newCategories = {
       ...categories,
       [category]: !categories[category],
-    });
+    };
+
+    setCategories(newCategories);
+
+    const isAtLeastOneTrue = Object.values(newCategories).some(
+      (value) => value
+    );
+
+    if (isAtLeastOneTrue) {
+      removeError("category");
+    }
   };
 
   return (
@@ -43,9 +92,16 @@ const CreateMovieModal = ({
               <input
                 type="text"
                 placeholder="title"
-                className="bg-slate-200 mb-3 w-1/2 rounded-md capitalize outline-none px-4 py-2"
+                className={`bg-slate-200 mb-3 w-1/2 rounded-md capitalize outline-none px-4 py-2 ${
+                  errors.includes("title") ? "border-2 border-rose-500" : ""
+                }`}
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                  if (e.target.value) {
+                    removeError("title");
+                  }
+                }}
               />
             </div>
 
@@ -53,9 +109,16 @@ const CreateMovieModal = ({
               <input
                 type="text"
                 placeholder="year"
-                className="bg-slate-200 mb-3 w-1/2 rounded-md capitalize outline-none px-4 py-2"
+                className={`bg-slate-200 mb-3 w-1/2 rounded-md capitalize outline-none px-4 py-2 ${
+                  errors.includes("year") ? "border-2 border-rose-500" : ""
+                }`}
                 value={year}
-                onChange={(e) => setYear(e.target.value)}
+                onChange={(e) => {
+                  setYear(e.target.value);
+                  if (e.target.value) {
+                    removeError("year");
+                  }
+                }}
               />
             </div>
 
@@ -82,6 +145,9 @@ const CreateMovieModal = ({
                     </div>
                   ))}
                 </div>
+                {errors.includes("category") && (
+                  <p className="text-rose-500">No categories are selected.</p>
+                )}
               </div>
             </div>
 
