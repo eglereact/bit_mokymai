@@ -25,7 +25,7 @@ const CreateMovieModal = ({
   return (
     <div>
       <div className="modal-backdrop">
-        <div className="modal w-1/2">
+        <div className="modal w-1/3">
           <div className="flex justify-between border-b-2 p-4 border-slate-200">
             <h1 className="text-2xl text-slate-800 font-bold">
               Create a new movie
@@ -43,7 +43,7 @@ const CreateMovieModal = ({
               <input
                 type="text"
                 placeholder="title"
-                className="bg-slate-200 outline-none"
+                className="bg-slate-200 mb-3 w-1/2 rounded-md capitalize outline-none px-4 py-2"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -53,7 +53,7 @@ const CreateMovieModal = ({
               <input
                 type="text"
                 placeholder="year"
-                className="bg-slate-200 outline-none"
+                className="bg-slate-200 mb-3 w-1/2 rounded-md capitalize outline-none px-4 py-2"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
               />
@@ -61,47 +61,58 @@ const CreateMovieModal = ({
 
             <div className="flex gap-3">
               <div>
-                <label>Categories:</label>
-                {Object.keys(categories).map((category) => (
-                  <div key={category}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={categories[category]}
-                        onChange={() => handleCategories(category)}
-                      />
-                      {category}
-                    </label>
-                  </div>
-                ))}
+                <div className="grid grid-cols-3 gap-4">
+                  {Object.keys(categories).map((category) => (
+                    <div key={category}>
+                      <label
+                        className={`capitalize font-bold ${
+                          categories[category]
+                            ? "text-teal-600 "
+                            : "text-slate-800"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          className="mr-1 accent-teal-600"
+                          checked={categories[category]}
+                          onChange={() => handleCategories(category)}
+                        />
+                        {category}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
             <div>
-              <div>
-                <label>Rating: {rating}</label>
+              <div className="flex justify-between">
+                <label>Rating: </label>
+                <span className="font-bold text-white bg-teal-600 w-7 h-7 flex justify-center items-center  rounded">
+                  {rating}
+                </span>
               </div>
               <input
                 type="range"
                 placeholder="Rating"
-                className="bg-slate-200 outline-none"
+                className=" outline-none w-full accent-teal-600 range pr-6"
                 value={rating}
                 onChange={(e) => setRating(e.target.value)}
                 min="1"
                 max="10"
               />
             </div>
-            <div>
+            <div className="flex gap-2 py-2">
               <button
                 type="button"
-                className="bg-green-200 p-4"
+                className="bg-teal-600 hover:bg-teal-700 transition-all shadow-lg text-white  font-bold capitalize rounded-md py-3 px-4"
                 onClick={handleCreate}
               >
                 Add
               </button>
               <button
                 type="button"
-                className="bg-gray-200 p-4"
+                className="bg-gray-400 hover:bg-gray-500 transition-all shadow-lg text-white  font-bold capitalize rounded-md  py-3 px-4"
                 onClick={() => setCreateMovieModal(null)}
               >
                 Close

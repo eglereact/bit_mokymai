@@ -1,44 +1,66 @@
-import { GiFilmProjector } from "react-icons/gi";
+import { MdDelete } from "react-icons/md";
+import { MdEditSquare } from "react-icons/md";
 
 const Movie = ({ m, setEditMovieModal, setDeleteMovieModal }) => {
   return (
     <div>
-      <div className="bg-slate-200 p-9">
-        <div className=" w-32 h-40 relative bg-spring text-slate-900 rounded">
-          <div className="flex flex-col items-center pt-4 ">
-            <GiFilmProjector size={50} />
-            <h1 className="capitalize font-bold text-xl">{m.title}</h1>
-            <p className="text-sm">{m.year}</p>
+      <div className="bg-slate-900 text-white w-[280px] rounded-xl min-h-[400px] p-4 flex flex-col ">
+        <div className="flex text-lg ">
+          <p className="font-bold text-teal-600 pr-1">Title:</p>{" "}
+          <p className="capitalize">{m.title}</p>
+        </div>
+
+        <div className="flex text-lg">
+          <p className="font-bold text-teal-600 pr-1">Year:</p>{" "}
+          <p className=" capitalize">{m.year}</p>
+        </div>
+
+        <div className="flex ">
+          <div className="flex text-lg flex-wrap gap-1">
+            <label className="capitalize font-bold text-teal-600">
+              Genres:
+            </label>
+            {Object.keys(m.categories).map((category) => (
+              <div key={category}>
+                <span className="text-base">
+                  {m.categories[category] && (
+                    <>
+                      <span className="text-teal-600"> • </span>
+                      {category.charAt(0).toUpperCase() + category.slice(1)}
+                    </>
+                  )}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-        <h1>Title: {m.title}</h1>
-        <p>Year: {m.year}</p>
-
-        <div>
-          {Object.keys(m.categories).map((category) => (
-            <div key={category}>
-              <span>
-                {m.categories[category] &&
-                  category.charAt(0).toUpperCase() + category.slice(1)}
-              </span>
-            </div>
-          ))}
+        <div className="flex text-lg">
+          <p className="font-bold text-teal-600 pr-1">Rating:</p>{" "}
+          <div>
+            {Array(+m.rating)
+              .fill()
+              .map((_, i) => (
+                <span key={i} className="text-yellow-500">
+                  ★
+                </span>
+              ))}
+            {`(${m.rating})`}
+          </div>
         </div>
-        <div>Rating {m.rating}</div>
-        <div>
+        <div className="py-4 flex gap-2">
           <button
             type="button"
-            className="bg-blue-300 p-2"
+            className="bg-cyan-700 p-2 hover:bg-cyan-900 transition-all rounded text-white"
             onClick={() => setEditMovieModal(m)}
           >
-            Edit
+            <MdEditSquare />
           </button>
           <button
             type="button"
-            className="bg-red-300 p-2"
+            className="bg-teal-800 p-2 hover:bg-teal-900 transition-all rounded text-white"
             onClick={() => setDeleteMovieModal(m)}
           >
-            Delete
+            <MdDelete />
           </button>
         </div>
       </div>

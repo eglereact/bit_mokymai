@@ -174,28 +174,32 @@ function App() {
   }
   if (route === "movies") {
     return (
-      <div>
-        <h1>Movies list</h1>
-        <button
-          type="button"
-          className="bg-pink-600 p-4"
-          onClick={() => setCreateMovieModal(movieDv)}
-        >
-          Add new movie
-        </button>
-        <button
-          type="button"
-          className="bg-yellow-600 p-4"
-          onClick={() => setRoute("categories")}
-        >
-          Go to categories
-        </button>
-        <div>
-          <MovieList
-            movies={movies}
-            setDeleteMovieModal={setDeleteMovieModal}
-            setEditMovieModal={setEditMovieModal}
-          />
+      <div className="flex flex-col justify-center items-center mt-8">
+        <div className="w-4/5">
+          <div className="flex gap-4">
+            <button
+              type="button"
+              className="bg-slate-800 hover:bg-slate-900 shadow-lg text-white font-bold capitalize rounded-md p-4"
+              onClick={() => setCreateMovieModal(movieDv)}
+            >
+              Add new movie
+            </button>
+            <button
+              type="button"
+              className="bg-teal-600 hover:bg-teal-700 transition-all shadow-lg text-white  font-bold capitalize rounded-md p-4"
+              onClick={() => setRoute("categories")}
+            >
+              Go to categories
+            </button>
+          </div>
+          <h1 className="my-6 text-4xl font-bold text-slate-800">Movie list</h1>
+          <div>
+            <MovieList
+              movies={movies}
+              setDeleteMovieModal={setDeleteMovieModal}
+              setEditMovieModal={setEditMovieModal}
+            />
+          </div>
         </div>
         {createMovieModal !== null && (
           <CreateMovieModal
