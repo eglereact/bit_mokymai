@@ -41,6 +41,8 @@ function App() {
   const [updateMovie, setUpdateMovie] = useState(null);
 
   const [msg, setMsg] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("");
+  const [sortCriteriaMovie, setSortCriteriaMovie] = useState("");
 
   const removeMsg = useCallback((id) => {
     setMsg((msgs) => msgs.filter((m) => m.id !== id));
@@ -174,14 +176,71 @@ function App() {
       }
     });
 
-    console.log("mappedCategories", mappedCategories);
-
     // Update editMovieModal with the movie data and mapped categories
     setEditMovieModal({
       ...movie,
       categories: mappedCategories,
     });
   };
+
+  const sortCategory = (criteria) => {
+    if (null === categories) {
+      return;
+    }
+    switch (criteria) {
+      case "lengthAsc":
+        return categories
+          .slice()
+          .sort((a, b) => a.category.length - b.category.length);
+      case "lengthDesc":
+        return categories
+          .slice()
+          .sort((a, b) => b.category.length - a.category.length);
+      case "categoryAsc":
+        return categories
+          .slice()
+          .sort((a, b) => a.category.localeCompare(b.category));
+      case "categoryDesc":
+        return categories
+          .slice()
+          .sort((a, b) => b.category.localeCompare(a.category));
+      default:
+        return categories;
+    }
+  };
+
+  const sortMovies = (criteria) => {
+    if (null === movies) {
+      return;
+    }
+    switch (criteria) {
+      case "yearAsc":
+        return movies
+          .slice()
+          .sort((a, b) => parseInt(a.year) - parseInt(b.year));
+      case "yearDesc":
+        return movies
+          .slice()
+          .sort((a, b) => parseInt(b.year) - parseInt(a.year));
+      case "ratingAsc":
+        return movies
+          .slice()
+          .sort((a, b) => parseInt(a.rating) - parseInt(b.rating));
+      case "ratingDesc":
+        return movies
+          .slice()
+          .sort((a, b) => parseInt(b.rating) - parseInt(a.rating));
+      case "titleAsc":
+        return movies.slice().sort((a, b) => a.title.localeCompare(b.title));
+      case "titleDesc":
+        return movies.slice().sort((a, b) => b.title.localeCompare(a.title));
+      default:
+        return movies;
+    }
+  };
+
+  const sortedCategories = sortCategory(sortCriteria);
+  const sortedMovies = sortMovies(sortCriteriaMovie);
 
   if (route === "categories") {
     return (
@@ -205,11 +264,37 @@ function App() {
           </div>
           <h1 className="my-6 text-4xl font-bold text-slate-800 w-4/5">
             Category list{" "}
-            <span className="text-teal-600">({categories.length})</span>
+            <span className="text-teal-600">({categories?.length})</span>
           </h1>
+          <div className="flex gap-2 my-4 w-4/5 ">
+            <button
+              onClick={() => setSortCriteria("lengthAsc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Length ASC
+            </button>
+            <button
+              onClick={() => setSortCriteria("lengthDesc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Length DESC
+            </button>
+            <button
+              onClick={() => setSortCriteria("categoryAsc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Category [A-Z]
+            </button>
+            <button
+              onClick={() => setSortCriteria("categoryDesc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Category [Z-A]
+            </button>
+          </div>
           <div>
             <CategoriesList
-              categories={categories}
+              categories={sortedCategories}
               setDeleteModal={setDeleteModal}
               setEditModal={setEditModal}
             />
@@ -263,11 +348,49 @@ function App() {
             </button>
           </div>
           <h1 className="my-6 text-4xl font-bold text-slate-800">
-            Movie list <span className="text-teal-600">({movies.length})</span>
+            Movie list <span className="text-teal-600">({movies?.length})</span>
           </h1>
+          <div className="flex gap-2 my-4 w-4/5 ">
+            <button
+              onClick={() => setSortCriteriaMovie("titleAsc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Title [A-Z]
+            </button>
+            <button
+              onClick={() => setSortCriteriaMovie("titleDesc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Title [Z-A]
+            </button>
+            <button
+              onClick={() => setSortCriteriaMovie("yearAsc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Year (oldest)
+            </button>
+            <button
+              onClick={() => setSortCriteriaMovie("yearDesc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Year (newest)
+            </button>
+            <button
+              onClick={() => setSortCriteriaMovie("ratingAsc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Rating (worst)
+            </button>
+            <button
+              onClick={() => setSortCriteriaMovie("ratingDesc")}
+              className="bg-slate-900 rounded-lg p-1 text-white  w-52 hover:bg-slate-700"
+            >
+              Sort by Rating (best)
+            </button>
+          </div>
           <div>
             <MovieList
-              movies={movies}
+              movies={sortedMovies}
               setDeleteMovieModal={setDeleteMovieModal}
               setEditMovieModal={handleEditMovie}
             />

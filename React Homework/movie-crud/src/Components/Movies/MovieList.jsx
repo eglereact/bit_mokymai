@@ -11,7 +11,7 @@ const MovieList = ({ movies, setDeleteMovieModal, setEditMovieModal }) => {
 
   return (
     <div className="flex flex-wrap bg-teal-600 rounded-md gap-4 shadow-lg mb-6 p-6">
-      {movies.map((m) => (
+      {movies?.map((m) => (
         <Movie
           key={m.id}
           m={m}
