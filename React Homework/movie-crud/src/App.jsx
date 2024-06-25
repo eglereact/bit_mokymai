@@ -163,6 +163,26 @@ function App() {
     setRefresh(Date.now());
   }, [updateMovie, addMsg]);
 
+  const handleEditMovie = (movie) => {
+    // Initialize all categories to false
+    const mappedCategories = mapCategoriesToFalse(categories);
+
+    // Update mappedCategories based on movie.categories
+    Object.keys(mappedCategories).forEach((category) => {
+      if (movie.categories.hasOwnProperty(category)) {
+        mappedCategories[category] = movie.categories[category];
+      }
+    });
+
+    console.log("mappedCategories", mappedCategories);
+
+    // Update editMovieModal with the movie data and mapped categories
+    setEditMovieModal({
+      ...movie,
+      categories: mappedCategories,
+    });
+  };
+
   if (route === "categories") {
     return (
       <div className="App">
@@ -183,6 +203,10 @@ function App() {
               Go to movies
             </button>
           </div>
+          <h1 className="my-6 text-4xl font-bold text-slate-800 w-4/5">
+            Category list{" "}
+            <span className="text-teal-600">({categories.length})</span>
+          </h1>
           <div>
             <CategoriesList
               categories={categories}
@@ -238,12 +262,14 @@ function App() {
               Go to categories
             </button>
           </div>
-          <h1 className="my-6 text-4xl font-bold text-slate-800">Movie list</h1>
+          <h1 className="my-6 text-4xl font-bold text-slate-800">
+            Movie list <span className="text-teal-600">({movies.length})</span>
+          </h1>
           <div>
             <MovieList
               movies={movies}
               setDeleteMovieModal={setDeleteMovieModal}
-              setEditMovieModal={setEditMovieModal}
+              setEditMovieModal={handleEditMovie}
             />
           </div>
         </div>

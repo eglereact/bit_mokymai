@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const EditMovie = ({
   setUpdateMovie,
@@ -11,6 +11,14 @@ const EditMovie = ({
   const [categories, setCategories] = useState(editMovieModal.categories);
   const [rating, setRating] = useState(editMovieModal.rating);
   const [errors, setErrors] = useState([]);
+
+  // useEffect(() => {
+  //   setTitle(editMovieModal.title);
+  //   setYear(editMovieModal.year);
+  //   setCategories(editMovieModal.categories);
+  //   setRating(editMovieModal.rating);
+  //   console.log("Edit Movie Modal Updated: ", editMovieModal);
+  // }, [editMovieModal]);
 
   const isAtLeastOneTrue = Object.values(categories).some((value) => value);
 
@@ -44,6 +52,7 @@ const EditMovie = ({
     if (hasError) {
       return;
     }
+
     setUpdateMovie({
       ...editMovieModal,
       title,
@@ -80,9 +89,7 @@ const EditMovie = ({
       <div className="modal-backdrop">
         <div className="modal w-1/3">
           <div className="flex justify-between border-b-2 p-4 border-slate-200">
-            <h1 className="text-2xl text-slate-800 font-bold">
-              Create a new movie
-            </h1>
+            <h1 className="text-2xl text-slate-800 font-bold">Edit movie</h1>
             <div
               className="text-2xl cursor-pointer w-4 h-4 text-slate-800 font-bold"
               onClick={() => setEditMovieModal(null)}
@@ -158,14 +165,14 @@ const EditMovie = ({
             <div>
               <div className="flex justify-between">
                 <label className="text-slate-800">Rating: </label>
-                <span className="font-bold text-white bg-teal-600 w-7 h-7 flex justify-center items-center  rounded">
+                <span className="font-bold text-white bg-teal-600 w-7 h-7 flex justify-center items-center rounded">
                   {rating}
                 </span>
               </div>
               <input
                 type="range"
                 placeholder="Rating"
-                className=" outline-none w-full accent-teal-600 range pr-6"
+                className="outline-none w-full accent-teal-600 range pr-6"
                 value={rating}
                 onChange={(e) => setRating(e.target.value)}
                 min="1"
@@ -175,14 +182,14 @@ const EditMovie = ({
             <div className="flex gap-2 py-2">
               <button
                 type="button"
-                className="bg-teal-600 hover:bg-teal-700 transition-all shadow-lg text-white  font-bold capitalize rounded-md py-3 px-4"
+                className="bg-teal-600 hover:bg-teal-700 transition-all shadow-lg text-white font-bold capitalize rounded-md py-3 px-4"
                 onClick={handleEdit}
               >
                 Edit
               </button>
               <button
                 type="button"
-                className="bg-gray-400 hover:bg-gray-500 transition-all shadow-lg text-white  font-bold capitalize rounded-md  py-3 px-4"
+                className="bg-gray-400 hover:bg-gray-500 transition-all shadow-lg text-white font-bold capitalize rounded-md py-3 px-4"
                 onClick={() => setEditMovieModal(null)}
               >
                 Close
@@ -194,4 +201,5 @@ const EditMovie = ({
     </div>
   );
 };
+
 export default EditMovie;

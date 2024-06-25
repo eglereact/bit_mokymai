@@ -11,7 +11,7 @@ const CategoriesList = ({ categories, setDeleteModal, setEditModal }) => {
   }
 
   return (
-    <div className="flex justify-center mt-6">
+    <div className="flex justify-center">
       <div className="flex gap-2 w-4/5 pl-7 py-6 rounded-md shadow-lg bg-teal-600 flex-wrap">
         {categories.map((c) => (
           <div
