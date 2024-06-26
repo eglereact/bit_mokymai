@@ -1,4 +1,9 @@
-const Delete = ({ setDeleteModal, deleteModal, setDestroy }) => {
+import { useContext } from "react";
+import { CatContext } from "../Context/CatCon";
+
+const Delete = () => {
+  const { setDeleteModal, deleteModal, setDestroy } = useContext(CatContext);
+
   const handleDelete = () => {
     setDestroy({ ...deleteModal });
     setDeleteModal(null);

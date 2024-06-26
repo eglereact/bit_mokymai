@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CatContext } from "../Context/CatCon";
 
 const ages = ["0-1", "1-3", "3-7", "7+"];
 
@@ -17,7 +18,9 @@ const images = [
   "/src/images/smokey.png",
 ];
 
-const Edit = ({ editModal, setEditModal, setUpdate }) => {
+const Edit = () => {
+  const { editModal, setEditModal, setUpdate } = useContext(CatContext);
+
   const [name, setName] = useState(editModal.name);
   const [weight, setWeight] = useState(editModal.weight);
   const [image, setImage] = useState(editModal.image);

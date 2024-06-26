@@ -1,4 +1,9 @@
-const Cat = ({ c, setDeleteModal, setEditModal }) => {
+import { useContext } from "react";
+import { CatContext } from "../Context/CatCon";
+
+const Cat = ({ c }) => {
+  const { setDeleteModal, setEditModal } = useContext(CatContext);
+
   return (
     <div key={c.id} className="bg-slate-200 p-9">
       <h1>Name: {c.name}</h1>

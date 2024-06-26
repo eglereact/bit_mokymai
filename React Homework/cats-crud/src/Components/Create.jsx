@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CatContext } from "../Context/CatCon";
 
 const ages = ["0-1", "1-3", "3-7", "7+"];
 
@@ -20,7 +21,9 @@ const images = [
   "/src/images/spots.png",
 ];
 
-const Create = ({ createModal, setCreateModal, setStore }) => {
+const Create = () => {
+  const { createModal, setCreateModal, setStore } = useContext(CatContext);
+
   const [name, setName] = useState(createModal.name);
   const [weight, setWeight] = useState(createModal.weight);
   const [image, setImage] = useState(createModal.image);

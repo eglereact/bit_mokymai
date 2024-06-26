@@ -1,4 +1,8 @@
-const Messages = ({ msg, removeMsg }) => {
+import { useContext } from "react";
+import { CatContext } from "../Context/CatCon";
+
+const Messages = () => {
+  const { msg, removeMsg } = useContext(CatContext);
   if (msg.length === 0) {
     return null;
   }
