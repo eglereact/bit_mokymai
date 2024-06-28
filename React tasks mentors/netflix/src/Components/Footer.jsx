@@ -1,5 +1,4 @@
-import { IoLanguageSharp } from "react-icons/io5";
-import { FaCaretDown } from "react-icons/fa";
+import LanguageButton from "./LanguageButton";
 
 const Footer = () => {
   return (
@@ -33,10 +32,7 @@ const Footer = () => {
             <li>Only on Netflix</li>
           </ul>
         </div>
-        <button className="text-white border border-gray-500  px-4 py-1 rounded flex items-center gap-2">
-          <IoLanguageSharp /> English
-          <FaCaretDown />
-        </button>
+        <LanguageButton />
         <h4 className="text-sm">Netflix Lithuania</h4>
       </div>
     </footer>

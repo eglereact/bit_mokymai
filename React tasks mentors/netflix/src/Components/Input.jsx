@@ -6,11 +6,11 @@ const Input = () => {
       <h3 className="text-xl">
         Ready to watch? Enter your email to create or restart your membership.
       </h3>
-      <div className="flex gap-2 bg-black">
+      <div className="flex gap-2 ">
         <input
           type="text"
           placeholder="Email Address"
-          className="border w-[360px] py-4 px-4 border-gray-500 bg-black/10 rounded focus:border-black focus:outline-white"
+          className="border w-[360px] py-4 px-4 border-gray-500 bg-black/40 rounded focus:border-black focus:outline-white"
         />
         <button
           type="button"

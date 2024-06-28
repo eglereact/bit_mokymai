@@ -1,8 +1,7 @@
 import { logo } from "../Utils/urls";
-import { IoLanguageSharp } from "react-icons/io5";
-import { FaCaretDown } from "react-icons/fa";
 
 import Input from "./Input";
+import LanguageButton from "./LanguageButton";
 
 const Header = () => {
   return (
@@ -13,10 +12,7 @@ const Header = () => {
             <div className="w-7/12 h-11  mt-6 flex justify-between ">
               <div className="logo">{logo}</div>
               <div className="gap-4 flex h-8">
-                <button className="text-white border border-gray-500  px-4 py-1 rounded flex items-center gap-2">
-                  <IoLanguageSharp /> English
-                  <FaCaretDown />
-                </button>
+                <LanguageButton />
                 <button className="text-white bg-[#E50914] font-bold text-sm  hover:bg-[#B20710] transition-all px-4 py-1 rounded">
                   Sign In
                 </button>
