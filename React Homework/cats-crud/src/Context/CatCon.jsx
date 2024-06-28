@@ -162,7 +162,6 @@ export default function CatCon({ children }) {
         cats,
         setDeleteModal,
         setEditModal,
-        deleteModal,
         setDestroy,
         setUpdate,
         msg,
