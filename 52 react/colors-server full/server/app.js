@@ -25,6 +25,19 @@ app.get("/", (_, res) => {
   res.send("Colors Server");
 });
 
+app.get("/colors", (req, res) => {
+  const sql = `
+        SELECT *
+        FROM colors
+        ORDER BY id DESC
+    `;
+
+  connection.query(sql, (err, rows) => {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
+
 app.post("/colors", (req, res) => {
   let { color, range, shape } = req.body;
 
@@ -39,9 +52,9 @@ app.post("/colors", (req, res) => {
     INSERT INTO colors (color, amount, shape)
     VALUES ( ?, ?, ? )
 `;
-  connection.query(sql, [color, range, shape], (err) => {
+  connection.query(sql, [color, range, shape], (err, result) => {
     if (err) throw err;
-    res.send("OK");
+    res.json({ success: true, id: result.insertId });
   });
 });
 

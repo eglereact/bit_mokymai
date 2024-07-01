@@ -3,20 +3,11 @@ import { rbc, rbu } from "../styles/svg";
 import { DataContext } from "../Context/DataContext";
 
 const Create = () => {
-  const { create, setStore, setCreate, dv } = useContext(DataContext);
-  const [shape, setShape] = useState(dv.shape);
-  const [color, setColor] = useState(dv.color);
-  const [range, setRange] = useState(dv.range);
+  const { create, setStore, setCreate } = useContext(DataContext);
+  const [shape, setShape] = useState(create.shape);
+  const [color, setColor] = useState(create.color);
+  const [range, setRange] = useState(create.range);
   const [errors, setErrors] = useState([]);
-
-  useEffect(() => {
-    if (null === create) {
-      return;
-    }
-    setShape(create.shape);
-    setColor(create.color);
-    setRange(create.range);
-  }, [create]);
 
   const handleShape = (e) => {
     setShape(e.target.id);
@@ -49,10 +40,6 @@ const Create = () => {
     setStore({ shape, color, range });
     setCreate(null);
   };
-
-  if (null === create) {
-    return null;
-  }
 
   return (
     <div className="modal">

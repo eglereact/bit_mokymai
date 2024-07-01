@@ -1,21 +1,24 @@
-const List = ({ colors, setRemove, setEdit }) => {
+import { useContext } from "react";
+import { DataContext } from "../Context/DataContext";
+
+export default function List() {
+  const { colors } = useContext(DataContext);
+
   if (null === colors) {
     return (
-      <ul className="list-group list-group-flush ">
+      <ul className="list-group list-group-flush">
         <li className="list-group-item">Loading...</li>
       </ul>
     );
   }
 
   return (
-    <ul className="list-group list-group-flush ">
+    <ul className="list-group list-group-flush">
       {colors.map((c) => (
         <li key={c.id} className="list-group-item">
           <div className="color-line">
             <div className="content">
-              <div style={{ color: c.color, width: "150px" }}>
-                {c.title ?? "no title"}
-              </div>
+              <div className="title">{c.title ?? "no title"}</div>
               <div className="colors">
                 {Array(c.range)
                   .fill()
@@ -23,43 +26,32 @@ const List = ({ colors, setRemove, setEdit }) => {
                     c.shape !== "triangle" ? (
                       <div
                         key={i}
+                        style={{ backgroundColor: c.color }}
                         className={c.shape}
-                        style={{
-                          backgroundColor: c.color,
-                        }}
                       ></div>
                     ) : (
                       <div
                         key={i}
+                        style={{ borderBottomColor: c.color }}
                         className={c.shape}
-                        style={{
-                          borderBottomColor: c.color,
-                        }}
                       ></div>
                     )
                   )}
               </div>
             </div>
-            <div className="buttons">
-              <button
-                onClick={() => setEdit(c)}
-                type="button"
-                className="green"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => setRemove(c)}
-                type="button"
-                className="red"
-              >
-                Delete
-              </button>
-            </div>
+            {c.id !== 0 && (
+              <div className="buttons">
+                <button type="button" className="green">
+                  Edit
+                </button>
+                <button type="button" className="red">
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         </li>
       ))}
     </ul>
   );
-};
-export default List;
+}

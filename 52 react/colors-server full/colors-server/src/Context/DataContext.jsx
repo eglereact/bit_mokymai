@@ -1,21 +1,31 @@
 import { createContext } from "react";
 import useCreate from "../Hooks/useCreate";
+import useRead from "../Hooks/useRead";
 
 export const DataContext = createContext();
 
 const dv = {
   shape: "",
-  color: "#f267d8",
+  color: "#07cc44",
   range: 5,
 };
 
-const server_url = "http://localhost:3001/";
+const serverUrl = "http://localhost:3001/";
 
 export const Data = ({ children }) => {
-  const { create, setCreate, setStore } = useCreate(server_url);
+  const { colors, dispachColors } = useRead(serverUrl);
+  const { create, setCreate, setStore } = useCreate(serverUrl, dispachColors);
 
   return (
-    <DataContext.Provider value={{ create, setCreate, setStore, dv }}>
+    <DataContext.Provider
+      value={{
+        create,
+        setCreate,
+        setStore,
+        dv,
+        colors,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
