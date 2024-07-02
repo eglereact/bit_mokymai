@@ -1,4 +1,8 @@
-const Messages = ({ msg, removeMsg }) => {
+import { useContext } from "react";
+import { DataContext } from "../Context/DataContext";
+
+const Messages = () => {
+  const { msg, remMessage } = useContext(DataContext);
   if (msg.length === 0) {
     return null;
   }
@@ -20,7 +24,7 @@ const Messages = ({ msg, removeMsg }) => {
               type="button"
               className="btn-close"
               aria-label="Close"
-              onClick={() => removeMsg(m.id)}
+              onClick={() => remMessage(m.id)}
             ></button>
           </div>
           <div className="toast-body">{m.text}</div>

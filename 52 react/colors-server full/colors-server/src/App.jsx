@@ -3,6 +3,7 @@ import "./app.scss";
 import CreateButton from "./Components/CreateButton";
 import Modals from "./Components/Modals";
 import List from "./Components/List";
+import Messages from "./Components/Messages";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         </div>
       </div>
       <Modals />
+      <Messages />
     </Data>
   );
 }

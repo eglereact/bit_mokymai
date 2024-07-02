@@ -24,3 +24,33 @@ export const replace0Id = (id) => {
 export const remove0Id = () => {
   return { type: c.REMOVE_COLOR_ID_0 };
 };
+
+export const hideId = (id) => {
+  return { type: c.HIDE_COLOR_ID, payload: id };
+};
+
+export const removeHidden = () => {
+  return { type: c.REMOVE_HIDDEN };
+};
+
+export const showHidden = () => {
+  return { type: c.SHOW_HIDDEN };
+};
+export const editColor = (color) => {
+  return {
+    type: c.EDIT_COLOR,
+    payload: color,
+  };
+};
+
+export const removeOld = (_) => {
+  return {
+    type: c.REMOVE_OLD,
+  };
+};
+
+export const restoreOld = (_) => {
+  return {
+    type: c.RESTORE_OLD,
+  };
+};

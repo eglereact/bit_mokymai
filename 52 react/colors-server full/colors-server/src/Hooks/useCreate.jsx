@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { addColor, remove0Id, replace0Id } from "../Actions/colorsActions";
 
-const useCreate = (server_url, dispachColors) => {
+const useCreate = (serverUrl, dispatchColors, addMessage) => {
   const [create, setCreate] = useState(null);
   const [store, setStore] = useState(null);
 
@@ -10,22 +10,33 @@ const useCreate = (server_url, dispachColors) => {
     if (null === store) {
       return;
     }
-    dispachColors(addColor({ ...store, id: 0 }));
+    dispatchColors(addColor({ ...store, id: 0 }));
+    addMessage({
+      title: "Color create",
+      type: "success",
+      text: "Sending",
+    });
     axios
-      .post(`${server_url}colors`, store)
+      .post(`${serverUrl}colors`, store)
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
-          dispachColors(replace0Id(res.data.id));
+          dispatchColors(replace0Id(res.data.id));
+          addMessage(res.data.msg);
         }
-        dispachColors(remove0Id());
+        dispatchColors(remove0Id());
       })
       .catch((error) => {
         console.log(error);
-        dispachColors(remove0Id());
+        dispatchColors(remove0Id());
+        addMessage({
+          title: "Color create",
+          type: "error",
+          text: "Server error",
+        });
       });
     setStore(null);
-  }, [store, server_url]);
+  }, [store, serverUrl, addMessage, dispatchColors]);
 
   return {
     create,

@@ -1,4 +1,9 @@
-const Delete = ({ setRemove, remove, setDestroy }) => {
+import { useContext } from "react";
+import { DataContext } from "../Context/DataContext";
+
+const Delete = () => {
+  const { setRemove, remove, setDestroy } = useContext(DataContext);
+
   const handleDelete = () => {
     setDestroy({ ...remove });
     setRemove(null);
@@ -17,7 +22,7 @@ const Delete = ({ setRemove, remove, setDestroy }) => {
           </div>
           <div className="modal-body">
             <div>
-              <h6>Are you sure you want to delele shapes?</h6>
+              <h6>Are you sure you want to delete shapes?</h6>
             </div>
             <div className="color-line">
               <div className="content">
