@@ -1,0 +1,58 @@
+.task {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f6f6f6;
+  padding: 20px;
+  margin-bottom: 5px;
+}
+
+button {
+  width: 80px;
+  height: 40px;
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+.delete {
+  background-color: crimson;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.delete:hover {
+  background-color: brown;
+}
+
+.arrow {
+  background-color: skyblue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.arrow:hover {
+  background-color: cadetblue;
+}
+
+.add {
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.arrow:hover {
+  background-color: cadetblue;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  height: 34px;
+  width: 200px;
+}
